@@ -113,15 +113,15 @@ with open(queue_path, "w", encoding="utf-8") as f:
 ---
 
 ## ⏳ Pending
-- doc_fee_queue.json SEQ165 (อบจ.บึงกาฬ, 2,000 บาท 22-31 กค.69, bank/email ยังไม่มีใน PDF) — รอ Doc Fee Agent
-- doc_fee_queue.json SEQ166 (อบต.โนนแหลมทอง, 100 บาท 23 กค.-3 สค.69, bank/email ยังไม่มีใน PDF) — รอ Doc Fee Agent
+- doc_fee_queue.json SEQ166 (อบต.โนนแหลมทอง, 100 บาท 23 กค.-3 สค.69) — bank/email เติมแล้วโดย Doc Fee Agent (กรุงไทย 406-2-61616-4, Saraban_0646907@dla.go.th) — รอชำระ
+- doc_fee_queue.json SEQ170 (อบจ.สกลนคร, 1,000 บาท 27 กค.-5 สค.69, bank/email ยังไม่มีใน PDF) — รอ Doc Fee Agent
 - SEQ165 plant สกลนคร (110กม.) แต่ entity ยื่น = รักดี ≠ เจ้าของ plant (บ.ตักสิลา) → ต้องมีหนังสือยินยอม
 - SEQ167 plant ศรีบุญเรือง แต่ entity ยื่น = รักดี ≠ เจ้าของ plant (หจก.อาร์เอ็มเอ็น) → ต้องมีหนังสือยินยอม
-- doc_fee_queue.json SEQ170 (อบจ.สกลนคร, 1,000 บาท 27 กค.-5 สค.69, bank/email ยังไม่มีใน PDF) — รอ Doc Fee Agent
 - SEQ170 plant สกลนคร แต่ entity ยื่น = รักดี ≠ เจ้าของ plant (บ.ตักสิลา) → ต้องมีหนังสือยินยอม
-- SEQ168-170 รอผลประมูล (ยื่น 24 กค.69, seq170 เวลา 13.00-16.00น. อื่น 9.00-12.00น.)
+- (SEQ165 doc fee อบจ.บึงกาฬ 2,000฿ หายไปจาก queue แล้ว — สันนิษฐานว่า Doc Fee Agent ชำระ/ประมวลผลเสร็จแล้ว ยังไม่ยืนยัน 100%)
 
 ## ✅ Done This Session (ต่อ 16 กค.69)
+- แก้ไข seq167 pct: 47.37 → 47.36 (คำนวณผิดรอบก่อน, ตรวจพบจาก recheck) — bid 888,000/budget 1,687,000
 - seq 168 ทต.หนองสองห้อง 69069284558 added — plant มหาสารคาม ("(สารคาม108)"), ไม่มีค่าเอกสาร — result ✅ ต่ำสุด 468,000 (24 กค.69)
 - seq 169 อบต.ดูกอึ่ง 69079043879 added — plant มหาสารคาม ("(สารคาม140)"), ไม่มีค่าเอกสาร — result ✅ ต่ำสุด 928,000 (24 กค.69)
 - seq 170 อบจ.สกลนคร 69069467561 added — plant สกลนคร ("(สกลนคร38)") ⚠️ ต้องหนังสือยินยอม, ค่าเอกสาร 1,000฿ → append doc_fee_queue.json — result ✅ ต่ำสุด 998,000 (24 กค.69 บ่าย)
@@ -180,3 +180,20 @@ with open(queue_path, "w", encoding="utf-8") as f:
 - ทุกการ์ดต้องมีช่อง input "ผลประมูล (ราคาต่ำสุด)" + ปุ่มรวม "บันทึกผลประมูล" ที่กด sendPrompt('ผลประมูล\nSEQ n (label) = value\n...') ให้ user กรอกผลตรงใน widget ได้เลย
 - ห้ามตัดของเดิมทิ้งตอนเพิ่มฟีเจอร์ใหม่ในการ์ด — สะสมทุกส่วนไว้เสมอ (เคยพลาดตัดกล่องเตือนออกตอนเพิ่ม input)
 - แสดง diff text (compact, ทีละบรรทัด ไม่รวม code block เดียว) คู่กับ widget เสมอ — diff คือ source of truth, widget คือของอ่านง่าย
+
+## 🔍 Notes column parsing — clarified 2569-07-24
+- `(สารคามXX)` / `(ศรีบุญเรืองXX)` / `(สกลนครXX)` = ชื่อ plant + เลขอ้างอิงผลงาน (ไม่ใช่ระยะทาง) → ใช้ชื่อ plant ตรงนี้เสมอ (เคยพลาดอ่านว่า "ไม่ระบุ" ทั้งที่มีอยู่แล้ว — ดู seq163)
+- ตัวเลขคอลัมน์สุดท้ายของตาราง user (เช่น 60, 75, 90) = ระยะเวลาดำเนินการ (วัน) ไม่ใช่ plantDist — ห้ามเอามาใส่ plantDist
+- plantDist ใส่เฉพาะเมื่อ notes ระบุระยะทางชัดเจนเป็น "XXXกม." เท่านั้น (เช่น seq165 "110กม.") ถ้าไม่มีให้ปล่อย field ว่างไว้ ไม่เดา
+- ก่อน commit ทุกครั้งควร double-check pct ด้วยสูตร (budget-bid)/budget*10000 round /100 — เคยพลาด seq167 (47.37 ผิด ที่ถูกคือ 47.36) แก้ไขแล้ว 2569-07-24
+
+## 🔄 Session State (2569-07-24, ต่อจาก session ก่อน)
+- Last SEQ: 170 — seq163-170 ทั้งหมด push ขึ้น origin/main แล้ว (HEAD ตรงกับ origin ยืนยันด้วย git fetch)
+- ผลประมูลครบทุกตัว seq163-170 = ✅ เป็นผู้เสนอต่ำสุดทั้งหมด (ไม่มีที่แพ้ในช่วงนี้)
+- Pending งานจริง (ยังไม่จบ):
+  1. หนังสือยินยอม (plant ≠ entity ยื่น): SEQ165 (สกลนคร/ตักสิลา), SEQ167 (ศรีบุญเรือง/RMN), SEQ170 (สกลนคร/ตักสิลา)
+  2. doc fee ค้างชำระ: SEQ166 100฿ (bank/email มีแล้ว: กรุงไทย 406-2-61616-4, Saraban_0646907@dla.go.th), SEQ170 1,000฿ (bank/email ยังไม่มี)
+  3. SEQ165 doc fee (บึงกาฬ 2,000฿) หายไปจาก doc_fee_queue.json แล้ว — คาดว่า Doc Fee Agent จ่าย/ประมวลผลเสร็จ แต่ยังไม่ได้ยืนยัน 100% กับ user
+- Known issue: doc_fee_queue.json และ doc_fees.json ถูก agent อื่น (Doc Fee Agent) แก้ไขพร้อมกันแบบ real-time นอก session นี้ — ก่อนแก้ไฟล์ทั้งสองนี้ทุกครั้งต้อง Read ใหม่ก่อนเสมอ ห้ามสมมติ state เดิม
+- Known issue: git บน sandbox บางครั้ง lock ค้าง (.git/HEAD.lock, .git/index.lock) แก้ไม่ได้เอง (permission denied) — user ต้องลบเองด้วย PowerShell แล้ว push จาก PC เท่านั้น (iPhone push ไม่ได้)
+- ห้ามถามผลประมูลก่อน 12:01 (เช้า) / 16:01 (บ่าย)
