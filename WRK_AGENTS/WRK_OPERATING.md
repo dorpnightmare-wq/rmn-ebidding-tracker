@@ -197,3 +197,15 @@ with open(queue_path, "w", encoding="utf-8") as f:
 - Known issue: doc_fee_queue.json และ doc_fees.json ถูก agent อื่น (Doc Fee Agent) แก้ไขพร้อมกันแบบ real-time นอก session นี้ — ก่อนแก้ไฟล์ทั้งสองนี้ทุกครั้งต้อง Read ใหม่ก่อนเสมอ ห้ามสมมติ state เดิม
 - Known issue: git บน sandbox บางครั้ง lock ค้าง (.git/HEAD.lock, .git/index.lock) แก้ไม่ได้เอง (permission denied) — user ต้องลบเองด้วย PowerShell แล้ว push จาก PC เท่านั้น (iPhone push ไม่ได้)
 - ห้ามถามผลประมูลก่อน 12:01 (เช้า) / 16:01 (บ่าย)
+
+## 🔄 Session State (2569-07-27) — ปิดงานก่อนหยุดยาว 3 วัน
+- doc_fee_queue.json = [] (ว่างเปล่า — จบครบทุกรายการ)
+- Fee payments ปิดครบใน session นี้ (สร้าง PDF + log doc_fees.json + ยืนยันส่ง email ครบ):
+  1. 69079109557 อบจ.บึงกาฬ 2,000฿ เงินสด กรุงไทย 447-0-29255-9
+  2. 69079189741 อบต.โนนแหลมทอง 100฿ เงินสด กรุงไทย 404-6-21164-4 (⚠️ เลขบัญชีสลิปต่างจากประกาศ 406-2-61616-4 — ใช้เลขสลิปตามกฎ)
+  3. 69069467561 อบจ.สกลนคร 1,000฿ เงินสด กรุงไทย 677-7-74450-9
+- git: commit 4094f2d push สำเร็จ ยืนยันแล้วว่า origin/main ตรงกับ local (git fetch confirmed)
+- Known issue (ยืนยันซ้ำ): sandbox bash unlink ไฟล์ไม่ได้เลยแม้แต่ไฟล์ที่เพิ่งสร้างเอง (FUSE mount ผ่าน OneDrive) — ต้องเรียก allow_cowork_file_delete ก่อนทุกครั้งที่ rm ค้าง "Operation not permitted" (ไม่ใช่แปลว่ามี process อื่นชนเสมอไป)
+- Known issue (ยืนยันซ้ำ): OneDrive sync ระหว่าง sandbox กับเครื่อง user มี delay — commit จาก sandbox อาจไม่เห็นทันทีใน PowerShell ต้องรอ sync แล้ว pull ใหม่
+- Pending: ไม่มีงานค้าง — queue ว่าง, ผลประมูล seq163-170 ครบ (จาก session ก่อน)
+- User แจ้งหยุดยาว 3 วัน — session ถัดไปเริ่มด้วยการเช็ค doc_fee_queue.json และถามมีสลิป/ประกาศใหม่หรือไม่
