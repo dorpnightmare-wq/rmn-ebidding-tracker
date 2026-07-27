@@ -207,5 +207,8 @@ with open(queue_path, "w", encoding="utf-8") as f:
 - git: commit 4094f2d push สำเร็จ ยืนยันแล้วว่า origin/main ตรงกับ local (git fetch confirmed)
 - Known issue (ยืนยันซ้ำ): sandbox bash unlink ไฟล์ไม่ได้เลยแม้แต่ไฟล์ที่เพิ่งสร้างเอง (FUSE mount ผ่าน OneDrive) — ต้องเรียก allow_cowork_file_delete ก่อนทุกครั้งที่ rm ค้าง "Operation not permitted" (ไม่ใช่แปลว่ามี process อื่นชนเสมอไป)
 - Known issue (ยืนยันซ้ำ): OneDrive sync ระหว่าง sandbox กับเครื่อง user มี delay — commit จาก sandbox อาจไม่เห็นทันทีใน PowerShell ต้องรอ sync แล้ว pull ใหม่
-- Pending: ไม่มีงานค้าง — queue ว่าง, ผลประมูล seq163-170 ครบ (จาก session ก่อน)
-- User แจ้งหยุดยาว 3 วัน — session ถัดไปเริ่มด้วยการเช็ค doc_fee_queue.json และถามมีสลิป/ประกาศใหม่หรือไม่
+- User แจ้งหยุดยาว 3 วัน (27-29 ก.ค. 69) — HANDOVER สรุปจริง (เช็คซ้ำจาก seed_bids.js + doc_fees.json 2569-07-27):
+  1. ค่าเอกสารค้างชำระ: **ไม่มีใน queue** (doc_fee_queue.json ว่าง) แต่ SEQ163/164/167/171 ไม่ปรากฏใน doc_fees.json เลย — ไม่ทราบว่าฟรี (e-GP download) หรือยังไม่ได้ตรวจสอบ ต้องเปิดประกาศแต่ละอันเช็คซ้ำ
+  2. หนังสือยินยอม (plant≠entity ยื่น) ยังไม่ยืนยันว่าทำแล้วหรือยัง: SEQ165 (บึงกาฬ, plant สกลนคร/entity รักดี), SEQ167 (นาจาน, plant ศรีบุญเรือง/entity รักดี), SEQ170 (สกลนคร, plant สกลนคร/entity รักดี) — ไม่มี record ในไฟล์ไหนว่าออกหนังสือแล้ว
+  3. SEQ171 (อบต.บึงงาม 69079244572, ล่าสุด 2569-07-27) ยังไม่เช็คเรื่องค่าเอกสารเลย — เป็นตัวใหม่สุดที่อาจตกหล่น
+- session ถัดไปเริ่มด้วย: เช็ค doc_fee_queue.json + เปิดประกาศ SEQ163/164/167/171/163 ยืนยันค่าเอกสาร + ถามสถานะหนังสือยินยอม 3 ตัวข้างต้น
