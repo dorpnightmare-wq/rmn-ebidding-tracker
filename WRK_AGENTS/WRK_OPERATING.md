@@ -40,7 +40,7 @@ with open(queue_path, "w", encoding="utf-8") as f:
 
 **Scope = detection only (2569-07-16):** ดึงแค่ที่ระบุตรงๆ ในประกาศ (amount + payWindow) ถ้าไม่มีเลขบัญชี/อีเมลในประกาศ ปล่อย null ไว้ ห้ามไปขุดหาที่อื่น ห้าม flag เป็นปัญหา — append + push + จบ ให้ Doc Fee Agent ไปหาเพิ่มเอง ไม่ใช่หน้าที่ agent นี้
 
-**ถ้าไม่ต้องจ่าย → ไม่ต้องแตะ queue**
+**แก้ไข 2569-07-27 (override กฎเดิม):** ถ้าไม่ต้องจ่าย → ก็ต้อง append ลง `doc_fee_queue.json` เหมือนกัน แต่ใช้ `"status": "no_fee_required", "amount": 0` แทน — เพื่อให้ Doc Fee Agent เห็นว่า SEQ นี้ถูกตรวจแล้วและไม่มีค่าเอกสาร ไม่ใช่ยังไม่ได้เช็ค (เคยเกิดปัญหา Doc Fee Agent flag SEQ163,164,167,171 ว่าเป็นงานค้างเพราะไม่เจอ record เลย)
 
 ---
 
