@@ -130,6 +130,10 @@ Skill ฝั่ง fee-payment ก็แก้ไปพร้อมกัน: pa
 | 168 | ทต.หนองสองห้อง (ซ.เจริญรุ่ง) | ขอนแก่น | 468,000 | ✅ เป็นผู้เสนอต่ำสุด | 790,000.00 | 468,000 |
 | 169 | อบต.ดูกอึ่ง (บ้านหนองแคเจริญสุข) | ร้อยเอ็ด | 928,000 | ✅ เป็นผู้เสนอต่ำสุด | 1,595,236.33 | 928,000 |
 | 170 | อบจ.สกลนคร (สายสงเปลือย) | สกลนคร | 998,000 | ✅ เป็นผู้เสนอต่ำสุด (plant สกลนคร ⚠️, ค่าเอกสาร 1,000฿) | 1,723,096.18 | 998,000 |
+| 171 | อบต.บึงงาม | ร้อยเอ็ด | 1,215,000 | ✅ เป็นผู้เสนอต่ำสุด | 2,548,251.81 | 1,215,000 |
+| 172 | ทต.น้ำพอง | ขอนแก่น | 768,000 | ❌ ไม่ต่ำสุด (-109,000) | 1,183,244.30 | 659,000 |
+| 173 | ทต.บุ่งเลิศ | ร้อยเอ็ด | 368,000 | ✅ เป็นผู้เสนอต่ำสุด | 628,600.53 | 368,000 |
+| 174 | อบต.โนนแหลมทอง (รร.บ้านนามน) | กาฬสินธุ์ | 418,000 | ✅ เป็นผู้เสนอต่ำสุด (ค่าเอกสาร 100฿ จ่ายแล้ว) | 757,000.00 | 418,000 |
 
 ---
 
@@ -263,7 +267,7 @@ Dispatch ไม่ได้ทำให้ Doc Fee Agent ไม่จำเป�
 ## 🔄 Session State (2569-08-04) — hand off, usage เต็มรอบนี้
 - Last SEQ: 174 — seq171-174 ทั้งหมด push ขึ้น origin/main แล้ว
 - ผลประมูล: 171 ✅ต่ำสุด (1,215,000) / 172 ❌ไม่ต่ำสุด -109,000 (bid 768,000 vs lowest 659,000) / 173 ✅ต่ำสุด (368,000) / 174 ✅ต่ำสุด (418,000)
-- doc fee SEQ174 (69079461100, อบต.โนนแหลมทอง 100฿) → Doc Fee Agent ปิดครบแล้ว (bankAccNo ยืนยันจากสลิปจริง 404-6-21164-4, จ่าย Mobile Banking, PDF แนบ e-GP แล้ว, queue ว่าง)
+- doc fee SEQ174 (69079461100, อบต.โนนแหลมทอง 100฿) → จ่ายจริงแล้ว ยืนยันจาก `doc_fees.json` (bankAccNo 404-6-21164-4, Mobile Banking, paidDate 2569-08-04, แนบ e-GP แล้ว) **แต่ ⚠️ แก้ไข 2569-08-04 recheck: `doc_fee_queue.json` ยัง Read เจอ entry นี้ค้างเป็น `"status": "pending", "amount": 100` อยู่ (ไม่ถูกลบ/เคลียร์เหมือนเคส SEQ165/166/170 ก่อนหน้า) — สองไฟล์ไม่ตรงกัน** เมื่อขัดแย้งกันให้ยึด `doc_fees.json` เป็น source of truth (paid แล้ว) เรื่องนี้อยู่นอกขอบเขต agent นี้ (queue = append/read เท่านั้น ห้ามลบเอง) ต้องให้ Doc Fee Agent เคลียร์ entry นี้ออก หรือ user สั่งชัดเจน
 - Pending งานจริง: **ไม่มี** — หนังสือยินยอม (plant ≠ entity ยื่น) ไม่ใช่ pending task ที่ต้องปิด เป็นแค่ **แจ้งเตือน/detect เฉยๆ** (ยืนยันจาก user แล้ว 2569-08-04: "ไม่ต้องทำหนังสือจริง") — SEQ165/167/170 (และ SEQ ในอนาคตที่เข้าเงื่อนไขนี้) แค่โชว์ตารางว่า plant ใครเป็นเจ้าของ vs entity ที่ยื่น เมื่อ user ถามเท่านั้น ห้าม list เป็นรายการค้างทำใน session state อีก
 - Workflow ใหม่ที่ปรับรอบนี้ (ดูรายละเอียดเต็มในหัวข้อด้านบน):
   1. Doc fee dispatch: เจอ fee ต้องจ่าย → append queue → เรียก Agent tool ทันที โหลด skill fee-payment ในเซสชันเดียวกัน (ไม่ต้องรอ Doc Fee Agent)
@@ -275,3 +279,26 @@ Dispatch ไม่ได้ทำให้ Doc Fee Agent ไม่จำเป�
 - Known issue: doc_fee_queue.json / doc_fees.json ถูก Doc Fee Agent แก้พร้อมกันนอก session — Read ใหม่ก่อนแก้ทุกครั้ง ห้ามสมมติ state เดิม
 - ห้ามถามผลประมูลก่อน 12:01 (เช้า) / 16:01 (บ่าย)
 - แนะนำ: เริ่ม session ใหม่รอบหน้า อ่านไฟล์นี้ทั้งหมดก่อน โดยเฉพาะหัวข้อ "แบ่งงาน Operating Agent vs Doc Fee Agent" และ "โครงสร้างไฟล์ประกาศ" ด้านบน เพื่อความแม่นยำต่อเนื่อง
+
+## 🔄 Session State (2569-08-04) — Recheck x5 (audit ก่อนจบ session, ล่าสุดสุด)
+ทำตามคำสั่ง "Recheck x5 หา error/mistake/problem" — ผลตรวจสอบทั้งหมด:
+- ✅ **Git push ยืนยันแล้วจริง**: `git fetch origin` แล้วเทียบ `main` vs `origin/main` → ตรงกันที่ commit `9f4a9ac` (commit ล่าสุดคือ correction หนังสือยินยอม) สรุปคือทุก commit ของ seq171-174 + workflow fixes ทั้งหมด **push ขึ้น GitHub ครบแล้ว** ไม่มีอะไรค้างอยู่แค่ local
+- ✅ **seed_bids.js ตรวจสอบผ่าน**: parse ได้สะอาด, 550 entries รวม, ไม่มี seq ซ้ำในสาย 94-174, pct ของ seq171-174 คำนวณถูกต้องทั้งหมด (40.03 / 35.09 / 41.46 / 44.78), plant/entity ทั้ง 4 ตัวตรงกัน (มหาสารคาม = รักดี) ไม่ต้องแจ้งเตือนหนังสือยินยอม
+- ⚠️ **บั๊กที่เจอ (ยังไม่แก้ อยู่นอกขอบเขต)**: `doc_fee_queue.json` entry `69079461100` (SEQ174) ค้างสถานะ `"pending"` ทั้งที่ `doc_fees.json` บันทึกว่าจ่ายจบแล้ว — ดูรายละเอียดที่แก้ไขไว้ในบรรทัด "doc fee SEQ174" ด้านบนแล้ว ยึด `doc_fees.json` เป็นความจริงเสมอเมื่อสองไฟล์ขัดกัน
+- ⚠️ **ห้าม `git add .` / `git add *` เด็ดขาด (ย้ำอีกครั้ง)**: `git status --short` เจอไฟล์จาก agent อื่นที่ยังไม่ commit ค้างอยู่ในโฟลเดอร์เดียวกัน (ห้ามแตะ/สลับไปยุ่งเกี่ยวเด็ดขาด): modified `.gitignore`, `WRK_AGENTS/WRK_MAPMAKER.md`; untracked `BOQ_1.xlsx`, `SKILL_build.md`, `SKILL_ebidding.md`, `WRK_AGENTS/WRK_DOC_EXPIRY.md`, `WRK_AGENTS/WRK_ECOSYSTEM_ADMIN.md`, `*.skill` files, `seed_bids.backup_20260706_2225.js`, ไฟล์ PDF ใบแจ้งชำระ 5 ไฟล์, และไฟล์ `ziis9DhC` — ให้ `git add` เจาะจงชื่อไฟล์เท่านั้นเสมอ (`seed_bids.js`, `doc_fee_queue.json`, `WRK_AGENTS/WRK_OPERATING.md`)
+- ✅ ไม่พบข้อผิดพลาดอื่นใน workflow rules / widget rules / dispatch architecture ที่บันทึกไว้ด้านบน — สอดคล้องกันตลอดทั้งไฟล์
+- สรุป **Pending งานจริงของ Operating Agent: ไม่มี** (นอกจาก flag บั๊ก queue ด้านบนที่ต้องให้ Doc Fee Agent/user จัดการ ไม่ใช่หน้าที่ที่นี่)
+
+### 📂 Working folder ที่ต้องมีสิทธิ์เข้าถึงเสมอ
+- โฟลเดอร์หลัก: `C:\Users\Advice\OneDrive\Claude\Projects\RMN-eBidding-Workflow`
+- ไฟล์ที่แก้ได้ (ในสโคป): `seed_bids.js`, `doc_fee_queue.json` (append/read เท่านั้น), `WRK_AGENTS\WRK_OPERATING.md`
+- ไฟล์อ่านอย่างเดียว (ห้ามแก้): `doc_fees.json` (ของ Doc Fee Agent)
+- ห้ามแตะเด็ดขาด: `rmn_ebidding_tracker_2.html`, ไฟล์ `.skill` ทั้งหมด, ไฟล์ของ agent อื่นที่ list ไว้ข้างบน
+
+### 🚀 Prompt เริ่ม session ถัดไป (copy-paste ได้เลย)
+```
+อ่าน WRK_AGENTS/WRK_OPERATING.md ทั้งไฟล์ก่อน โดยเฉพาะหัวข้อ "🔄 Session State (2569-08-04) — Recheck x5" ท้ายสุด
+สรุปสถานะ: Last SEQ = 174, push ครบแล้ว (verified), seq171-174 ผลประมูลครบทุกตัว, ไม่มี pending งานจริง
+มีบั๊กเดียวที่ค้าง (นอกขอบเขต ไม่ต้องแก้เอง แค่รู้ไว้): doc_fee_queue.json ยัง pending SEQ174 ทั้งที่จ่ายจบแล้วใน doc_fees.json — ถ้า Doc Fee Agent ยังไม่เคลียร์ ให้แจ้งฉันแทนที่จะไปลบเอง
+พร้อมรับ SEQ ใหม่ (table + annoudoc PDF) ตามขั้นตอนเดิม: parse → คำนวณ pct → เช็ค plant/entity (แจ้งเตือนอย่างเดียว ไม่ต้องทำหนังสือ) → เช็คค่าเอกสาร (ถ้าต้องจ่าย → append queue + dispatch Agent tool ไป skill fee-payment ทันที ห้าม web search) → เพิ่ม seed_bids.js → widget card (เน้นชื่อหน่วยงานเต็ม) → commit + ส่ง PowerShell push command ให้ user รันเอง
+```
