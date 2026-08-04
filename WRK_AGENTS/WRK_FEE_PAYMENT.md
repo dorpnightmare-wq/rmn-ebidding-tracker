@@ -40,7 +40,7 @@ TaskCreate · TaskUpdate · TaskList · AskUserQuestion · mcp__visualize__read_
 | ประเภทการชำระ | ชื่อผู้ชำระ |
 |---|---|
 | โอนปกติ / Mobile Banking | นางอนุรักษ์ บารพรม |
-| เงินสด / Bill Payment / Counter | ห้างหุ้นส่วนจำกัด อาร์เอ็มเอ็น เอ็นเตอร์ไพส์ |
+| เงินสด / Bill Payment / Counter | ห้างหุ้นส่วนจำกัด รักดีการโยธา |
 
 โทร: 0872235093
 
