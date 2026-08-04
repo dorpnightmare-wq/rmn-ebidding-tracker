@@ -42,6 +42,14 @@ with open(queue_path, "w", encoding="utf-8") as f:
 
 **แก้ไข 2569-07-27 (override กฎเดิม):** ถ้าไม่ต้องจ่าย → ก็ต้อง append ลง `doc_fee_queue.json` เหมือนกัน แต่ใช้ `"status": "no_fee_required", "amount": 0` แทน — เพื่อให้ Doc Fee Agent เห็นว่า SEQ นี้ถูกตรวจแล้วและไม่มีค่าเอกสาร ไม่ใช่ยังไม่ได้เช็ค (เคยเกิดปัญหา Doc Fee Agent flag SEQ163,164,167,171 ว่าเป็นงานค้างเพราะไม่เจอ record เลย)
 
+**แก้ไข 2569-08-04 (dispatch step ใหม่ — จาก Doc Fee Agent):** ถ้าเจอ fee ที่ **ต้องจ่ายจริง** (amount > 0, status: "pending") → หลัง append queue เสร็จ ให้เรียก **Agent tool ทันที** (subagent_type: "general-purpose") แทนที่จะรอ Doc Fee Agent มาเจอเองทีหลัง:
+```
+prompt: "โหลด skill fee-payment แล้วประมวลผล entry [id] — ดึง bank/email จาก PDF ประกาศที่มีอยู่แล้วในบริบท, อัปเดต queue, สร้าง PDF ถ้ามีสลิป, หรือรายงานว่าขาดอะไร"
+```
+ผลลัพธ์โผล่ในแชท Operating Agent (ที่นี่) ทันที ไม่ต้องสลับไปแชท Doc Fee Agent — รันในเซสชันเดียวกันแทน scheduled task ข้อดีคือไม่ต้องพึ่ง mount ใหม่/sync ข้ามเซสชัน
+Skill ฝั่ง fee-payment ก็แก้ไปพร้อมกัน: payer_name (เงินสด/Bill Payment = รักดีการโยธา), ใช้ generate_fee_pdf_fixed.py แทนตัวเก่า, เพิ่ม submitMethod (email/e-GP/both ตาม ว.515), รองรับ dispatch แบบไม่มีสลิป (รายงานแทน PDF) — ไฟล์ skill พวกนี้อยู่นอกขอบเขต agent นี้ (ห้ามแตะ) แต่ dispatch เรียกได้ปกติ
+กรณี status: "no_fee_required" (amount: 0) → ไม่ต้อง dispatch — append เฉยๆ ตามเดิม
+
 ---
 
 ## 📋 Current Seq Status
