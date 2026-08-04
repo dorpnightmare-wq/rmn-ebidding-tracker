@@ -302,3 +302,41 @@ Dispatch ไม่ได้ทำให้ Doc Fee Agent ไม่จำเป�
 มีบั๊กเดียวที่ค้าง (นอกขอบเขต ไม่ต้องแก้เอง แค่รู้ไว้): doc_fee_queue.json ยัง pending SEQ174 ทั้งที่จ่ายจบแล้วใน doc_fees.json — ถ้า Doc Fee Agent ยังไม่เคลียร์ ให้แจ้งฉันแทนที่จะไปลบเอง
 พร้อมรับ SEQ ใหม่ (table + annoudoc PDF) ตามขั้นตอนเดิม: parse → คำนวณ pct → เช็ค plant/entity (แจ้งเตือนอย่างเดียว ไม่ต้องทำหนังสือ) → เช็คค่าเอกสาร (ถ้าต้องจ่าย → append queue + dispatch Agent tool ไป skill fee-payment ทันที ห้าม web search) → เพิ่ม seed_bids.js → widget card (เน้นชื่อหน่วยงานเต็ม) → commit + ส่ง PowerShell push command ให้ user รันเอง
 ```
+
+## 🔄 Session State (2569-08-04) — Doc Fee Agent closeout (หลัง Operating recheck x5)
+
+**สิ่งที่แก้เพิ่มในรอบนี้ (แก้ root cause ของบั๊กที่ Operating เจอ ไม่ใช่แค่ patch):**
+- ล้าง `doc_fee_queue.json` entry `69079461100` ที่ค้าง `pending` ออกแล้ว (ยึด `doc_fees.json` เป็นความจริง — จ่ายจบจริง, แนบเข้า e-GP แล้ว) → **queue ว่างสนิทตอนนี้** ✅
+- แก้ root cause ใน skill `e-bidding-operating`: เพิ่ม step 0 ก่อนเขียน queue ทุกครั้ง — grep `doc_fees.json` ด้วย id ก่อนเสมอ ถ้าจ่ายแล้วห้ามเขียน `pending` ซ้ำ/ห้าม dispatch ซ้ำ (สาเหตุจริงของบั๊กวันนี้: dispatch ไป research ซ้ำโครงการที่ฉันจ่ายไปแล้วในเซสชันเดียวกัน)
+- เพิ่มเนื้อหา "Division of labor" + "Announcement file structure" (annoudoc vs doc_*.pdf, ใช้ pdftotext -f 9 -l 10 ประหยัด token) เข้า skill `e-bidding-operating` ให้ตรงกับที่ Operating session บันทึกไว้ใน WRK_OPERATING.md อยู่แล้ว — sync 2 แหล่งให้ตรงกัน
+- เพิ่ม git hygiene rule (ห้าม `git add .`, วิธีจัดการ `.git/*.lock`) เข้า skill โดยตรง ไม่ใช่แค่ WRK file — กัน agent ในอนาคตพลาดซ้ำแม้ไม่เคยอ่าน WRK_OPERATING.md มาก่อน
+
+**Verified ไม่มีปัญหาอื่นจาก session นี้:**
+- ทั้ง 4 payment วันนี้ (69079109557, 69079189741, 69069467561, 69079461100) ครบใน `doc_fees.json`, PDF สร้างสำเร็จทุกตัว, ส่งตาม submitMethod ถูกต้อง
+- Skill `fee-payment` และ `e-bidding-operating` save สำเร็จผ่าน `save_skill` ทั้งคู่ (ไม่มี validation_errors)
+- Git local หลัง merge กับงาน Operating session แล้ว = `1bfc404` ก่อนแก้รอบนี้ — ต้อง commit ใหม่ + push อีกรอบ (ดู commit hash หลังข้อความนี้)
+
+**ไม่มีอะไรน่ากังวลอื่นแล้ว** — ไม่ต้อง over-audit ซ้ำรอบหน้าเว้นแต่เจอความผิดปกติจริง
+
+### 📂 Working folder requirement (Doc Fee Agent)
+- โฟลเดอร์หลัก: `RMN-eBidding-Workflow` (mounted จาก `C:\Users\Advice\OneDrive\Claude\Projects\RMN-eBidding-Workflow`)
+- ไฟล์ที่แก้ได้เต็มสิทธิ์: `doc_fees.json`, `doc_fee_queue.json` (แก้/ลบได้ทั้งคู่ — ต่างจาก Operating ที่ append/read เท่านั้น), `WRK_AGENTS/WRK_OPERATING.md`
+- ไฟล์อ่านอย่างเดียว: `seed_bids.js` (ของ Operating Agent)
+- script ที่ต้องใช้: `WRK_AGENTS/scripts/generate_fee_pdf_fixed.py` (ห้ามใช้ตัวเก่าใน .claude/skills)
+- ต้องมี mount เพิ่ม: `[EGP]_E-BIDDING - [R.M.N_GROUP]_DATABASE/Log/` (สำหรับ save PDF), `Downloads`/`uploads` (สำหรับหาสลิป)
+- Git: sandbox ไม่มี push credentials — commit ได้เอง, ต้องให้ user รัน `git push` จาก PowerShell เสมอ; ถ้าเจอ `.git/*.lock` ใช้ `allow_cowork_file_delete` ก่อน rm
+
+### 🚀 Prompt เริ่ม session ถัดไป — Doc Fee Payment Agent (copy-paste ได้เลย)
+```
+อ่าน WRK_AGENTS/WRK_OPERATING.md ทั้งไฟล์ก่อน โดยเฉพาะ 2 หัวข้อ "Session State (2569-08-04)" ท้ายสุด
+(อันของ Operating recheck x5 และอันของ Doc Fee Agent closeout ต่อท้าย)
+
+สถานะล่าสุด: doc_fee_queue.json ว่างสนิท, doc_fees.json มี 4 รายการจ่ายวันนี้ครบ (บึงกาฬ/โนนแหลมทอง x2/สกลนคร)
+แก้ root cause บั๊ก queue ค้างแล้วใน skill e-bidding-operating (เช็ค doc_fees.json ก่อนเขียน queue เสมอ)
+ระเบียบใหม่ ว.515 (16 ก.ค. 2569) มีผลแล้ว: 2 วิธีจ่าย (bank_transfer/bill_payment) + submitMethod ต้องเช็คจากประกาศ (email/e-GP/both) ไม่ใช่ email เสมอไป
+Dispatch architecture ทำงานแล้ว (e-bidding-operating → Agent tool → fee-payment) แต่ยังไม่เคยเห็น end-to-end เต็มรูปแบบตอนมีสลิปจริงมาปิดงาน — สังเกตรอบหน้า
+
+พร้อมรับสลิป/ประกาศใหม่ตามปกติ: หาสลิปจาก uploads/Downloads → ตรวจสอบ paymentMethod/submitMethod จากประกาศ →
+สร้าง PDF ด้วย generate_fee_pdf_fixed.py เสมอ (ฝังสลิป) → log doc_fees.json → ทำตาม submitMethod (email draft และ/หรือบอก user แนบเข้า e-GP) →
+ลบออกจาก queue → commit เฉพาะไฟล์ที่แก้ (ห้าม git add .) → ส่ง push command ให้ user
+```
