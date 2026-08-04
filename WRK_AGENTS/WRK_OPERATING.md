@@ -42,13 +42,26 @@ with open(queue_path, "w", encoding="utf-8") as f:
 
 **แก้ไข 2569-07-27 (override กฎเดิม):** ถ้าไม่ต้องจ่าย → ก็ต้อง append ลง `doc_fee_queue.json` เหมือนกัน แต่ใช้ `"status": "no_fee_required", "amount": 0` แทน — เพื่อให้ Doc Fee Agent เห็นว่า SEQ นี้ถูกตรวจแล้วและไม่มีค่าเอกสาร ไม่ใช่ยังไม่ได้เช็ค (เคยเกิดปัญหา Doc Fee Agent flag SEQ163,164,167,171 ว่าเป็นงานค้างเพราะไม่เจอ record เลย)
 
-**แก้ไข 2569-08-04 (dispatch step ใหม่ — จาก Doc Fee Agent):** ถ้าเจอ fee ที่ **ต้องจ่ายจริง** (amount > 0, status: "pending") → หลัง append queue เสร็จ ให้เรียก **Agent tool ทันที** (subagent_type: "general-purpose") แทนที่จะรอ Doc Fee Agent มาเจอเองทีหลัง:
+**แก้ไข 2569-08-04 (โครงสร้างไฟล์ประกาศ — สำคัญ, ยืนยันจาก user):** แต่ละโครงการมี PDF 2 ไฟล์เสมอ:
+- `annoudoc_*.pdf` = ประกาศเชิญชวน — บอกแค่ "ต้องจ่ายไหม" และ "ราคาเท่าไร" **ไม่เคย**มีเลขบัญชี/อีเมล
+- `doc_*.pdf` = เอกสารประกวดราคา (รายละเอียด+คุณสมบัติ) — ถ้ามีค่าเอกสาร รายละเอียดวิธีชำระ (ธนาคาร/เลขบัญชี/ชื่อบัญชี) อยู่ใน **ข้อ ๔.๘(๖)** เกือบทุกครั้งอยู่หน้า **9-10**
+ห้ามคาดหวังว่า annoudoc จะมีข้อมูลธนาคาร — ไม่มีอยู่แล้วโดยธรรมชาติของเอกสาร
+
+**เมื่อไรควรขอ/รับ doc_*.pdf (แก้ 2569-08-04):** ค่าเริ่มต้น user ส่งแค่ table + `annoudoc` เหมือนเดิมทุกครั้ง (พอสำหรับทำ seed_bids.js อยู่แล้ว) **ไม่ต้อง**ขอ doc_*.pdf ล่วงหน้า — ขอ/รับเฉพาะตอนที่ annoudoc เผยว่า "ต้องจ่ายค่าเอกสาร" (amount > 0) เท่านั้น ตอนนั้นค่อยให้ user แนบ doc_*.pdf มาด้วยพร้อมกัน เพื่อให้ dispatch ไป fee-payment skill มีไฟล์พร้อมใช้ pdftotext หน้า 9-10 ได้ทันที ถ้าไม่ต้องจ่าย (no_fee_required) ไม่ต้องมี doc_*.pdf เลยตลอดกระบวนการ
+
+**วิธีดึงข้อมูลแบบประหยัด token:** อย่าใช้ Read tool อ่านทั้งไฟล์ (render เป็นรูปทีละหน้า หนัก+อาจ error) ให้ใช้ bash:
 ```
-prompt: "โหลด skill fee-payment แล้วประมวลผล entry [id] — ดึง bank/email จาก PDF ประกาศที่มีอยู่แล้วในบริบท, อัปเดต queue, สร้าง PDF ถ้ามีสลิป, หรือรายงานว่าขาดอะไร"
+pdftotext -f 9 -l 10 <path ของ doc_*.pdf> -
+```
+ลองช่วงหน้า 9-10 ก่อนเป็นค่าเริ่มต้น (ยึดตามตัวอย่างจริงที่เจอ) ถ้าหาข้อ ๔.๘(๖) หรือคำว่า "ค่าซื้อเอกสาร" ไม่เจอในช่วงนั้น ค่อยขยับ/ขยายช่วงหน้า (เช่นลอง 7-12) แทนที่จะดึงทั้งไฟล์ 15+ หน้าทันที
+
+**แก้ไข 2569-08-04 (dispatch step — จาก Doc Fee Agent):** ถ้าเจอ fee ที่ **ต้องจ่ายจริง** (amount > 0, status: "pending") → หลัง append queue เสร็จ ให้เรียก **Agent tool ทันที** (subagent_type: "general-purpose") แทนที่จะรอ Doc Fee Agent มาเจอเองทีหลัง:
+```
+prompt: "โหลด skill fee-payment แล้วประมวลผล entry [id] — annoudoc ที่แนบมามีแค่ amount/payWindow (ไม่มี bank/email อยู่แล้วโดยปกติ) ให้ใช้ pdftotext -f 9 -l 10 อ่าน doc_*.pdf ของโครงการนี้ก่อน หาข้อ ๔.๘(๖) เรื่องค่าซื้อเอกสาร ถ้าไม่เจอในช่วงหน้านั้นค่อยขยายช่วง อัปเดต queue ด้วยข้อมูลที่ได้, สร้าง PDF ถ้ามีสลิปแนบ, ถ้ายังไม่มี bank/email ให้ mark ว่าขาดแล้วรายงานกลับ — ห้าม web search/fetch เว็บหน่วยงานหาเพิ่มเด็ดขาด (เปลือง token โดยใช่เหตุ เพราะข้อมูลอยู่ใน doc_*.pdf อยู่แล้ว)"
 ```
 ผลลัพธ์โผล่ในแชท Operating Agent (ที่นี่) ทันที ไม่ต้องสลับไปแชท Doc Fee Agent — รันในเซสชันเดียวกันแทน scheduled task ข้อดีคือไม่ต้องพึ่ง mount ใหม่/sync ข้ามเซสชัน
 Skill ฝั่ง fee-payment ก็แก้ไปพร้อมกัน: payer_name (เงินสด/Bill Payment = รักดีการโยธา), ใช้ generate_fee_pdf_fixed.py แทนตัวเก่า, เพิ่ม submitMethod (email/e-GP/both ตาม ว.515), รองรับ dispatch แบบไม่มีสลิป (รายงานแทน PDF) — ไฟล์ skill พวกนี้อยู่นอกขอบเขต agent นี้ (ห้ามแตะ) แต่ dispatch เรียกได้ปกติ
-กรณี status: "no_fee_required" (amount: 0) → ไม่ต้อง dispatch — append เฉยๆ ตามเดิม
+กรณี status: "no_fee_required" (amount: 0) → ไม่ต้อง dispatch — append เฉยๆ ตามเดิม (ไม่ต้องเปิด doc_*.pdf เลยด้วยซ้ำ เพราะ annoudoc บอกครบแล้วว่าไม่มีค่าเอกสาร)
 
 ---
 
@@ -233,3 +246,37 @@ Skill ฝั่ง fee-payment ก็แก้ไปพร้อมกัน: pa
 - ข้อจำกัดที่รู้ตัวแล้ว: subagent ที่ dispatch ทำงานครั้งเดียวจบ รอสลิปไม่ได้ — พอ user ส่งสลิปจริงทีหลัง ยังต้องมีเซสชันแบบมี fee-payment skill active มาทำต่อ (dispatch รอบสอง หรือกลับมาที่แชทนี้)
 - ยังไม่ได้ทดสอบ end-to-end จริงว่า Agent tool dispatch จาก e-bidding-operating ทำงานลื่นไหม — รอบหน้าที่มีค่าเอกสารเข้ามาให้สังเกตดูว่า sync/mount โอเคไหม (ประวัติเก่าเคยมี scheduled task ชื่อ `doc-fee-morning-alert` พังเพราะ sync ไม่ผ่าน — dispatch นี้ต่างกันตรงรันในเซสชันเดียวกัน ไม่ต้อง sync ข้าม แต่ยังไม่ยืนยันด้วยของจริง)
 - แก้ holiday list ใน `e-bidding-operating` skill ด้วย (ของเก่าวันที่ผิด/ไม่ตรงปฏิทินราชการจริง) ยึดจาก https://calendar.kapook.com/2569/holiday
+
+## ⚖️ แบ่งงาน Operating Agent (ที่นี่) vs Doc Fee Agent — หลัง dispatch (2569-08-04)
+Dispatch ไม่ได้ทำให้ Doc Fee Agent ไม่จำเป็น แค่ลดงาน "ต้องมีคนเปิดแชทมาเช็ค queue เอง" ออกไป งานที่เหลือยังต้องมี session แบบ multi-turn คุยกับ user อยู่:
+
+**Operating Agent (ที่นี่) รับผิดชอบผ่าน dispatch:**
+- ตอนเพิ่ม SEQ ใหม่ + เจอ fee ในประกาศ → เรียก Agent tool (subagent ชั่วคราว) โหลด skill `fee-payment` ประมวลผลทันทีในเซสชันนี้
+- ใช้ข้อมูลที่มีอยู่แล้ว (annoudoc + doc_*.pdf ถ้าแนบมา) เท่านั้น ห้าม web search
+- ถ้าข้อมูลพอ → อัปเดต queue + สร้าง PDF เบื้องต้นได้เลย
+- ถ้าไม่พอ (ไม่มี doc_*.pdf, หา bank/email ไม่เจอ) → mark ว่าขาด รายงานกลับ ไม่เดา — งานนี้จบแค่ "first-pass" เดียว ไม่ monitor ต่อ
+
+**Doc Fee Agent ยังต้องทำต่อ (dispatch ทำแทนไม่ได้):**
+1. รับสลิปจริงที่ user จ่ายเงินแล้ว → ยืนยันเลขบัญชีจากสลิป (บางครั้งต่างจากที่ประกาศ/dispatch เจอ เช่น SEQ166 สลิปจริง 404-6-21164-4 vs ประกาศ 406-2-61616-4) → สร้าง PDF สุดท้าย + แนบส่ง e-GP/email
+2. Monitor queue แบบ recurring — เคส dispatch ทำไม่จบ (ค้างเป็น pending นาน) ต้องมีคนกลับมาเช็คซ้ำเป็นระยะ ที่นี่ทำได้แค่ตอน SEQ นั้นถูกเพิ่มครั้งเดียว
+3. แก้ไข/ดูแลไฟล์ skill `fee-payment` และ `e-bidding-operating` เอง (อยู่นอกขอบเขต Operating Agent — ห้ามแตะ)
+4. Correction ระหว่างทาง (พิมพ์เลขบัญชีผิด, เปลี่ยน submitMethod, ฯลฯ) ที่ต้องคุยกับ user เป็นรอบๆ
+
+สรุป: งานลดลง ไม่ใช่หายไปทั้งหมด — ทั้งสอง agent ยังต้องมีอยู่คู่กัน
+
+## 🔄 Session State (2569-08-04) — hand off, usage เต็มรอบนี้
+- Last SEQ: 174 — seq171-174 ทั้งหมด push ขึ้น origin/main แล้ว
+- ผลประมูล: 171 ✅ต่ำสุด (1,215,000) / 172 ❌ไม่ต่ำสุด -109,000 (bid 768,000 vs lowest 659,000) / 173 ✅ต่ำสุด (368,000) / 174 ✅ต่ำสุด (418,000)
+- doc fee SEQ174 (69079461100, อบต.โนนแหลมทอง 100฿) → Doc Fee Agent ปิดครบแล้ว (bankAccNo ยืนยันจากสลิปจริง 404-6-21164-4, จ่าย Mobile Banking, PDF แนบ e-GP แล้ว, queue ว่าง)
+- Pending งานจริง (ยังไม่จบ, สืบทอดจาก session ก่อน ยังไม่มีใครยืนยันว่าทำแล้ว):
+  1. หนังสือยินยอม (plant ≠ entity ยื่น): SEQ165 (สกลนคร/ตักสิลา), SEQ167 (ศรีบุญเรือง/RMN), SEQ170 (สกลนคร/ตักสิลา) — ยังไม่มี record ว่าออกหนังสือแล้ว
+- Workflow ใหม่ที่ปรับรอบนี้ (ดูรายละเอียดเต็มในหัวข้อด้านบน):
+  1. Doc fee dispatch: เจอ fee ต้องจ่าย → append queue → เรียก Agent tool ทันที โหลด skill fee-payment ในเซสชันเดียวกัน (ไม่ต้องรอ Doc Fee Agent)
+  2. โครงสร้างไฟล์: annoudoc (ไม่มี bank/email เลย) vs doc_*.pdf (มีที่ข้อ ๔.๘(๖) มักหน้า 9-10) — ใช้ `pdftotext -f 9 -l 10` ประหยัด token แทน Read ทั้งไฟล์
+  3. ห้าม subagent web search หา bank/email เด็ดขาด — ใช้แค่ข้อมูลในไฟล์ที่ส่งมาเท่านั้น
+  4. user ส่งแค่ table+annoudoc ตามปกติทุกครั้ง, แนบ doc_*.pdf เฉพาะตอนมี fee ต้องจ่ายเท่านั้น
+  5. widget card: ต้องเน้นชื่อหน่วยงาน (font-weight 500, text-primary) + โชว์ชื่อเต็ม ไม่ใช่ชื่อย่อ
+- Known issue: `.git/HEAD.lock`/`index.lock` ค้างบ่อยมากรอบนี้ (เกิดเกือบทุก commit) — sandbox unlink ไม่ได้ (permission denied) ต้องให้ user ลบเองด้วย PowerShell (`Remove-Item .git\HEAD.lock -Force -ErrorAction SilentlyContinue` + `index.lock`) ก่อน commit/push ทุกครั้งที่เจอ
+- Known issue: doc_fee_queue.json / doc_fees.json ถูก Doc Fee Agent แก้พร้อมกันนอก session — Read ใหม่ก่อนแก้ทุกครั้ง ห้ามสมมติ state เดิม
+- ห้ามถามผลประมูลก่อน 12:01 (เช้า) / 16:01 (บ่าย)
+- แนะนำ: เริ่ม session ใหม่รอบหน้า อ่านไฟล์นี้ทั้งหมดก่อน โดยเฉพาะหัวข้อ "แบ่งงาน Operating Agent vs Doc Fee Agent" และ "โครงสร้างไฟล์ประกาศ" ด้านบน เพื่อความแม่นยำต่อเนื่อง
