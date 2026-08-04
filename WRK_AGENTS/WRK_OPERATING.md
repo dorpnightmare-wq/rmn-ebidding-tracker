@@ -213,3 +213,15 @@ with open(queue_path, "w", encoding="utf-8") as f:
   2. หนังสือยินยอม (plant≠entity ยื่น) ยังไม่ยืนยันว่าทำแล้วหรือยัง: SEQ165 (บึงกาฬ, plant สกลนคร/entity รักดี), SEQ167 (นาจาน, plant ศรีบุญเรือง/entity รักดี), SEQ170 (สกลนคร, plant สกลนคร/entity รักดี) — ไม่มี record ในไฟล์ไหนว่าออกหนังสือแล้ว
   3. SEQ171 (อบต.บึงงาม 69079244572, ล่าสุด 2569-07-27) ยังไม่เช็คเรื่องค่าเอกสารเลย — เป็นตัวใหม่สุดที่อาจตกหล่น
 - session ถัดไปเริ่มด้วย: เช็ค doc_fee_queue.json + เปิดประกาศ SEQ163/164/167/171/163 ยืนยันค่าเอกสาร + ถามสถานะหนังสือยินยอม 3 ตัวข้างต้น
+
+## 🏛️ ระเบียบใหม่: หนังสือ กวจ. ว.515 (16 ก.ค. 2569) — เปลี่ยนวิธีจ่าย/ส่งหลักฐานค่าเอกสาร
+- 2 ช่องทางจ่าย: **bank_transfer** (โอนเข้าบัญชีหน่วยงานตรง, แบบเดิม) หรือ **bill_payment** (ใหม่ — KTB Corporate Online, ใช้ Company Code + Ref.1 เลขผู้เสียภาษี + Ref.2 เบอร์โทร)
+- **ส่งหลักฐาน**: ไม่ใช่ email เสมอไปอีกต่อไป — ประกาศจำนวนมากตอนนี้ระบุ "ยื่นหลักฐานพร้อมข้อเสนอผ่านระบบ e-GP" แทน ต้องอ่านข้อความประกาศทุกครั้งเพื่อตัดสินว่าเป็น `email` / `e-GP` / `both`
+- ยังต้องสร้าง PDF ใบแจ้งชำระเสมอ (ฝังสลิปเข้าไป) แม้จะแนบเข้า e-GP แทน email — ตัดสินใจกับ user แล้ว (2569-08-04): ดูเป็นทางการกว่าสลิปเปล่า และ e-GP บาง endpoint ไม่รับอัปโหลด JPG ตรงๆ ต้องแปลงเป็น PDF อยู่ดี
+
+## 🔀 Dispatch architecture: e-bidding-operating → Agent tool → fee-payment (เพิ่ม 2569-08-04)
+- แก้ skill `e-bidding-operating` แล้ว: เจอค่าเอกสารในประกาศ → เขียน `doc_fee_queue.json` ทันที (รวม field ใหม่ `paymentMethod`, `submitMethod`) → เรียก Agent tool (subagent) โหลด skill `fee-payment` ให้ประมวลผลในเซสชันเดียวกันทันที ไม่ต้องรอ user มาเปิดแชทนี้เอง
+- แก้ skill `fee-payment` แล้ว: รับ dispatch แบบไม่มีสลิปได้ (แค่ยืนยัน queue entry ครบ + รายงานว่าเหลือรออะไร), เพิ่ม field `submitMethod`/`paymentMethod`, แก้ payer_name table ให้ตรง (เงินสด/Bill Payment = รักดีการโยธา ไม่ใช่ อาร์เอ็มเอ็น เอ็นเตอร์ไพส์ — ของเก่าผิดมานาน), ชี้ไปใช้ `generate_fee_pdf_fixed.py` แทนตัวเก่าที่ยัง truncate อยู่
+- ข้อจำกัดที่รู้ตัวแล้ว: subagent ที่ dispatch ทำงานครั้งเดียวจบ รอสลิปไม่ได้ — พอ user ส่งสลิปจริงทีหลัง ยังต้องมีเซสชันแบบมี fee-payment skill active มาทำต่อ (dispatch รอบสอง หรือกลับมาที่แชทนี้)
+- ยังไม่ได้ทดสอบ end-to-end จริงว่า Agent tool dispatch จาก e-bidding-operating ทำงานลื่นไหม — รอบหน้าที่มีค่าเอกสารเข้ามาให้สังเกตดูว่า sync/mount โอเคไหม (ประวัติเก่าเคยมี scheduled task ชื่อ `doc-fee-morning-alert` พังเพราะ sync ไม่ผ่าน — dispatch นี้ต่างกันตรงรันในเซสชันเดียวกัน ไม่ต้อง sync ข้าม แต่ยังไม่ยืนยันด้วยของจริง)
+- แก้ holiday list ใน `e-bidding-operating` skill ด้วย (ของเก่าวันที่ผิด/ไม่ตรงปฏิทินราชการจริง) ยึดจาก https://calendar.kapook.com/2569/holiday
