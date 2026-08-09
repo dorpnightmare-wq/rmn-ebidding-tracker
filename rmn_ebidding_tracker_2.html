@@ -828,7 +828,7 @@ html.dark .kpi-chart-legend span{color:rgba(250,249,245,.55)}
         <div class="form-group"><label>วันที่ชำระค่าเอกสาร</label><input id="f-docfee-date" type="date"></div>
         <div class="form-group"><label>วิธีชำระค่าเอกสาร</label><select id="f-docfee-method"><option value="">-- ไม่ระบุ --</option><option>โอนเงิน</option><option>เงินสด</option><option>Bill Payment</option></select></div>
         <div class="form-group"><label>ธนาคาร</label><input id="f-docfee-bank" type="text" placeholder="ธ.ก.ส. / กรุงไทย ฯลฯ"></div>
-        <div class="form-group"><label>📧 สถานะ Email ยืนยัน</label><select id="f-docfee-email"><option value="">— ไม่ระบุ —</option><option value="true">✓ ส่ง email แล้ว</option><option value="false">⏳ ยังไม่ส่ง email</option></select></div>
+        <div class="form-group" style="display:none"><label>📧 สถานะ Email ยืนยัน</label><select id="f-docfee-email"><option value="">— ไม่ระบุ —</option><option value="true">✓ ส่ง email แล้ว</option><option value="false">⏳ ยังไม่ส่ง email</option></select></div>
         <div class="form-group"><label>คู่แข่งที่ได้งาน (กรณีแพ้)</label><input id="f-competitor" type="text" placeholder="ชื่อบริษัท/ห้างที่ชนะ"></div>
         <div class="form-group"><label>ประเภทงาน</label><input id="f-worktype" type="text" placeholder="เสริมผิว, OVERLAY, Pavement Recycling ฯลฯ"></div>
         <div class="form-group"><label>Plant ที่ใช้ยื่น</label><select id="f-plant">
@@ -2021,7 +2021,7 @@ const App = (() => {
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
           <span style="font-size:11px;color:var(--muted);flex-shrink:0">${dateRange}</span>
-          <span style="font-size:11px;color:var(--muted);flex:1;min-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${UI.esc(f.emailTo||'—')}</span>
+          <span style="display:none;font-size:11px;color:var(--muted);flex:1;min-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${UI.esc(f.emailTo||'—')}</span>
           <span style="font-size:11px;color:var(--muted);flex-shrink:0">${fmtThaiDate(f.paidDate)}</span>
         </div>
         <div style="display:flex;gap:6px;justify-content:flex-end">

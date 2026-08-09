@@ -29,12 +29,13 @@ Senior UI/UX Designer — ปรับ UI/UX ของ `rmn_ebidding_tracker_2.h
   - Entity-tag pills L1479,1532,1540,1666: `rgba(255,255,255,.06/.04/.09)` → `var(--tag-bg)` (was invisible in light mode)
   - L1821-1822 kpi-label: `#7a7872`/`#8a8880` → `var(--muted)`
 
-### ✅ Done (2569-08-07)
+### ✅ Done (2569-08-09)
 - ซ่อน UI เช็ค/ส่ง email ทั้งหมด (workflow เปลี่ยน: จ่ายค่าเอกสารพร้อมยื่นประมูลเลย ไม่ต้องส่ง email ยืนยันอีก) — ไม่แตะ emailSent field ใน doc_fees.json/DOC_FEES array
   - renderDashDocFee (Dashboard widget): ลบปุ่ม toggle email + chip "รอส่ง", ยุบเหลือ filter เดียว (unpaid), ลบ dead var `_dashDocFeeFilter`, `unsentEmail`
   - renderDocFeeTab (Doc Fee tab): ลบ stat box "รอส่ง email" + ปุ่ม toggle email ต่อการ์ด
   - renderDocFeeBlock (project detail modal): ลบปุ่ม toggle email
   - `toggleDocFeeEmail()` function ยังอยู่ (ไม่มีปุ่มเรียกแล้ว — เก็บไว้เผื่อย้อนกลับ ไม่ลบเพื่อลด risk)
+- (ต่อ) ซ่อนที่เหลือเพิ่ม: Add Bid form dropdown "สถานะ Email ยืนยัน" (L831) + emailTo display ใน Doc Fee tab (L2024) — ใช้ `style="display:none"` ไม่ลบโค้ด เพื่อ unhide ได้ทันทีถ้า workflow เปลี่ยนกลับ (ตามคำสั่ง user)
 
 ### ⏳ Pending UI tasks
 - (none currently open)
