@@ -1,4 +1,5 @@
 # 🎨 UI/UX Customize Agent
+> เรียกสั้นว่า "UI" (แจ้งจาก DP 2569-07-27)
 
 ## 🎯 Role
 Senior UI/UX Designer — ปรับ UI/UX ของ `rmn_ebidding_tracker_2.html` เท่านั้น
@@ -27,6 +28,13 @@ Senior UI/UX Designer — ปรับ UI/UX ของ `rmn_ebidding_tracker_2.h
   - L1142: `color:#155724` → `var(--green)` (sum_price_agree cell, was illegible in dark mode)
   - Entity-tag pills L1479,1532,1540,1666: `rgba(255,255,255,.06/.04/.09)` → `var(--tag-bg)` (was invisible in light mode)
   - L1821-1822 kpi-label: `#7a7872`/`#8a8880` → `var(--muted)`
+
+### ✅ Done (2569-08-07)
+- ซ่อน UI เช็ค/ส่ง email ทั้งหมด (workflow เปลี่ยน: จ่ายค่าเอกสารพร้อมยื่นประมูลเลย ไม่ต้องส่ง email ยืนยันอีก) — ไม่แตะ emailSent field ใน doc_fees.json/DOC_FEES array
+  - renderDashDocFee (Dashboard widget): ลบปุ่ม toggle email + chip "รอส่ง", ยุบเหลือ filter เดียว (unpaid), ลบ dead var `_dashDocFeeFilter`, `unsentEmail`
+  - renderDocFeeTab (Doc Fee tab): ลบ stat box "รอส่ง email" + ปุ่ม toggle email ต่อการ์ด
+  - renderDocFeeBlock (project detail modal): ลบปุ่ม toggle email
+  - `toggleDocFeeEmail()` function ยังอยู่ (ไม่มีปุ่มเรียกแล้ว — เก็บไว้เผื่อย้อนกลับ ไม่ลบเพื่อลด risk)
 
 ### ⏳ Pending UI tasks
 - (none currently open)

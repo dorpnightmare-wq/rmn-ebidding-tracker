@@ -944,7 +944,6 @@ const CONFIG = Object.freeze({
 /* ── Year Filter ────────────────────────────────────────── */
 let _activeYear = 2569;
 let _docFeeHiddenIds = new Set(JSON.parse(localStorage.getItem('docfee_hidden')||'[]'));
-let _dashDocFeeFilter = 'all';
 function _getFiscalYear(dateStr) {
   if (!dateStr) return 0;
   const y = parseInt(dateStr.slice(0,4));
@@ -1195,12 +1194,6 @@ function renderDocFeeBlock(b) {
   const paidCol = f.paid ? '#166534' : '#a16207';
   const paidBdr = f.paid ? '#86efac' : '#fde68a';
   const paidBadge = `<span style="background:${paidBg};color:${paidCol};border:1px solid ${paidBdr};padding:1px 7px;border-radius:3px;font-size:10px;font-weight:700">${paidLabel}</span>`;
-  // email toggle button (3-state: null → true → false → null)
-  const eBg  = f.emailSent===true?'#dbeafe':f.emailSent===false?'#fee2e2':'var(--bg)';
-  const eCol = f.emailSent===true?'#1d4ed8':f.emailSent===false?'#991b1b':'var(--muted)';
-  const eBdr = f.emailSent===true?'#93c5fd':f.emailSent===false?'#fca5a5':'var(--card-border)';
-  const eTxt = f.emailSent===true?'📧 ส่ง email แล้ว':f.emailSent===false?'📧 ยังไม่ส่ง email':'📧 คลิกอัปเดต email';
-  const emailToggle = `<button onclick="App.toggleDocFeeEmail('${b._id}')" style="background:${eBg};color:${eCol};border:1px solid ${eBdr};padding:1px 7px;border-radius:3px;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">${eTxt}</button>`;
   const rows = [
     f.amount   ? `<div><span style="color:var(--muted);font-size:10px">ยอดเงิน · </span><strong>฿${f.amount.toLocaleString()}</strong></div>` : '',
     (f.payMethod||f.bank) ? `<div><span style="color:var(--muted);font-size:10px">รายละเอียดการจ่าย · </span>${[f.payMethod,f.bank].filter(Boolean).join(' — ')}</div>` : '',
@@ -1209,7 +1202,7 @@ function renderDocFeeBlock(b) {
   return `<div style="padding:8px 10px;border-radius:6px;background:var(--bg);border:1px solid var(--card-border);margin-top:6px;font-size:12px;font-family:inherit">
     <div style="display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin-bottom:${rows?'6px':'0'}">
       <span style="font-size:11px;font-weight:700;color:var(--text)">📄 ค่าเอกสารประมูล</span>
-      ${paidBadge}${emailToggle}
+      ${paidBadge}
     </div>
     ${rows ? `<div style="display:flex;flex-direction:column;gap:3px;color:var(--text)">${rows}</div>` : ''}
   </div>`;
@@ -1811,7 +1804,6 @@ const App = (() => {
     const avgDrop    = Math.round(bids.reduce((s,b)=>{const base=Math.max(b.budget||0,b.midPrice||0);return s+(base>0?(base-b.bid)/base*100:b.pct);},0)/total);
     const totalDocFee = bids.reduce((s,b)=>{ const f=getDocFee(b); return s+(f?.amount||0); },0);
     const paidDocCnt  = bids.filter(b=>getDocFee(b)?.paid).length;
-    const unsentEmail = bids.filter(b=>{ const f=getDocFee(b); return f?.paid && f.emailSent !== true; }).length;
 
     // Timestamp
     const now = new Date();
@@ -1942,8 +1934,6 @@ const App = (() => {
     const allBids = Store.getAll();
     const fees = allBids.map(b=>({b, f:getDocFee(b)})).filter(x=>x.f);
     const unpaid  = fees.filter(x=>!x.f.paid);
-    const unsent  = fees.filter(x=>x.f.paid && x.f.emailSent!==true);
-    const done    = fees.filter(x=>x.f.paid && x.f.emailSent===true);
     const _daysLeft = (dateStr) => {
       if (!dateStr) return null;
       const parts = dateStr.split('-');
@@ -1958,10 +1948,6 @@ const App = (() => {
       const paidCol = f.paid ? '#166534' : '#a16207';
       const paidBdr = f.paid ? '#86efac' : '#fde68a';
       const paidTxt = f.paid ? '✓ จ่ายแล้ว' : '⏳ ยังไม่จ่าย';
-      const eBg  = f.emailSent===true?'#dbeafe':'#fee2e2';
-      const eCol = f.emailSent===true?'#1d4ed8':'#991b1b';
-      const eBdr = f.emailSent===true?'#93c5fd':'#fca5a5';
-      const eTxt = f.emailSent===true?'📧 ส่ง E-mail ยืนยันแล้ว':'📧 ยังไม่ส่ง E-mail';
       const days = _daysLeft(f.feeEnd);
       const daysHtml = days===null ? '' :
         days < 0  ? `<span style="font-size:10px;font-weight:700;color:#991b1b;background:#fee2e2;border:1px solid #fca5a5;border-radius:3px;padding:1px 8px">เกินกำหนด ${Math.abs(days)} วัน</span>` :
@@ -1977,28 +1963,14 @@ const App = (() => {
         <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
           ${daysHtml}
           <button onclick="App.toggleDocFeePaid('${b._id}')" style="font-size:10px;font-weight:700;padding:1px 6px;border-radius:3px;cursor:pointer;border:1px solid ${paidBdr};background:${paidBg};color:${paidCol};font-family:inherit">${paidTxt}</button>
-          <button onclick="App.toggleDocFeeEmail('${b._id}')" style="font-size:10px;font-weight:700;padding:1px 6px;border-radius:3px;cursor:pointer;border:1px solid ${eBdr};background:${eBg};color:${eCol};font-family:inherit">${eTxt}</button>
         </div>
       </div>`;
     };
-    const pendingTotal = unpaid.length + unsent.length;
-    const visRows = _dashDocFeeFilter==='unpaid' ? unpaid
-                  : _dashDocFeeFilter==='unsent'  ? unsent
-                  : [...unpaid,...unsent];
-    const chipStyle = (key,bg,border,color) => {
-      const active = _dashDocFeeFilter===key;
-      return `font-size:11px;border-radius:4px;padding:2px 8px;cursor:pointer;font-family:inherit;border:1px solid ${active?border:'var(--card-border)'};background:${active?bg:'var(--surface)'};color:${active?color:'var(--muted)'};font-weight:${active?'700':'400'}`;
-    };
     const html = !fees.length
       ? '<div style="font-size:13px;color:var(--muted);padding:8px 0">ยังไม่มีโครงการที่มีค่าเอกสาร</div>'
-      : !pendingTotal
+      : !unpaid.length
         ? '<div style="font-size:13px;color:#16a34a;padding:8px 0">✅ ทุกโครงการเรียบร้อยแล้ว</div>'
-        : `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
-            <button onclick="_dashDocFeeFilter='all';App.renderDashDocFee()" style="${chipStyle('all','var(--surface)','var(--card-border)','var(--text)')}">ทั้งหมด <strong style="color:var(--text)">${fees.length}</strong></button>
-            ${unpaid.length?`<button onclick="_dashDocFeeFilter='unpaid';App.renderDashDocFee()" style="${chipStyle('unpaid','#fef9c3','#fde68a','#a16207')}">⏳ รอจ่าย <strong>${unpaid.length}</strong></button>`:''}
-            ${unsent.length?`<button onclick="_dashDocFeeFilter='unsent';App.renderDashDocFee()" style="${chipStyle('unsent','#dbeafe','#93c5fd','#1d4ed8')}">📧 รอส่ง <strong>${unsent.length}</strong></button>`:''}
-          </div>
-          ${visRows.map(x=>row(x)).join('')}`;
+        : unpaid.map(x=>row(x)).join('');
     UI.setHTML('dash-docfee', html);
   }
 
@@ -2019,7 +1991,6 @@ const App = (() => {
     const visRows    = rows.filter(x=>!_docFeeHiddenIds.has(x.b._id||x.b.id));
     const hiddenCnt  = rows.length - visRows.length;
     const unpaidCnt  = visRows.filter(x=>!x.f.paid).length;
-    const unsentCnt  = visRows.filter(x=>x.f.paid&&x.f.emailSent!==true).length;
     const totalAmt   = visRows.reduce((s,x)=>s+(x.f.amount||0),0);
     const summary = `
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:center">
@@ -2032,19 +2003,12 @@ const App = (() => {
         <div style="background:${unpaidCnt?'#fef3c7':'var(--surface)'};border:1px solid ${unpaidCnt?'#fde68a':'var(--card-border,#e2e8f0)'};border-radius:6px;padding:8px 14px;font-size:12px">
           <span style="color:var(--muted)">รอจ่าย</span> <strong style="color:${unpaidCnt?'#92400e':'var(--text)'}">${unpaidCnt}</strong>
         </div>
-        <div style="background:${unsentCnt?'#dbeafe':'var(--surface)'};border:1px solid ${unsentCnt?'#93c5fd':'var(--card-border,#e2e8f0)'};border-radius:6px;padding:8px 14px;font-size:12px">
-          <span style="color:var(--muted)">รอส่ง email</span> <strong style="color:${unsentCnt?'#1e40af':'var(--text)'}">${unsentCnt}</strong>
-        </div>
         ${hiddenCnt?`<button data-edit-only onclick="_docFeeHiddenIds.clear();localStorage.removeItem('docfee_hidden');App.renderDocFeeTab()" style="margin-left:auto;font-size:11px;padding:6px 12px;border-radius:6px;border:1px solid var(--card-border,#e2e8f0);background:var(--surface);color:var(--muted);cursor:pointer;font-family:inherit">แสดงที่ซ่อน (${hiddenCnt})</button>`:''}
       </div>`;
     const cards = visRows.map(({b,f},i)=>{
       const paidBg  = f.paid?'#dcfce7':'#fef9c3';
       const paidCol = f.paid?'#166534':'#a16207';
       const paidTxt = f.paid?(f.amount?'✓ จ่ายแล้ว':'✓ จ่ายแล้ว (ไม่ทราบยอด)'):'⏳ รอจ่าย';
-      const eBg  = f.emailSent===true?'#dbeafe':'#fee2e2';
-      const eCol = f.emailSent===true?'#1d4ed8':'#991b1b';
-      const eBdr = f.emailSent===true?'#93c5fd':'#fca5a5';
-      const eTxt = f.emailSent===true?'📧 ส่ง E-mail ยืนยันแล้ว':'📧 ยังไม่ส่ง E-mail ยืนยัน';
       const noAmt = !f.amount;
       const dateRange = (f.feeStart||f.feeEnd) ? fmtThaiDate(f.feeStart)+' – '+fmtThaiDate(f.feeEnd) : '—';
       const hideKey = b._id||b.id;
@@ -2062,7 +2026,6 @@ const App = (() => {
         </div>
         <div style="display:flex;gap:6px;justify-content:flex-end">
           <button onclick="App.toggleDocFeePaid('${b._id}')" style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:4px;cursor:pointer;border:1px solid ${f.paid?'#86efac':'#fde68a'};background:${paidBg};color:${paidCol};font-family:inherit">${paidTxt}</button>
-          <button onclick="App.toggleDocFeeEmail('${b._id}')" style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:4px;cursor:pointer;border:1px solid ${eBdr};background:${eBg};color:${eCol};font-family:inherit">${eTxt}</button>
         </div>
       </div>`;
     }).join('');
