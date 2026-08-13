@@ -153,3 +153,44 @@
 
 ### ⏳ Pending
 - (none) — ระบบพร้อมใช้งานครบทั้ง 2 เครื่อง
+
+## 🔄 Session State (2026-08-13 — PC: iOS workflow + security remediation)
+> เครื่องที่ใช้: **PC (MARX)** · commit `5d5c026`
+
+### ✅ Done — iOS workflow (scope: OPY บันทึกผลประมูล + DA อ่าน state เท่านั้น)
+- ทดสอบจริงจากมือถือ → ยืนยัน **ไม่มี bridge ไป PC** (bridge ผูกกับ session ที่เปิด ไม่ใช่บัญชี) → เปิดแอปเดสก์ท็อปค้างไว้ก็ไม่ช่วย → ปิดข้อสงสัยนี้ถาวร
+- มือถือรันใน cloud container → เห็น OneDrive/PC ไม่ได้เลย → **git เป็นช่องทางเดียว**
+- แอป GitHub บน iPhone **แก้ไฟล์ + commit ได้** (Edit File · Go to line · Find in File) → **ตัด PAT ออกจากแผนทั้งหมด** (auth ของแอปอยู่ในเครื่อง container ใช้ไม่ได้ แต่ให้ user commit เองแทน)
+- ยก KB เข้า repo แบบ minimal 2 ไฟล์: `KB/OPERATING.md` (OPY) + `KB/agents/KB_ECOSYSTEM_ADMIN.md` (DA) — ไม่ยกทั้ง 6 ไฟล์ เพื่อลด drift
+- สร้าง `BOOTSTRAP_IOS.md` = คำสั่งเปิด session มือถือ + ข้อห้าม
+- track `WRK_ECOSYSTEM_ADMIN.md` เข้า git ครั้งแรก (เดิม untracked = ไม่มี backup เลย)
+- `.gitignore` 1 → 9 บรรทัด (กัน xlsx/docx/pdf/skill/pycache/backup)
+
+### 🔴 บั๊กใหญ่ที่เจอ+แก้: repo มี 2 branch ข้อมูลไม่ตรงกัน
+- default branch บน GitHub เป็น **master** (ค้างที่ seq 103 / 105 บรรทัด) ขณะ **main** มี 553 records
+- ถ้า commit จากแอปมือถือตอนนั้น = ลงผิด branch ข้อมูลหาย 454 บรรทัด
+- แก้: เปลี่ยน default → `main` · ลบ `master` + `claude/pull-latest-changes-XmNZQ` · `git fetch --prune` · `git remote set-head origin -a`
+- อธิบายเรื่องค้างเก่าได้ด้วย: iOS เคยรายงาน HEAD `7deb2ca` ≠ PC `8f12d04` เพราะ ls-remote ชี้ไป master
+
+### 🔒 Security remediation (สำคัญที่สุดของ session นี้)
+- ตรวจพบ repo **public** มีข้อมูลส่วนบุคคลอยู่แล้ว (ไม่ใช่กำลังจะรั่ว — รั่วไปแล้ว)
+- แยก repo ใหม่ **`RMN-eBidding-KB` (private)** → ย้าย `WRK_DOC_EXPIRY.md` (เลขบัตร ปชช. + เบอร์ส่วนตัว), `MEMORY_BACKUP_2026-08-09.md`, `NETWORK_NOTES.md` (IP บ้าน + คำสั่ง firewall)
+- redact ใน `WRK_ECOSYSTEM_ADMIN.md`: เลขบัตร ปชช. → `[REDACTED]` · บล็อก MWB/IP → ย้ายไป private
+- **ไม่แก้** `WRK_FEE_PAYMENT.md` — ชื่อ/เบอร์ในนั้นเป็น template ใบแจ้งชำระที่ส่งหน่วยงานราชการอยู่แล้ว = contact สาธารณะ
+- สแกนแล้ว **ไม่พบ** API key / token / password ใดๆ
+- ⚠️ **ยังไม่ทำ**: ล้าง git history (91 commits เก่ายังค้นเจอเลขบัตรได้) — เลือก D1 "หยุดเลือดก่อน" ไว้ก่อน
+
+### 📋 Core Rules ใหม่ (ยังไม่ได้เขียนลง CLAUDE.md — pending)
+| # | กฎ |
+|---|---|
+| 16 | PC ต้อง `git pull` ก่อนเริ่มงานทุกครั้ง (กัน split-brain กับมือถือ) |
+| 17 | มือถือ = OPY + DA(read-only) เท่านั้น · DOC/MM/UI/EXP/API = PC |
+| 18 | เช็ค branch = `main` ก่อน commit จากแอป GitHub ทุกครั้ง |
+| 19 | ข้อมูลส่วนบุคคล (เลขบัตร/เบอร์ส่วนตัว/IP) → repo private เท่านั้น |
+| 20 | แก้ KB ที่ต้นฉบับ M4RX-B4SE เสมอ → copy ทับ `KB/` ก่อน push |
+
+### ⏳ Pending
+- เขียน Core Rule 16-20 ลง `WRK_AGENTS/CLAUDE.md`
+- ทดสอบจริงบนมือถือ: clone → OPY อ่าน context → ร่าง record → commit ผ่านแอป
+- ตัดสินใจเรื่อง git history (D1 ปล่อยไว้ / D2 filter-repo / D3 สร้าง repo ใหม่)
+- DA อ่าน state บนมือถือ = อ่านจาก public repo ได้แล้ว (redact เรียบร้อย) — ยังไม่ทดสอบ
