@@ -1,3 +1,8 @@
+> # ⏸️ ON HOLD (2026-08-13) — ไม่ใช้แล้ว
+> พบว่า **สั่งงานจากมือถือผ่าน session เดิมใน Cowork tab ได้เลย** (bridge ตามมา ทดสอบจาก iPhone จริง → รันบน MARX)
+> → ไม่ต้อง clone / ไม่ต้อง commit ผ่านแอป GitHub / ใช้ได้ครบทุก agent
+> เอกสารข้างล่างเก็บไว้เป็น fallback เผื่อวันหน้า bridge ใช้ไม่ได้ · ดูกฎปัจจุบันที่ `WRK_AGENTS/CLAUDE.md` §Multi-Device Rules rev.2
+
 # 📱 BOOTSTRAP_IOS — เปิด session บนมือถือ
 
 > ใช้เฉพาะ **OPY** (บันทึกผลประมูล) และ **DA** (อ่าน state) เท่านั้น

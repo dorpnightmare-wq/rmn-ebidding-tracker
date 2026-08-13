@@ -20,15 +20,18 @@ ToolSearch → โหลดเฉพาะเมื่อ tool ไม่มี�
 - คำนวณ usage ก่อนทุก Edit — ถ้า context ไม่พอ ห้าม Edit แจ้ง user แทน
 - 👑 Preview สิทธิ์นายเท่านั้น — แสดง visual preview ทุกครั้งที่แก้ไข UI (ห้าม skip)
 
-## 🔀 Multi-Device Rules (เพิ่ม 2026-08-13)
-- **16.** PC ต้อง `git pull` ก่อนเริ่มงานทุกครั้ง — กัน split-brain กับมือถือ
-- **17.** มือถือ = **OPY** (บันทึกผลประมูล) + **DA** (อ่าน state, read-only) เท่านั้น · DOC · MM · UI · EXP · API = **PC เท่านั้น**
-- **18.** เช็ค branch = **`main`** ก่อน commit จากแอป GitHub ทุกครั้ง (เคยมีบั๊ก master ค้างที่ seq 103)
+## 🔀 Multi-Device Rules (rev.2 — 2026-08-13 ยืนยันจาก iPhone จริง)
+- **16.** งานทุกอย่าง **execute บน PC (MARX) เครื่องเดียว** — มือถือเป็นแค่ช่องพิมพ์คำสั่ง ไม่มี state แยก จึงไม่มี split-brain
+- **17.** มือถือ = **remote control** → เปิด session เดิมใน **Cowork tab** แล้วพิมพ์ต่อ · **ใช้ได้ครบทุก agent** (bridge ผูกกับ session รอดข้ามการปิด/เปิดแอป)
+  - PC offline/หลับ → tool error → **แจ้ง user ว่า execute ไม่ได้ รอ PC ออนไลน์** · **ห้าม fallback ไป clone/GitHub app**
+- **18.** git ทั้งหมดรันผ่าน **`Windows-MCP → PowerShell`** (PowerShell จริงบนเครื่อง — มี network + ลบ `.lock` ได้)
+  - ⛔ **ห้ามใช้ `device_bash` รัน git** — VM นั้นไม่มี network (403 proxy) และลบ `HEAD.lock`/`index.lock` ไม่ได้ → lock ค้างทุกครั้ง
+  - device_bash ใช้ได้เฉพาะ **อ่าน/แก้ไฟล์**
 - **19.** ข้อมูลส่วนบุคคล (เลขบัตร ปชช. / เบอร์ส่วนตัว / IP เครื่อง) → repo **private `RMN-eBidding-KB`** เท่านั้น ห้ามลง repo public
 - **20.** แก้ KB ที่ต้นฉบับ `M4RX-B4SE\...\E-Bidding\` เสมอ → copy ทับ `KB/` ใน repo ก่อน push
 
-> มือถือไม่มี bridge ไป PC (ยืนยันแล้ว) · เห็นไฟล์ผ่าน git เท่านั้น · ไม่ใช้ PAT — Claude ร่าง → user commit ผ่านแอป GitHub
-> รายละเอียดเปิด session มือถือ: `BOOTSTRAP_IOS.md`
+> ⚠️ ยังไม่ทดสอบ: PC หลับ/ปิดจอ แล้ว bridge ยังอยู่ไหม
+> 📦 workflow เก่า (clone + commit ผ่านแอป GitHub) = **ON HOLD** ไม่ใช้แล้ว — เก็บไว้ที่ `BOOTSTRAP_IOS.md` เผื่อวันหน้า
 
 ## 📁 Files & URLs
 - Main: `rmn_ebidding_tracker_2.html` (single source of truth)
