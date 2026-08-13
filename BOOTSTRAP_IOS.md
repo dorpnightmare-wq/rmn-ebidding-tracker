@@ -15,6 +15,20 @@
 
 ---
 
+## 📍 เปิดที่ไหน — Cowork tab เท่านั้น (ยืนยัน 2026-08-13)
+| | Cowork tab | Project chat |
+|---|---|---|
+| รัน `git clone` | ✅ มี shell | ❌ ไม่มี shell → ใช้ไม่ได้ |
+| ผูก project instructions | ❌ New task ไม่มีตัวเลือกโปรเจกต์ | ✅ |
+
+- **ใช้ Cowork tab → `+ New task` เท่านั้น** · Project chat ทำงาน OPY/DA ไม่ได้เลย (clone ไม่ได้ = ไม่เห็น seed_bids.js)
+- New task มีแค่ Camera / Photos / Add files / Connectors — **ผูก project ไม่ได้** → prompt ต้อง **self-contained** ทุกครั้ง
+- เก็บ prompt OPY/DA ไว้ใน Notes บน iPhone แล้ว copy-paste (Text Replacement อาจตัดข้อความยาว)
+- `Add files` ไม่ต้องใช้ — clone ได้ไฟล์สดกว่า ไม่มี drift
+- session ที่รันบน PC มองเห็นได้จาก Cowork tab บนมือถือด้วย (แต่ยังไม่มี bridge ไป PC เหมือนเดิม)
+
+---
+
 ## ▶️ Flow มาตรฐาน — ไม่ใช้ PAT
 
 ```
