@@ -30,6 +30,12 @@ ToolSearch → โหลดเฉพาะเมื่อ tool ไม่มี�
 - **19.** ข้อมูลส่วนบุคคล (เลขบัตร ปชช. / เบอร์ส่วนตัว / IP เครื่อง) → repo **private `RMN-eBidding-KB`** เท่านั้น ห้ามลง repo public
 - **20.** แก้ KB ที่ต้นฉบับ `M4RX-B4SE\...\E-Bidding\` เสมอ → copy ทับ `KB/` ใน repo ก่อน push
 
+- **21. Restart session → ทำจาก PC เท่านั้น** (ทดสอบแล้ว 2026-08-13)
+  - bridge ติดตอน **แนบ folder เข้า Cowork task** ตอนเริ่มงาน · มือถือ Add context **ไม่มีตัวเลือก folder** → task ใหม่จากมือถือ = **ไม่มี bridge** ทำงานไม่ได้
+  - ⚠️ ถ้า context เต็มตอนอยู่นอกบ้าน = **ทำงานต่อไม่ได้จนกลับ PC** → ก่อนออกจากบ้านเช็ค context ก่อน ใกล้เต็มให้ restart ทิ้งไว้
+  - ขั้นตอน: ① เขียน session state ลง `WRK_<AGENT>.md` → ② commit+push → ③ **สร้าง task ใหม่จาก PC + แนบ folder ตั้งแต่ข้อความแรก** → ④ ตั้งชื่อแชทให้ตรงเดิม → ⑤ อ่าน KB+WRK ต่องาน
+- **22. หนึ่งงาน = หนึ่ง agent session** — ห้ามให้ DA ทำงานแทน (KB/WRK/log จะลงผิดที่ + เปลือง context) · DA ทำได้แค่ บอกว่าใช้ agent ตัวไหน · เช็ค read-only · แก้ข้อมูลเก่าข้าม agent · git ให้ทุก agent
+
 > ⚠️ ยังไม่ทดสอบ: PC หลับ/ปิดจอ แล้ว bridge ยังอยู่ไหม
 > 📦 workflow เก่า (clone + commit ผ่านแอป GitHub) = **ON HOLD** ไม่ใช้แล้ว — เก็บไว้ที่ `BOOTSTRAP_IOS.md` เผื่อวันหน้า
 
