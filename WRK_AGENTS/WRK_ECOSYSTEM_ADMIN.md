@@ -232,3 +232,17 @@
 - **push 3 commits: `aa8e560` · `0cab528` · `c67c339`** (ต้อง pull ก่อน — Core Rule 16)
 - ยังไม่ทดสอบ commit จริงผ่านแอป GitHub บนมือถือ (รอมีผลประมูลจริง)
 - ยังไม่ทดสอบ iOS Text Replacement ว่ารองรับ prompt หลายบรรทัดยาวๆ ไหม
+
+### 🔁 ต่อท้าย session #2 — เปลี่ยนโมเดล multi-device (สำคัญที่สุดของวัน)
+- **iPhone = remote control ของ PC** — เปิด **session เดิม** ใน Cowork tab แล้วพิมพ์สั่ง งาน execute บน MARX จริง (ทดสอบจาก iPhone → `HOST=MARX`) → ใช้ได้ **ครบทุก agent**
+- **task ใหม่ที่สร้างจากมือถือ = ไม่มี bridge** — bridge ติดตอน "แนบ folder เข้า Cowork task" และมือถือ Add context ไม่มีตัวเลือก folder → **restart ต้องทำจาก PC เท่านั้น** (Core Rule 21)
+- **git ต้องรันผ่าน `Windows-MCP → PowerShell`** (Windows host จริง มี network + ลบ `.lock` ได้) · ⛔ ห้ามใช้ `device_bash` รัน git (Linux VM ไม่มี network + ลบ lock ไม่ได้) — Core Rule 18 rev.2
+- workflow เก่า (clone + commit ผ่านแอป GitHub) → **ON HOLD** ที่ `BOOTSTRAP_IOS.md` · Core Rule 17-18 เดิมถูกแทนแล้ว
+- **Core Rule 22**: หนึ่งงาน = หนึ่ง agent session · DA ทำได้แค่ route / read-only check / แก้ข้อมูลเก่าข้าม agent / git ให้ทุก agent
+- **Core Rule 21 rev**: user รับได้ว่า context เต็มนอกบ้าน → **ไม่ต้องเช็ค/เตือนล่วงหน้า** ชดเชยด้วยการเขียน WRK state **ระหว่างทาง** ทุกก้อนงาน
+- bridge หลุดชั่วคราวได้เมื่อเน็ตตก → **กลับมาเอง** ไม่ต้อง restart แค่ลองใหม่
+- commits: `bbbac0e` (rev.2) · `485f652` (Rule 21-22) · `4f4091a` (Rule 21 rev)
+
+### ⏳ Pending (ท้าย session)
+- ยังไม่ทดสอบ: PC หลับ/ปิดจอ แล้ว bridge ยังอยู่ไหม
+- ยังไม่ทดสอบ: resume session ที่ context เต็มแล้ว ยังอ่านย้อนได้ไหม
