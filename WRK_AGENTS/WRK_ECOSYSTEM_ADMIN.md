@@ -192,7 +192,10 @@
 ### ⏳ Pending
 - ~~เขียน Core Rule 16-20 ลง `WRK_AGENTS/CLAUDE.md`~~ ✅ เสร็จ (section `## 🔀 Multi-Device Rules`)
 - ทดสอบจริงบนมือถือ: clone → OPY อ่าน context → ร่าง record → commit ผ่านแอป
-- ตัดสินใจเรื่อง git history (D1 ปล่อยไว้ / D2 filter-repo / D3 สร้าง repo ใหม่)
+- ~~ตัดสินใจเรื่อง git history~~ ✅ **ปิดเคส — เลือก D1 (ปล่อย history ไว้)**
+  - เหตุผล user: ต่อให้ป้องกันดีแค่ไหน ข้อมูลจากหน่วยงานรัฐก็รั่วอยู่แล้วทั้งประเทศ — ต้นทุน D2/D3 (เว็บดับ / เสีย 91 commits) ไม่คุ้มกับความเสี่ยงส่วนเพิ่มที่ลดได้
+  - สิ่งที่ได้ผลจริงคือหยุดรั่วเพิ่ม: Core Rule 19 + repo private แล้ว → commit เก่าเป็น snapshot ตายตัว ไม่โตขึ้น
+  - ⚠️ ถ้าอนาคตมีเหตุให้ต้องล้างจริง (เช่น audit/ลูกค้าร้องขอ) ให้กลับมาทำ D2 `git filter-repo` — บันทึกไว้เป็นทางเลือกสำรอง
 
 ### ✅ Done (2026-08-13 — data fix: fiscalYear)
 - **backfill 143 records** ที่ไม่มี `fiscalYear` → 2569 (commit `e9dd329`)
