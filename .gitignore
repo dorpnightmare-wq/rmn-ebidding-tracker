@@ -1,1 +1,9 @@
-.netlify/ 
+.netlify/
+__pycache__/
+*.pyc
+*.xlsx
+*.docx
+*.pdf
+*.skill
+seed_bids.backup_*.js
+ziis9DhC
