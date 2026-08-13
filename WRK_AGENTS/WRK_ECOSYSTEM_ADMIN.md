@@ -190,7 +190,7 @@
 | 20 | แก้ KB ที่ต้นฉบับ M4RX-B4SE เสมอ → copy ทับ `KB/` ก่อน push |
 
 ### ⏳ Pending
-- เขียน Core Rule 16-20 ลง `WRK_AGENTS/CLAUDE.md`
+- ~~เขียน Core Rule 16-20 ลง `WRK_AGENTS/CLAUDE.md`~~ ✅ เสร็จ (section `## 🔀 Multi-Device Rules`)
 - ทดสอบจริงบนมือถือ: clone → OPY อ่าน context → ร่าง record → commit ผ่านแอป
 - ตัดสินใจเรื่อง git history (D1 ปล่อยไว้ / D2 filter-repo / D3 สร้าง repo ใหม่)
 - DA อ่าน state บนมือถือ = อ่านจาก public repo ได้แล้ว (redact เรียบร้อย) — ยังไม่ทดสอบ

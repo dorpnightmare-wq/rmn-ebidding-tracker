@@ -20,6 +20,16 @@ ToolSearch → โหลดเฉพาะเมื่อ tool ไม่มี�
 - คำนวณ usage ก่อนทุก Edit — ถ้า context ไม่พอ ห้าม Edit แจ้ง user แทน
 - 👑 Preview สิทธิ์นายเท่านั้น — แสดง visual preview ทุกครั้งที่แก้ไข UI (ห้าม skip)
 
+## 🔀 Multi-Device Rules (เพิ่ม 2026-08-13)
+- **16.** PC ต้อง `git pull` ก่อนเริ่มงานทุกครั้ง — กัน split-brain กับมือถือ
+- **17.** มือถือ = **OPY** (บันทึกผลประมูล) + **DA** (อ่าน state, read-only) เท่านั้น · DOC · MM · UI · EXP · API = **PC เท่านั้น**
+- **18.** เช็ค branch = **`main`** ก่อน commit จากแอป GitHub ทุกครั้ง (เคยมีบั๊ก master ค้างที่ seq 103)
+- **19.** ข้อมูลส่วนบุคคล (เลขบัตร ปชช. / เบอร์ส่วนตัว / IP เครื่อง) → repo **private `RMN-eBidding-KB`** เท่านั้น ห้ามลง repo public
+- **20.** แก้ KB ที่ต้นฉบับ `M4RX-B4SE\...\E-Bidding\` เสมอ → copy ทับ `KB/` ใน repo ก่อน push
+
+> มือถือไม่มี bridge ไป PC (ยืนยันแล้ว) · เห็นไฟล์ผ่าน git เท่านั้น · ไม่ใช้ PAT — Claude ร่าง → user commit ผ่านแอป GitHub
+> รายละเอียดเปิด session มือถือ: `BOOTSTRAP_IOS.md`
+
 ## 📁 Files & URLs
 - Main: `rmn_ebidding_tracker_2.html` (single source of truth)
 - Logo: `assets/logo.png`
