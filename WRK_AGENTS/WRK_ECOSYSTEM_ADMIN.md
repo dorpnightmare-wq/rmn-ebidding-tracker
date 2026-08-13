@@ -208,3 +208,27 @@
   - verify: mismatch เหลือ 0 · 553 records · JSON valid
 - 📌 **กฎที่ยึดต่อไป: FY คำนวณจาก `date` ไม่ใช่จากเลข id** (id เข้ารหัสเดือนที่ขึ้นระบบ e-GP ซึ่งอาจต่างจากวันประกาศจริง)
 - DA อ่าน state บนมือถือ = อ่านจาก public repo ได้แล้ว (redact เรียบร้อย) — ยังไม่ทดสอบ
+
+## 🔄 Session State (2026-08-13 #2 — PC: repo hygiene + iOS entry point)
+> เครื่อง: **PC (MARX)** · resume จาก session #1 วันเดียวกัน
+
+### ✅ Done
+- commit WRK ที่ค้างจาก session ก่อน (`aa8e560`) — mark iOS mobile test ผ่าน 100% + note บั๊ก `KB/OPERATING.md` hardcode seq 94-102
+- `.gitignore` +2 บรรทัด: `SKILL_*.md`, `PROJECT_INSTRUCTIONS_DRAFT.md` (`0cab528`) → working tree clean
+- **ยืนยัน entry point มือถือ: Cowork tab เท่านั้น** (`c67c339` → `BOOTSTRAP_IOS.md` section `## 📍 เปิดที่ไหน`)
+  - Project chat ธรรมดา **ไม่มี shell** → clone ไม่ได้ → ทำงาน OPY/DA ไม่ได้เลย
+  - Cowork `+ New task` **ผูก project ไม่ได้** (Add context มีแค่ Camera/Photos/Add files/Connectors) → prompt ต้อง **self-contained** ทุกครั้ง
+  - โปรเจกต์ `RMN-eBidding-Workflow` ที่สร้างบนมือถือ = ไม่ใช้ ลบทิ้งได้
+  - session ที่รันบน PC **มองเห็นได้จาก Cowork tab บนมือถือ** (แต่ยังไม่มี bridge ไป PC ตามเดิม)
+- ร่าง prompt เปิด session มือถือ 2 ก้อน (OPY / DA) — แนะนำเก็บใน Notes บน iPhone
+- checklist iPhone workflow: interactive widget + `iPhone_Workflow_Checklist_RMN.docx` (Core Rule 10) — docx อยู่ใน repo folder แต่ถูก gitignore
+- memory ใหม่: `project_ios_cowork_entry_point.md` + index
+
+### ⚠️ ข้อจำกัดที่เจอใน session นี้
+- **device_bash (VM ในเครื่อง user) ไม่มี network** → `git pull/push` ทำเองไม่ได้ (HTTP 403 from proxy) → **user ต้องรันใน PowerShell เสมอ**
+- device_bash ลบ `HEAD.lock` / `index.lock` ไม่ได้ (Operation not permitted) → user ต้อง `del` เอง
+
+### ⏳ Pending
+- **push 3 commits: `aa8e560` · `0cab528` · `c67c339`** (ต้อง pull ก่อน — Core Rule 16)
+- ยังไม่ทดสอบ commit จริงผ่านแอป GitHub บนมือถือ (รอมีผลประมูลจริง)
+- ยังไม่ทดสอบ iOS Text Replacement ว่ารองรับ prompt หลายบรรทัดยาวๆ ไหม
