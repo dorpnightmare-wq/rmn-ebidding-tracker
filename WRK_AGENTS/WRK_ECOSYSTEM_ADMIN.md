@@ -193,4 +193,13 @@
 - ~~เขียน Core Rule 16-20 ลง `WRK_AGENTS/CLAUDE.md`~~ ✅ เสร็จ (section `## 🔀 Multi-Device Rules`)
 - ทดสอบจริงบนมือถือ: clone → OPY อ่าน context → ร่าง record → commit ผ่านแอป
 - ตัดสินใจเรื่อง git history (D1 ปล่อยไว้ / D2 filter-repo / D3 สร้าง repo ใหม่)
+
+### ✅ Done (2026-08-13 — data fix: fiscalYear)
+- **backfill 143 records** ที่ไม่มี `fiscalYear` → 2569 (commit `e9dd329`)
+  - ต้นตอ: template ที่ OPY ใช้บันทึกรายวัน**ไม่มี field นี้** → OPY แก้ schema แล้ว (`6d1d909`)
+- **แก้ 26 records** ที่ `fiscalYear` ผิด — ยึด **วันประกาศ (field `date`)** ตามที่ user สั่ง
+  - กฎ: เดือน ≥ ต.ค. → ปีงบ +1 (ปีงบไทยเริ่ม 1 ต.ค.)
+  - 2565 92→71 · 2566 92→110 · 2567 135→138 · 2568 57 · 2569 177
+  - verify: mismatch เหลือ 0 · 553 records · JSON valid
+- 📌 **กฎที่ยึดต่อไป: FY คำนวณจาก `date` ไม่ใช่จากเลข id** (id เข้ารหัสเดือนที่ขึ้นระบบ e-GP ซึ่งอาจต่างจากวันประกาศจริง)
 - DA อ่าน state บนมือถือ = อ่านจาก public repo ได้แล้ว (redact เรียบร้อย) — ยังไม่ทดสอบ
