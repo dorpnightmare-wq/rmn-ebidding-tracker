@@ -37,7 +37,8 @@ ToolSearch → โหลดเฉพาะเมื่อ tool ไม่มี�
   - ขั้นตอน: ① เขียน session state ลง `WRK_<AGENT>.md` → ② commit+push → ③ **สร้าง task ใหม่จาก PC + แนบ folder ตั้งแต่ข้อความแรก** → ④ ตั้งชื่อแชทให้ตรงเดิม → ⑤ อ่าน KB+WRK ต่องาน
 - **22. หนึ่งงาน = หนึ่ง agent session** — ห้ามให้ DA ทำงานแทน (KB/WRK/log จะลงผิดที่ + เปลือง context) · DA ทำได้แค่ บอกว่าใช้ agent ตัวไหน · เช็ค read-only · แก้ข้อมูลเก่าข้าม agent · git ให้ทุก agent
 
-> ⚠️ ยังไม่ทดสอบ: PC หลับ/ปิดจอ แล้ว bridge ยังอยู่ไหม
+> ✅ ปิดเคส sleep: user ไม่ใช้ sleep mode — **PC เปิดตอนตื่น ปิดตอนนอน** → remote จากมือถือใช้ได้ช่วงเช้า–ดึกทุกวัน (ครอบคลุมรอบ 12:01 / 16:01)
+> ⚠️ bridge หลุดชั่วคราวได้ตอนเน็ตตก → **กลับมาเอง** ไม่ต้อง restart แค่ลองใหม่
 > 📦 workflow เก่า (clone + commit ผ่านแอป GitHub) = **ON HOLD** ไม่ใช้แล้ว — เก็บไว้ที่ `BOOTSTRAP_IOS.md` เผื่อวันหน้า
 
 ## 📁 Files & URLs
@@ -54,14 +55,23 @@ M4RX-B4SE/RMN_Enterprise/E-Bidding/
 - CMD: ใช้ `%USERPROFILE%` เสมอ — ห้าม hardcode path
 - Mounts: `RMN-eBidding-Workflow` / `E-BIDDING` / `Downloads`
 
-## 🔀 Git Push (ส่งทีละบรรทัด — ห้ามรวม)
+## 🔀 Git Push — **Claude push เอง ห้ามรบกวน user** (2026-08-13)
+ทุก agent commit+push เองผ่าน **`Windows-MCP → PowerShell`** ไม่ต้องส่งคำสั่งให้ user รัน
+
 ```
-git -C "%USERPROFILE%\OneDrive\Claude\Projects\RMN-eBidding-Workflow" add <file>
-git -C "%USERPROFILE%\OneDrive\Claude\Projects\RMN-eBidding-Workflow" commit -m "msg"
-git -C "%USERPROFILE%\OneDrive\Claude\Projects\RMN-eBidding-Workflow" push
+$r="$env:USERPROFILE\OneDrive\Claude\Projects\RMN-eBidding-Workflow"
+Remove-Item "$r\.git\HEAD.lock","$r\.git\index.lock" -Force -ErrorAction SilentlyContinue
+git -C $r add <file>
+git -C $r commit -m "msg"
+git -C $r push
+git -C $r rev-parse --short HEAD; git -C $r rev-parse --short origin/main
 ```
-> GitHub Pages deploy จาก branch `main` (ไม่ใช่ master)
-> push ธรรมดาได้เลย ไม่ต้อง push origin main:master อีกต่อไป
+- **ลบ `.lock` ก่อนทุกครั้ง** (lock ค้างบ่อยจาก OneDrive) — PowerShell ลบได้ `device_bash` ลบไม่ได้
+- ⛔ **ห้ามใช้ `device_bash` รัน git** — Linux VM ไม่มี network (403 proxy) · ใช้อ่าน/แก้ไฟล์เท่านั้น
+- ปิดงานต้องรายงาน `HEAD` = `origin/main` ทุกครั้ง
+- PC offline → แจ้ง user "execute ไม่ได้ รอ PC ออนไลน์" · ห้ามส่งคำสั่งให้ user ไปรันเอง
+
+> GitHub Pages deploy จาก branch `main` · push ธรรมดาได้เลย
 
 ## 🎨 UI Rules
 - Light mode default · Viewer URL: `?view=1` (mobile) · Editor: no param (desktop)
