@@ -28,6 +28,7 @@ ToolSearch → โหลดเฉพาะเมื่อ tool ไม่มี�
   - ⛔ **ห้ามใช้ `device_bash` รัน git** — VM นั้นไม่มี network (403 proxy) และลบ `HEAD.lock`/`index.lock` ไม่ได้ → lock ค้างทุกครั้ง
   - device_bash ใช้ได้เฉพาะ **อ่าน/แก้ไฟล์**
 - **19.** ข้อมูลส่วนบุคคล (เลขบัตร ปชช. / เบอร์ส่วนตัว / IP เครื่อง) → repo **private `RMN-eBidding-KB`** เท่านั้น ห้ามลง repo public
+  - 📍 ไฟล์ที่ย้ายไป private แล้ว: `WRK_DOC_EXPIRY.md` · `MEMORY_BACKUP_*.md` · `NETWORK_NOTES.md` → หาที่ `RMN-eBidding-KB\` **ไม่ใช่** `WRK_AGENTS\`
 - **20.** แก้ KB ที่ต้นฉบับ `M4RX-B4SE\...\E-Bidding\` เสมอ → copy ทับ `KB/` ใน repo ก่อน push
 
 - **21. Restart session → ทำจาก PC เท่านั้น** (ทดสอบแล้ว 2026-08-13)
