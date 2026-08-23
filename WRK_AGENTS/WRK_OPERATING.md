@@ -306,3 +306,29 @@ Dispatch ไม่ได้ทำให้ Doc Fee Agent ไม่จำเป�
 
 ## 📌 หมายเหตุ (2569-08-04)
 Session state ของ Doc Fee Agent ที่เคยบันทึกผิดไว้ในไฟล์นี้ (หัวข้อ "Doc Fee Agent closeout") ถูกย้ายไปอยู่ที่ `WRK_AGENTS/WRK_FEE_PAYMENT.md` แล้ว (ไฟล์ที่ถูกต้องของ Doc Fee Agent) — ไฟล์นี้ (`WRK_OPERATING.md`) เก็บเฉพาะ session state ของ Operating Agent เท่านั้นนับจากนี้
+## 🔄 Session State (2569-08-20) — ปิด session, verified
+- **Last SEQ = 181** · seed_bids.js 557 records · commit ล่าสุด `a904823` **push แล้ว** (local = origin ยืนยันด้วย git fetch)
+- SEQ ที่เพิ่มรอบนี้ + ผลครบทุกตัว (ไม่มีค้างรอผล):
+
+| seq | id | หน่วยงาน | ยื่น | ต่ำสุด | ผล | plant |
+|-----|----|---------|------|--------|-----|-------|
+| 175 | 69079488448 | อบต.วังแสง (มค.) | 288,000 | 288,000 | ✅ | มหาสารคาม |
+| 176 | 69059509007 | อบต.ใหม่นาเพียง (ขก.) | 1,058,000 | 1,044,000 | ❌ −14,000 | มหาสารคาม |
+| 177 | 69079054553 | อบต.หมูม่น (กส.) | 638,000 | 602,270 | ❌ −35,730 | มหาสารคาม |
+| 178 | 69069589057 | ทต.โนนสูงเปลือย (นภ.) | 1,118,000 | 1,118,000 | ✅ | ศรีบุญเรือง ⚠ |
+| 179 | 69089150896 | ทต.สุวรรณคูหา (นภ.) | 466,000 | 466,000 | ✅ | ศรีบุญเรือง ⚠ |
+| 180 | 69079253957 | ทต.เขื่อนอุบลรัตน์ (ขก.) | 1,198,000 | 1,198,000 | ✅ | ศรีบุญเรือง ⚠ |
+| 181 | 69089123180 | ทต.โคกสูงสัมพันธ์ (ขก.) | 528,000 | 508,800 | ❌ −19,200 | ศรีบุญเรือง ⚠ |
+
+- ค่าเอกสาร: ทั้ง 7 โครงการ **ไม่มีค่าเอกสาร** → append `no_fee_required` ครบใน doc_fee_queue.json (13 entries, **pending = 0**)
+- ✅ บั๊กเก่าเคลียร์แล้ว: entry SEQ174 (`69079461100`) ที่เคยค้าง pending ถูก Doc Fee Agent ลบออกจาก queue เรียบร้อย
+- Recheck ก่อนปิด session (script ตรวจอัตโนมัติ): pct ทั้ง 7 ตัวถูกต้อง · fiscalYear ตรงกฎ date ทุกตัว · ไม่มี seq/id ซ้ำในสาย 94–181 · status ↔ lowest สอดคล้องกันทุกตัว — **ไม่พบ error**
+
+### 🆕 กฎ/ความสามารถที่เปลี่ยนใน session นี้ (สำคัญต่อ session หน้า)
+1. **ชื่อเรียก agent = "OPY"** (แทน Operating Agent เต็ม) แจ้งโดย DP
+2. **`fiscalYear` บังคับทุก record** — คำนวณจาก field `date` (วันประกาศ) เท่านั้น: เดือน ≥ 10 → ปี+1 · เดือน 01–09 → ปี **ห้ามคำนวณจากเลข id** (id = เดือนที่ขึ้นระบบ e-GP ไม่ตรงวันประกาศจริง 26 records) — schema เต็มอยู่ใน `KB/OPERATING.md`
+3. **OPY push เองได้แล้ว** — sandbox bash ไม่มี git credential (`could not read Username`) แต่ push ผ่าน **Windows-MCP PowerShell** สำเร็จ:
+   `cd C:\Users\Advice\OneDrive\Claude\Projects\RMN-eBidding-Workflow; git push origin main` — ไม่ต้องให้ user รันเอง (ข้อความสีแดงใน PowerShell = progress output ของ git ไม่ใช่ error)
+4. **Widget contrast (ยืนยันจาก user)**: ราคายื่นใช้กล่อง `#FAC775` + ตัวเลข `#412402` 28px (hex ตายตัว ห้ามพึ่ง `var(--bg-warning)` ที่พลิกใน dark mode) · เลขที่โครงการ 20px/500 text-primary + badge `SEQ n` ฟ้า (`#B5D4F4`/`#0C447C`) · ชื่อหน่วยงานเต็ม 17px/500 text-primary
+5. `.git/index.lock` ยังค้างบ่อย — sandbox ลบได้แล้วหลังเรียก `allow_cowork_file_delete` ครั้งเดียว (สิทธิ์ค้างทั้ง session) ไม่ต้องรบกวน user
+6. ห้าม `git add .` — ยังมีไฟล์ agent อื่นค้าง uncommitted (`WRK_AGENTS/WRK_MAPMAKER.md`, `PROJECT_INSTRUCTIONS_DRAFT.md`, `SKILL_build.md`, `SKILL_ebidding.md`) ให้ระบุชื่อไฟล์เสมอ
