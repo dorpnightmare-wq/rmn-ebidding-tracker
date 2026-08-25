@@ -2630,9 +2630,10 @@ App.renderDash();
     const r = await fetch('https://raw.githubusercontent.com/m4dm4rx/RMN-eBidding-Workflow/main/assets.json', { cache: 'no-cache' });
     if (!r.ok) return; // 404: not generated yet
     const data = await r.json();
-    if (Array.isArray(data)) {
+    const list = Array.isArray(data) ? data : Array.isArray(data?.assets) ? data.assets : null; // support {meta,assets:[]} envelope
+    if (list) {
       ASSETS.length = 0;
-      data.forEach(a => { if (a && a.pii !== true) ASSETS.push(a); }); // never load pii:true rows
+      list.forEach(a => { if (a && a.pii !== true) ASSETS.push(a); }); // never load pii:true rows
       App.renderAssets();
     }
   } catch(e) { /* offline, file://, or malformed JSON — keep ASSETS empty */ }
