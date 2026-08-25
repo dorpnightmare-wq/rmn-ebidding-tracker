@@ -1,0 +1,1453 @@
+{
+  "meta": {
+    "schemaVersion": 1,
+    "generatedBy": "DA (Ecosystem & Datacenter Admin)",
+    "generatedOn": "2026-08-24",
+    "dateFormat": "พ.ศ. (Buddhist Era) YYYY-MM-DD",
+    "owner": {
+      "name": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "taxId": "0443561001307",
+      "address": "487 หมู่ 3 ต.เกิ้ง อ.เมืองมหาสารคาม จ.มหาสารคาม 44000",
+      "tel": "087-223-5093"
+    },
+    "counts": {
+      "equipment": 11,
+      "truck": 10,
+      "work": 4
+    },
+    "piiPolicy": "ไฟล์นี้ไม่มี PII — บุคลากรอยู่ personnel.json ใน repo private RMN-eBidding-KB เท่านั้น",
+    "sourceKb": "M4RX-B4SE\\RMN_Enterprise\\Company-Assets\\EQUIPMENT.md + RMN-eBidding-KB\\COMPANY.md"
+  },
+  "assets": [
+    {
+      "id": "EQ-5-1-8672",
+      "type": "equipment",
+      "egpItem": "5-1",
+      "criteria": {
+        "name": "Crawler Dozer / Back Hoe",
+        "min": "120 แรงม้า × 1",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "spec": {
+        "plate": "ตฆ 8672",
+        "province": "มหาสารคาม",
+        "vehicleType": "รถแทรกเตอร์ (รย.13)",
+        "brand": "KOBELCO",
+        "model": "SK200-10 SM",
+        "modelYear": 2024,
+        "chassisNo": "YN15434693",
+        "chassisPos": "กลาง",
+        "engineBrand": "HINO",
+        "engineNo": "J05E TG57004",
+        "enginePos": "ซ้ายเครื่อง",
+        "cylinders": 4,
+        "horsepower": 155,
+        "weightKg": 21600,
+        "weightTotalKg": 21600
+      },
+      "ownership": {
+        "method": "เช่าซื้อ",
+        "titleHolder": "บริษัท ไทยโอริกซ์ลีสซิ่ง จำกัด",
+        "titleHolderTaxId": "0105553121611",
+        "possessor": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "possessorIsUs": true
+      },
+      "dates": {
+        "registered": "2568-01-31",
+        "possessed": "2568-01-31"
+      },
+      "tax": {
+        "paidOn": "2569-06-18",
+        "dueNext": "2570-01-31",
+        "flag": "green"
+      },
+      "docs": [
+        "05_เครื่องจักร\\5-1_ตฆ8672_คู่มือจดทะเบียน.pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "เล่มทะเบียนต้นฉบับ (ฝากไฟล์\\เอกสารขึ้นชั้น3)"
+      },
+      "pii": false
+    },
+    {
+      "id": "EQ-5-2-7104",
+      "type": "equipment",
+      "egpItem": "5-2",
+      "criteria": {
+        "name": "Front End Loader / Back Hoe",
+        "min": "95 แรงม้า × 2",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "spec": {
+        "plate": "1ตข 7104",
+        "province": "กรุงเทพมหานคร",
+        "vehicleType": "รถแทรกเตอร์ (รย.13)",
+        "brand": "KOBELCO",
+        "model": "SK200-10 SM",
+        "modelYear": 2025,
+        "chassisNo": "YN15436236",
+        "chassisPos": "หน้าขวา",
+        "engineBrand": "HINO",
+        "engineNo": "J05E TG60036",
+        "cylinders": 4,
+        "horsepower": 155,
+        "weightKg": 21600,
+        "weightTotalKg": 21600
+      },
+      "ownership": {
+        "method": "เช่าซื้อ",
+        "titleHolder": "บริษัท ไทยโอริกซ์ลีสซิ่ง จำกัด",
+        "titleHolderTaxId": "0105553121611",
+        "possessor": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "possessorIsUs": true
+      },
+      "dates": {
+        "registered": "2568-09-04",
+        "possessed": "2568-09-04"
+      },
+      "tax": {
+        "paidOn": "2568-09-04",
+        "dueNext": "2569-09-04",
+        "flag": "red"
+      },
+      "docs": [
+        "05_เครื่องจักร\\5-2_1ตข7104_คู่มือจดทะเบียน.pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "เล่มทะเบียนต้นฉบับ (ฝากไฟล์\\เอกสารขึ้นชั้น3)"
+      },
+      "pii": false,
+      "note": "ทะเบียนคือ 1ตข 7104 ไม่ใช่ ตบ 7104/7106 (แผนเดิมเขียนผิด) · ภาษีครบเร็วสุดในกองรถ"
+    },
+    {
+      "id": "EQ-5-2-9092",
+      "type": "equipment",
+      "egpItem": "5-2",
+      "criteria": {
+        "name": "Front End Loader / Back Hoe",
+        "min": "95 แรงม้า × 2",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "spec": {
+        "plate": "ตฆ 9092",
+        "province": "มหาสารคาม",
+        "vehicleType": "รถแทรกเตอร์ (รย.13)",
+        "brand": "KOMATSU",
+        "model": "WA380-6",
+        "chassisNo": "WA09565935",
+        "chassisPos": "กลางขวา",
+        "engineBrand": "KOMATSU",
+        "engineNo": "6M10726537365",
+        "cylinders": 6,
+        "horsepower": 177,
+        "weightKg": 18000,
+        "weightTotalKg": 18000
+      },
+      "ownership": {
+        "method": "กรรมสิทธิ์ (ซื้อ)",
+        "titleHolder": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "titleHolderTaxId": "0443561001307",
+        "possessor": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "possessorIsUs": true
+      },
+      "dates": {
+        "registered": "2568-07-18",
+        "possessed": "2568-07-18"
+      },
+      "tax": {
+        "paidOn": "2569-04-29",
+        "dueNext": "2570-07-18",
+        "flag": "green"
+      },
+      "docs": [
+        "05_เครื่องจักร\\5-2_ตฆ9092_คู่มือจดทะเบียน.pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "เล่มทะเบียนต้นฉบับ (ฝากไฟล์\\เอกสารขึ้นชั้น3)"
+      },
+      "pii": false
+    },
+    {
+      "id": "EQ-5-3-9065",
+      "type": "equipment",
+      "egpItem": "5-3",
+      "criteria": {
+        "name": "Motor Grader",
+        "min": "115 แรงม้า × 2",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "spec": {
+        "plate": "ตฆ 9065",
+        "province": "มหาสารคาม",
+        "vehicleType": "รถแทรกเตอร์ (รย.13)",
+        "brand": "CATERPILLAR",
+        "model": "140H",
+        "modelYear": 1999,
+        "chassisNo": "2ZK04260",
+        "chassisPos": "กลางขวา",
+        "engineBrand": "CATERPILLAR",
+        "engineNo": "6NC14305",
+        "cylinders": 6,
+        "cc": 10450,
+        "horsepower": 150,
+        "axles": 3,
+        "wheels": 6,
+        "tyres": 6,
+        "weightKg": 25000,
+        "weightTotalKg": 25000
+      },
+      "ownership": {
+        "method": "กรรมสิทธิ์ (ซื้อ)",
+        "titleHolder": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "titleHolderTaxId": "0443561001307",
+        "possessor": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "possessorIsUs": true
+      },
+      "dates": {
+        "registered": "2568-07-03",
+        "possessed": "2568-07-03"
+      },
+      "tax": {
+        "paidOn": "2569-04-29",
+        "dueNext": "2570-07-03",
+        "flag": "green"
+      },
+      "docs": [
+        "05_เครื่องจักร\\5-3_ตฆ9065_คู่มือจดทะเบียน.pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "เล่มทะเบียนต้นฉบับ (ฝากไฟล์\\เอกสารขึ้นชั้น3)"
+      },
+      "pii": false
+    },
+    {
+      "id": "EQ-5-3-4069",
+      "type": "equipment",
+      "egpItem": "5-3",
+      "criteria": {
+        "name": "Motor Grader",
+        "min": "115 แรงม้า × 2",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "spec": {
+        "plate": "ตฆ 4069",
+        "province": "มหาสารคาม",
+        "vehicleType": "รถแทรกเตอร์ (รย.13)",
+        "brand": "CATERPILLAR",
+        "model": "140G",
+        "chassisNo": "72V-3798",
+        "chassisPos": "กลางขวา",
+        "engineBrand": "CATERPILLAR",
+        "engineNo": "3N 85847",
+        "cylinders": 6,
+        "horsepower": 150,
+        "axles": 3,
+        "wheels": 6,
+        "tyres": 6,
+        "weightKg": 14000,
+        "weightTotalKg": 14000
+      },
+      "ownership": {
+        "method": "กรรมสิทธิ์ (ซื้อ)",
+        "titleHolder": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "titleHolderTaxId": "0443561001307",
+        "possessor": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "possessorIsUs": true
+      },
+      "dates": {
+        "registered": "2551-03-07",
+        "possessed": "2564-02-01"
+      },
+      "tax": {
+        "paidOn": "2569-05-14",
+        "dueNext": "2570-01-23",
+        "flag": "green",
+        "source": "user เปิดเล่มให้ 2026-08-24"
+      },
+      "docs": [
+        "05_เครื่องจักร\\5-3_ตฆ4069_คู่มือจดทะเบียน.pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "เล่มทะเบียนต้นฉบับ (ฝากไฟล์\\เอกสารขึ้นชั้น3)"
+      },
+      "pii": false
+    },
+    {
+      "id": "EQ-5-4-161",
+      "type": "equipment",
+      "egpItem": "5-4",
+      "criteria": {
+        "name": "Self-Propelled Rubber Tyre Roller",
+        "min": "8 ตัน × 2",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "spec": {
+        "plate": "ถข 161",
+        "province": "มหาสารคาม",
+        "vehicleType": "รถบดถนน (รย.14)",
+        "brand": "SAKAI",
+        "model": "TZ701",
+        "chassisNo": "TT5H20360",
+        "chassisPos": "กลางขวา",
+        "engineBrand": "SAKAI",
+        "engineNo": "W04DTG12337",
+        "cylinders": 4,
+        "horsepower": 93.9,
+        "axles": 2,
+        "wheels": 6,
+        "tyres": 6,
+        "weightKg": 8800,
+        "weightTons": 8.8
+      },
+      "ownership": {
+        "method": "กรรมสิทธิ์ (ซื้อ)",
+        "titleHolder": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "titleHolderTaxId": "0443561001307",
+        "possessor": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "possessorIsUs": true
+      },
+      "dates": {
+        "registered": "2568-07-03",
+        "possessed": "2568-07-03"
+      },
+      "tax": {
+        "paidOn": "2569-04-30",
+        "dueNext": "2570-07-03",
+        "flag": "green"
+      },
+      "docs": [
+        "05_เครื่องจักร\\5-4_ถข161_คู่มือจดทะเบียน.pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "เล่มทะเบียนต้นฉบับ (ฝากไฟล์\\เอกสารขึ้นชั้น3)"
+      },
+      "pii": false,
+      "note": "เกณฑ์ข้อนี้วัดที่น้ำหนัก (ตัน) ไม่ใช่แรงม้า"
+    },
+    {
+      "id": "EQ-5-4-162",
+      "type": "equipment",
+      "egpItem": "5-4",
+      "criteria": {
+        "name": "Self-Propelled Rubber Tyre Roller",
+        "min": "8 ตัน × 2",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "spec": {
+        "plate": "ถข 162",
+        "province": "มหาสารคาม",
+        "vehicleType": "รถบดถนน (รย.14)",
+        "brand": "SAKAI",
+        "model": "TZ701",
+        "chassisNo": "TT5H20529",
+        "chassisPos": "กลาง",
+        "engineBrand": "SAKAI",
+        "engineNo": "W04DTG14795",
+        "cylinders": 4,
+        "horsepower": 93.9,
+        "axles": 2,
+        "wheels": 6,
+        "tyres": 6,
+        "weightKg": 8800,
+        "weightTons": 8.8
+      },
+      "ownership": {
+        "method": "กรรมสิทธิ์ (ซื้อ)",
+        "titleHolder": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "titleHolderTaxId": "0443561001307",
+        "possessor": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "possessorIsUs": true
+      },
+      "dates": {
+        "registered": "2568-07-03",
+        "possessed": "2568-07-03"
+      },
+      "tax": {
+        "paidOn": "2569-04-30",
+        "dueNext": "2570-07-03",
+        "flag": "green"
+      },
+      "docs": [
+        "05_เครื่องจักร\\5-4_ถข162_คู่มือจดทะเบียน.pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "เล่มทะเบียนต้นฉบับ (ฝากไฟล์\\เอกสารขึ้นชั้น3)"
+      },
+      "pii": false,
+      "note": "เกณฑ์ข้อนี้วัดที่น้ำหนัก (ตัน) ไม่ใช่แรงม้า"
+    },
+    {
+      "id": "EQ-5-5-138",
+      "type": "equipment",
+      "egpItem": "5-5",
+      "criteria": {
+        "name": "Steel Wheel Static 8 ตัน / สั่นสะเทือน 10 ตัน",
+        "min": "× 2",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "spec": {
+        "plate": "ถข 138",
+        "province": "มหาสารคาม",
+        "vehicleType": "รถบดถนน (รย.14)",
+        "brand": "SAKAI",
+        "model": "SW850-2",
+        "chassisNo": "4SW5650183",
+        "chassisPos": "หน้าขวา",
+        "engineBrand": "SAKAI",
+        "engineNo": "TCD2012L042V-11109532",
+        "cylinders": 4,
+        "horsepower": null,
+        "axles": 2,
+        "wheels": 2,
+        "wheelType": "ล้อเหล็ก",
+        "weightKg": 12000,
+        "weightTons": 12
+      },
+      "ownership": {
+        "method": "กรรมสิทธิ์ (ซื้อ)",
+        "titleHolder": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "titleHolderTaxId": "0443561001307",
+        "possessor": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "possessorIsUs": true
+      },
+      "dates": {
+        "registered": "2565-10-31",
+        "possessed": "2565-10-31"
+      },
+      "tax": {
+        "paidOn": null,
+        "dueNext": "2569-10-31",
+        "flag": "orange",
+        "paidOnNote": "23/../2569 — เลขเดือนอ่านไม่ชัด"
+      },
+      "docs": [
+        "05_เครื่องจักร\\5-5_ถข138_คู่มือจดทะเบียน.pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "เล่มทะเบียนต้นฉบับ (ฝากไฟล์\\เอกสารขึ้นชั้น3)"
+      },
+      "pii": false,
+      "note": "แรงม้าไม่ระบุในเล่มทะเบียน — ผ่านเกณฑ์ด้วยน้ำหนัก 12 ตัน"
+    },
+    {
+      "id": "EQ-5-5-121",
+      "type": "equipment",
+      "egpItem": "5-5",
+      "criteria": {
+        "name": "Steel Wheel Static 8 ตัน / สั่นสะเทือน 10 ตัน",
+        "min": "× 2",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "spec": {
+        "plate": "ถข 121",
+        "province": "มหาสารคาม",
+        "vehicleType": "รถบดถนน (รย.14)",
+        "brand": "INGERSOLL-RAND",
+        "model": "SD100D",
+        "chassisNo": "147610",
+        "chassisPos": "กลางซ้าย",
+        "engineBrand": "INGERSOLL-RAND",
+        "engineNo": "45424138",
+        "cylinders": 4,
+        "horsepower": 125,
+        "wheelType": "ล้อเหล็ก",
+        "weightKg": 11000,
+        "weightTons": 11
+      },
+      "ownership": {
+        "method": "กรรมสิทธิ์ (ซื้อ)",
+        "titleHolder": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "titleHolderTaxId": "0443561001307",
+        "possessor": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "possessorIsUs": true
+      },
+      "dates": {
+        "registered": "2541-12-01",
+        "possessed": "2563-05-18"
+      },
+      "tax": {
+        "paidOn": "2569-04-30",
+        "dueNext": "2570-06-08",
+        "flag": "green",
+        "source": "user เปิดเล่มให้ 2026-08-24"
+      },
+      "docs": [
+        "05_เครื่องจักร\\5-5_ถข121_คู่มือจดทะเบียน.pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "เล่มทะเบียนต้นฉบับ (ฝากไฟล์\\เอกสารขึ้นชั้น3)"
+      },
+      "pii": false
+    },
+    {
+      "id": "EQ-5-6-6540",
+      "type": "equipment",
+      "egpItem": "5-6",
+      "criteria": {
+        "name": "Self-Propelled Vibratory Roller",
+        "min": "100 แรงม้า × 2",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "spec": {
+        "plate": "ถข 6540",
+        "province": "กรุงเทพมหานคร",
+        "vehicleType": "รถบดถนน (รย.14)",
+        "brand": "BOMAG",
+        "model": "BW220 D-5",
+        "modelYear": 2023,
+        "chassisNo": "961587611122",
+        "chassisPos": "กลางขวา",
+        "engineBrand": "DEUTZ",
+        "engineNo": "12906834",
+        "cylinders": 6,
+        "cc": 6060,
+        "horsepower": 202,
+        "axles": 2,
+        "wheels": 3,
+        "wheelType": "ยาง 2 + ล้อเหล็ก 1",
+        "weightKg": 22500,
+        "weightTotalKg": 22500
+      },
+      "ownership": {
+        "method": "เช่า (RMN เช่าต่อจากลีดเวย์)",
+        "titleHolder": "บริษัท กรุงไทย มิซูโฮ ลีสซิ่ง จำกัด",
+        "titleHolderTaxId": "0105535023735",
+        "possessor": "บริษัท ลีดเวย์ เฮฟวี่ แมชชีนเนอรี่ จำกัด",
+        "possessorIsUs": false,
+        "possessorTaxId": "0505550004157",
+        "hirePurchaseSignedOn": "2568-01-29",
+        "leaseDocLocation": "หน้าที่ 2 ในไฟล์ PDF ของรถคันนั้นเอง",
+        "leaseEndDate": null
+      },
+      "dates": {
+        "registered": "2568-05-06",
+        "possessed": "2568-05-06"
+      },
+      "tax": {
+        "paidOn": "2569-01-12",
+        "dueNext": "2570-05-06",
+        "flag": "green"
+      },
+      "docs": [
+        "05_เครื่องจักร\\5-6_ถข6540_คู่มือจดทะเบียน+สัญญาเช่า.pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "เล่มทะเบียนต้นฉบับ (ฝากไฟล์\\เอกสารขึ้นชั้น3)"
+      },
+      "pii": false,
+      "note": "🔴 ทะเบียนไม่มีชื่อ RMN ทั้งช่องกรรมสิทธิ์และครอบครอง — e-GP ดึงจากกรมขนส่งจะขึ้นชื่อลีดเวย์ ต้องแนบสัญญาเช่า"
+    },
+    {
+      "id": "EQ-5-6-6541",
+      "type": "equipment",
+      "egpItem": "5-6",
+      "criteria": {
+        "name": "Self-Propelled Vibratory Roller",
+        "min": "100 แรงม้า × 2",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "spec": {
+        "plate": "ถข 6541",
+        "province": "กรุงเทพมหานคร",
+        "vehicleType": "รถบดถนน (รย.14)",
+        "brand": "BOMAG",
+        "model": "BW211 D-5 SI",
+        "modelYear": 2025,
+        "chassisNo": "993935001192",
+        "chassisPos": "กลางขวา",
+        "engineBrand": "CUMMINS",
+        "engineNo": "42H9547702S",
+        "cylinders": 4,
+        "cc": 3920,
+        "horsepower": 192,
+        "axles": 2,
+        "wheels": 3,
+        "wheelType": "ยาง 2 + ล้อเหล็ก 1",
+        "weightKg": 13300,
+        "weightTotalKg": 13300
+      },
+      "ownership": {
+        "method": "เช่า (RMN เช่าต่อจากลีดเวย์)",
+        "titleHolder": "บริษัท กรุงไทย มิซูโฮ ลีสซิ่ง จำกัด",
+        "titleHolderTaxId": "0105535023735",
+        "possessor": "บริษัท ลีดเวย์ เฮฟวี่ แมชชีนเนอรี่ จำกัด",
+        "possessorIsUs": false,
+        "possessorTaxId": "0505550004157",
+        "hirePurchaseSignedOn": "2568-03-21",
+        "leaseDocLocation": "หน้าที่ 2 ในไฟล์ PDF ของรถคันนั้นเอง",
+        "leaseEndDate": null
+      },
+      "dates": {
+        "registered": "2568-05-06",
+        "possessed": "2568-05-06"
+      },
+      "tax": {
+        "paidOn": "2569-03-12",
+        "dueNext": "2570-05-06",
+        "flag": "green"
+      },
+      "docs": [
+        "05_เครื่องจักร\\5-6_ถข6541_คู่มือจดทะเบียน+สัญญาเช่า.pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "เล่มทะเบียนต้นฉบับ (ฝากไฟล์\\เอกสารขึ้นชั้น3)"
+      },
+      "pii": false,
+      "note": "🔴 ทะเบียนไม่มีชื่อ RMN ทั้งช่องกรรมสิทธิ์และครอบครอง — e-GP ดึงจากกรมขนส่งจะขึ้นชื่อลีดเวย์ ต้องแนบสัญญาเช่า"
+    },
+    {
+      "id": "TR-5-7-825889",
+      "type": "truck",
+      "egpItem": "5-7",
+      "criteria": {
+        "name": "Dump Truck 6/10 ล้อ",
+        "min": "× 6",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "spec": {
+        "plate": "82-5889",
+        "province": "มหาสารคาม",
+        "vehicleType": "รถบรรทุกส่วนบุคคล",
+        "bodyType": "กระบะบรรทุกยกได้มีข้างเลื่อน",
+        "color": "ขาว",
+        "brand": "ISUZU",
+        "model": "FXZ77QXDFV",
+        "chassisNo": "MP1FXZ777MT002513",
+        "engineBrand": "ISUZU",
+        "engineNo": "6UZ1ZH8692",
+        "cylinders": 6,
+        "horsepower": 360,
+        "kilowatt": 265,
+        "axles": 3,
+        "wheels": 10,
+        "tyres": 10,
+        "weightKg": 12000,
+        "payloadKg": 13000,
+        "weightTotalKg": 25000
+      },
+      "ownership": {
+        "method": "เช่าซื้อ",
+        "titleHolder": "บริษัท ตรีเพชรอีซูซุลิสซิ่ง จำกัด",
+        "titleHolderTaxId": null,
+        "possessor": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "possessorIsUs": true,
+        "hirePurchaseNo": null
+      },
+      "dates": {
+        "registered": "2566-10-04",
+        "possessed": "2566-10-04"
+      },
+      "tax": {
+        "paidOn": "2568-07-29",
+        "dueNext": "2569-09-30",
+        "flag": "orange",
+        "period": "4/68–3/69"
+      },
+      "docs": [
+        "05_เครื่องจักร\\5-7_82-5889_คู่มือจดทะเบียน.pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "เล่มทะเบียนต้นฉบับ (ฝากไฟล์\\เอกสารขึ้นชั้น3)"
+      },
+      "pii": false,
+      "transportLicense": {
+        "printedInBook": "ค.ข. 272/2562",
+        "printedExpiry": "2567-05-02",
+        "current": "มค.บ. 417/2567",
+        "expires": "2572-07-30",
+        "note": "เลขในเล่ม = ข้อมูล ณ วันจดทะเบียนรถ เล่มไม่อัปเดตเมื่อต่ออายุ"
+      }
+    },
+    {
+      "id": "TR-5-7-825886",
+      "type": "truck",
+      "egpItem": "5-7",
+      "criteria": {
+        "name": "Dump Truck 6/10 ล้อ",
+        "min": "× 6",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "spec": {
+        "plate": "82-5886",
+        "province": "มหาสารคาม",
+        "vehicleType": "รถบรรทุกส่วนบุคคล",
+        "bodyType": "กระบะบรรทุกยกได้มีข้างเลื่อน",
+        "color": "ขาว",
+        "brand": "ISUZU",
+        "model": "FXZ77QXDFV",
+        "chassisNo": "MP1FXZ777MT002590",
+        "engineBrand": "ISUZU",
+        "engineNo": "6UZ1ZK0122",
+        "cylinders": 6,
+        "horsepower": 360,
+        "kilowatt": 265,
+        "axles": 3,
+        "wheels": 10,
+        "tyres": 10,
+        "weightKg": 12000,
+        "payloadKg": 13000,
+        "weightTotalKg": 25000
+      },
+      "ownership": {
+        "method": "เช่าซื้อ",
+        "titleHolder": "บริษัท ตรีเพชรอีซูซุลิสซิ่ง จำกัด",
+        "titleHolderTaxId": null,
+        "possessor": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "possessorIsUs": true,
+        "hirePurchaseNo": null
+      },
+      "dates": {
+        "registered": "2566-10-04",
+        "possessed": "2566-10-04"
+      },
+      "tax": {
+        "paidOn": "2568-07-21",
+        "dueNext": "2569-09-30",
+        "flag": "orange",
+        "period": "4/68–3/69"
+      },
+      "docs": [
+        "05_เครื่องจักร\\5-7_82-5886_คู่มือจดทะเบียน.pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "เล่มทะเบียนต้นฉบับ (ฝากไฟล์\\เอกสารขึ้นชั้น3)"
+      },
+      "pii": false,
+      "note": "ชื่อไฟล์เดิมเขียนผิดเป็น 82-5996 — แก้แล้ว 2026-08-24",
+      "transportLicense": {
+        "printedInBook": "ค.ข. 272/2562",
+        "printedExpiry": "2567-05-02",
+        "current": "มค.บ. 417/2567",
+        "expires": "2572-07-30",
+        "note": "เลขในเล่ม = ข้อมูล ณ วันจดทะเบียนรถ เล่มไม่อัปเดตเมื่อต่ออายุ"
+      }
+    },
+    {
+      "id": "TR-5-7-825985",
+      "type": "truck",
+      "egpItem": "5-7",
+      "criteria": {
+        "name": "Dump Truck 6/10 ล้อ",
+        "min": "× 6",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "spec": {
+        "plate": "82-5985",
+        "province": "มหาสารคาม",
+        "vehicleType": "รถบรรทุกส่วนบุคคล",
+        "bodyType": "กระบะบรรทุกยกได้มีข้างเลื่อน",
+        "color": "ขาว",
+        "brand": "ISUZU",
+        "model": "FXZ77QXDFV",
+        "chassisNo": "MP1FXZ777MT003288",
+        "engineBrand": "ISUZU",
+        "engineNo": "6UZ1EEZ025",
+        "cylinders": 6,
+        "horsepower": 360,
+        "kilowatt": 265,
+        "axles": 3,
+        "wheels": 10,
+        "tyres": 10,
+        "weightKg": 12600,
+        "payloadKg": 12400,
+        "weightTotalKg": 25000
+      },
+      "ownership": {
+        "method": "เช่าซื้อ",
+        "titleHolder": "บริษัท ตรีเพชรอีซูซุลิสซิ่ง จำกัด",
+        "titleHolderTaxId": null,
+        "possessor": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "possessorIsUs": true,
+        "hirePurchaseNo": null
+      },
+      "dates": {
+        "registered": "2566-12-06",
+        "possessed": "2566-12-06"
+      },
+      "tax": {
+        "paidOn": "2568-07-29",
+        "dueNext": "2569-09-30",
+        "flag": "orange",
+        "period": "4/68–3/69"
+      },
+      "docs": [
+        "05_เครื่องจักร\\5-7_82-5985_คู่มือจดทะเบียน.pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "เล่มทะเบียนต้นฉบับ (ฝากไฟล์\\เอกสารขึ้นชั้น3)"
+      },
+      "pii": false,
+      "transportLicense": {
+        "printedInBook": "ค.ข. 272/2562",
+        "printedExpiry": "2567-05-02",
+        "current": "มค.บ. 417/2567",
+        "expires": "2572-07-30",
+        "note": "เลขในเล่ม = ข้อมูล ณ วันจดทะเบียนรถ เล่มไม่อัปเดตเมื่อต่ออายุ"
+      }
+    },
+    {
+      "id": "TR-5-7-825983",
+      "type": "truck",
+      "egpItem": "5-7",
+      "criteria": {
+        "name": "Dump Truck 6/10 ล้อ",
+        "min": "× 6",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "spec": {
+        "plate": "82-5983",
+        "province": "มหาสารคาม",
+        "vehicleType": "รถบรรทุกส่วนบุคคล",
+        "bodyType": "กระบะบรรทุกยกได้มีข้างเลื่อน",
+        "color": "ขาว",
+        "brand": "ISUZU",
+        "model": "FXZ77QXDFV",
+        "chassisNo": "MP1FXZ777MT003281",
+        "engineBrand": "ISUZU",
+        "engineNo": "6UZ1EEZ018",
+        "cylinders": 6,
+        "horsepower": 360,
+        "kilowatt": 265,
+        "axles": 3,
+        "wheels": 10,
+        "tyres": 10,
+        "weightKg": 12600,
+        "payloadKg": 12400,
+        "weightTotalKg": 25000
+      },
+      "ownership": {
+        "method": "เช่าซื้อ",
+        "titleHolder": "บริษัท ตรีเพชรอีซูซุลิสซิ่ง จำกัด",
+        "titleHolderTaxId": null,
+        "possessor": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "possessorIsUs": true,
+        "hirePurchaseNo": null
+      },
+      "dates": {
+        "registered": "2566-12-06",
+        "possessed": "2566-12-06"
+      },
+      "tax": {
+        "paidOn": "2568-07-29",
+        "dueNext": "2569-09-30",
+        "flag": "orange",
+        "period": "4/68–3/69"
+      },
+      "docs": [
+        "05_เครื่องจักร\\5-7_82-5983_คู่มือจดทะเบียน.pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "เล่มทะเบียนต้นฉบับ (ฝากไฟล์\\เอกสารขึ้นชั้น3)"
+      },
+      "pii": false,
+      "transportLicense": {
+        "printedInBook": "ค.ข. 272/2562",
+        "printedExpiry": "2567-05-02",
+        "current": "มค.บ. 417/2567",
+        "expires": "2572-07-30",
+        "note": "เลขในเล่ม = ข้อมูล ณ วันจดทะเบียนรถ เล่มไม่อัปเดตเมื่อต่ออายุ"
+      }
+    },
+    {
+      "id": "TR-5-7-825987",
+      "type": "truck",
+      "egpItem": "5-7",
+      "criteria": {
+        "name": "Dump Truck 6/10 ล้อ",
+        "min": "× 6",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "spec": {
+        "plate": "82-5987",
+        "province": "มหาสารคาม",
+        "vehicleType": "รถบรรทุกส่วนบุคคล",
+        "bodyType": "กระบะบรรทุกยกได้มีข้างเลื่อน",
+        "color": "ขาว",
+        "brand": "ISUZU",
+        "model": "FXZ77QXDFV",
+        "chassisNo": "MP1FXZ777MT003277",
+        "engineBrand": "ISUZU",
+        "engineNo": "6UZ1EEY953",
+        "cylinders": 6,
+        "horsepower": 360,
+        "kilowatt": 265,
+        "axles": 3,
+        "wheels": 10,
+        "tyres": 10,
+        "weightKg": 12600,
+        "payloadKg": 12400,
+        "weightTotalKg": 25000
+      },
+      "ownership": {
+        "method": "เช่าซื้อ",
+        "titleHolder": "บริษัท ตรีเพชรอีซูซุลิสซิ่ง จำกัด",
+        "titleHolderTaxId": null,
+        "possessor": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "possessorIsUs": true,
+        "hirePurchaseNo": null
+      },
+      "dates": {
+        "registered": "2566-12-06",
+        "possessed": "2566-12-06"
+      },
+      "tax": {
+        "paidOn": "2568-07-21",
+        "dueNext": "2569-09-30",
+        "flag": "orange",
+        "period": "4/68–3/69"
+      },
+      "docs": [
+        "05_เครื่องจักร\\5-7_82-5987_คู่มือจดทะเบียน.pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "เล่มทะเบียนต้นฉบับ (ฝากไฟล์\\เอกสารขึ้นชั้น3)"
+      },
+      "pii": false,
+      "transportLicense": {
+        "printedInBook": "ค.ข. 272/2562",
+        "printedExpiry": "2567-05-02",
+        "current": "มค.บ. 417/2567",
+        "expires": "2572-07-30",
+        "note": "เลขในเล่ม = ข้อมูล ณ วันจดทะเบียนรถ เล่มไม่อัปเดตเมื่อต่ออายุ"
+      }
+    },
+    {
+      "id": "TR-5-7-825989",
+      "type": "truck",
+      "egpItem": "5-7",
+      "criteria": {
+        "name": "Dump Truck 6/10 ล้อ",
+        "min": "× 6",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "spec": {
+        "plate": "82-5989",
+        "province": "มหาสารคาม",
+        "vehicleType": "รถบรรทุกส่วนบุคคล",
+        "bodyType": "กระบะบรรทุกยกได้มีข้างเลื่อน",
+        "color": "ขาว",
+        "brand": "ISUZU",
+        "model": "FXZ77QXDFV",
+        "chassisNo": "MP1FXZ777MT003287",
+        "engineBrand": "ISUZU",
+        "engineNo": "6UZ1EEZ024",
+        "cylinders": 6,
+        "horsepower": 360,
+        "kilowatt": 265,
+        "axles": 3,
+        "wheels": 10,
+        "tyres": 10,
+        "weightKg": 12600,
+        "payloadKg": 12400,
+        "weightTotalKg": 25000
+      },
+      "ownership": {
+        "method": "เช่าซื้อ",
+        "titleHolder": "บริษัท ตรีเพชรอีซูซุลิสซิ่ง จำกัด",
+        "titleHolderTaxId": null,
+        "possessor": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "possessorIsUs": true,
+        "hirePurchaseNo": null
+      },
+      "dates": {
+        "registered": "2566-12-06",
+        "possessed": "2566-12-06"
+      },
+      "tax": {
+        "paidOn": "2568-07-21",
+        "dueNext": "2569-09-30",
+        "flag": "orange",
+        "period": "4/68–3/69"
+      },
+      "docs": [
+        "05_เครื่องจักร\\5-7_82-5989_คู่มือจดทะเบียน.pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "เล่มทะเบียนต้นฉบับ (ฝากไฟล์\\เอกสารขึ้นชั้น3)"
+      },
+      "pii": false,
+      "transportLicense": {
+        "printedInBook": "ค.ข. 272/2562",
+        "printedExpiry": "2567-05-02",
+        "current": "มค.บ. 417/2567",
+        "expires": "2572-07-30",
+        "note": "เลขในเล่ม = ข้อมูล ณ วันจดทะเบียนรถ เล่มไม่อัปเดตเมื่อต่ออายุ"
+      }
+    },
+    {
+      "id": "TR-5-8-827166",
+      "type": "truck",
+      "egpItem": "5-8",
+      "criteria": {
+        "name": "Water Tank Truck",
+        "min": "6,000 ลิตร × 4",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "spec": {
+        "plate": "82-7166",
+        "province": "มหาสารคาม",
+        "vehicleType": "รถบรรทุกส่วนบุคคล",
+        "bodyType": "บรรทุกของเหลว (น้ำ)",
+        "brand": "HINO",
+        "model": "FM8JN1D-SGT",
+        "chassisNo": "4NKFM8JN1XHX10481",
+        "engineBrand": "HINO",
+        "engineNo": "J08EWHH52121",
+        "horsepower": 260,
+        "axles": 3,
+        "wheels": 6,
+        "tyres": 10,
+        "weightKg": 15000,
+        "payloadKg": 10000,
+        "weightTotalKg": 25000,
+        "tankLiters": null,
+        "firstRegistered": "2560-05-09"
+      },
+      "ownership": {
+        "method": "กรรมสิทธิ์ (ซื้อ)",
+        "titleHolder": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "titleHolderTaxId": "0443561001307",
+        "possessor": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "possessorIsUs": true
+      },
+      "dates": {
+        "registered": "2569-05-06",
+        "possessed": "2569-05-06"
+      },
+      "tax": {
+        "paidOn": "2569-05-06",
+        "dueNext": "2570-03-31",
+        "flag": "green"
+      },
+      "docs": [
+        "05_เครื่องจักร\\5-8_82-7166_คู่มือจดทะเบียน.pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "เล่มทะเบียนต้นฉบับ (ฝากไฟล์\\เอกสารขึ้นชั้น3)"
+      },
+      "pii": false,
+      "note": "เล่มทะเบียนไม่ระบุความจุถังเป็นลิตร — ถ้าถูกขอหลักฐาน 6,000 ล. ต้องใช้ใบเสร็จ/สเปคถัง",
+      "transportLicense": {
+        "current": "มค.บ. 417/2567",
+        "expires": "2572-07-30"
+      }
+    },
+    {
+      "id": "TR-5-8-827155",
+      "type": "truck",
+      "egpItem": "5-8",
+      "criteria": {
+        "name": "Water Tank Truck",
+        "min": "6,000 ลิตร × 4",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "spec": {
+        "plate": "82-7155",
+        "province": "มหาสารคาม",
+        "vehicleType": "รถบรรทุกส่วนบุคคล",
+        "bodyType": "บรรทุกของเหลว (น้ำ)",
+        "brand": "HINO",
+        "model": "FM8JN1D-SGT",
+        "chassisNo": "MNKFM8JN1XHX10394",
+        "engineBrand": "HINO",
+        "engineNo": "J08EWHH51692",
+        "horsepower": 260,
+        "axles": 3,
+        "wheels": 6,
+        "tyres": 10,
+        "weightKg": 9800,
+        "payloadKg": 15200,
+        "weightTotalKg": 25000,
+        "tankLiters": null,
+        "firstRegistered": "2560-02-20"
+      },
+      "ownership": {
+        "method": "กรรมสิทธิ์ (ซื้อ)",
+        "titleHolder": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "titleHolderTaxId": "0443561001307",
+        "possessor": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "possessorIsUs": true
+      },
+      "dates": {
+        "registered": "2569-04-24",
+        "possessed": "2569-04-24"
+      },
+      "tax": {
+        "paidOn": "2569-03-12",
+        "dueNext": "2569-12-31",
+        "flag": "orange",
+        "dueNextUncertain": true
+      },
+      "docs": [
+        "05_เครื่องจักร\\5-8_82-7155_คู่มือจดทะเบียน.pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "เล่มทะเบียนต้นฉบับ (ฝากไฟล์\\เอกสารขึ้นชั้น3)"
+      },
+      "pii": false,
+      "note": "เล่มทะเบียนไม่ระบุความจุถังเป็นลิตร — ถ้าถูกขอหลักฐาน 6,000 ล. ต้องใช้ใบเสร็จ/สเปคถัง",
+      "transportLicense": {
+        "current": "มค.บ. 417/2567",
+        "expires": "2572-07-30"
+      }
+    },
+    {
+      "id": "TR-5-8-826778",
+      "type": "truck",
+      "egpItem": "5-8",
+      "criteria": {
+        "name": "Water Tank Truck",
+        "min": "6,000 ลิตร × 4",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "spec": {
+        "plate": "82-6778",
+        "province": "มหาสารคาม",
+        "vehicleType": "รถบรรทุกส่วนบุคคล",
+        "bodyType": "บรรทุกของเหลว (น้ำ)",
+        "brand": "ISUZU",
+        "model": "FXZ23NFPF",
+        "chassisNo": "FXZ23NFPFR-3600670",
+        "engineBrand": "ISUZU",
+        "engineNo": "6SD1-717656",
+        "horsepower": 240,
+        "axles": 3,
+        "wheels": 6,
+        "tyres": 10,
+        "weightKg": 9900,
+        "payloadKg": 11100,
+        "weightTotalKg": 21000,
+        "tankLiters": null,
+        "firstRegistered": "2537-12-14"
+      },
+      "ownership": {
+        "method": "กรรมสิทธิ์ (ซื้อ)",
+        "titleHolder": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "titleHolderTaxId": "0443561001307",
+        "possessor": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "possessorIsUs": true
+      },
+      "dates": {
+        "registered": "2568-07-03",
+        "possessed": "2568-07-03"
+      },
+      "tax": {
+        "paidOn": "2569-05-14",
+        "dueNext": "2570-06-30",
+        "flag": "green"
+      },
+      "docs": [
+        "05_เครื่องจักร\\5-8_82-6778_คู่มือจดทะเบียน.pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "เล่มทะเบียนต้นฉบับ (ฝากไฟล์\\เอกสารขึ้นชั้น3)"
+      },
+      "pii": false,
+      "note": "เล่มทะเบียนไม่ระบุความจุถังเป็นลิตร — ถ้าถูกขอหลักฐาน 6,000 ล. ต้องใช้ใบเสร็จ/สเปคถัง",
+      "transportLicense": {
+        "current": "มค.บ. 417/2567",
+        "expires": "2572-07-30"
+      }
+    },
+    {
+      "id": "TR-5-8-826753",
+      "type": "truck",
+      "egpItem": "5-8",
+      "criteria": {
+        "name": "Water Tank Truck",
+        "min": "6,000 ลิตร × 4",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "spec": {
+        "plate": "82-6753",
+        "province": "มหาสารคาม",
+        "vehicleType": "รถบรรทุกส่วนบุคคล",
+        "bodyType": "บรรทุกของเหลว (น้ำ)",
+        "brand": "HINO",
+        "model": "FM187LA-",
+        "chassisNo": "FM187LA-12369",
+        "engineBrand": "HINO",
+        "engineNo": "H07C-E67007",
+        "horsepower": 180,
+        "axles": 3,
+        "wheels": 6,
+        "tyres": 10,
+        "weightKg": 8200,
+        "payloadKg": 12800,
+        "weightTotalKg": 21000,
+        "tankLiters": null,
+        "firstRegistered": "2533-09-04"
+      },
+      "ownership": {
+        "method": "กรรมสิทธิ์ (ซื้อ)",
+        "titleHolder": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "titleHolderTaxId": "0443561001307",
+        "possessor": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+        "possessorIsUs": true
+      },
+      "dates": {
+        "registered": "2568-06-23",
+        "possessed": "2568-06-23"
+      },
+      "tax": {
+        "paidOn": "2569-05-08",
+        "dueNext": "2570-03-31",
+        "flag": "green"
+      },
+      "docs": [
+        "05_เครื่องจักร\\5-8_82-6753_คู่มือจดทะเบียน.pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "เล่มทะเบียนต้นฉบับ (ฝากไฟล์\\เอกสารขึ้นชั้น3)"
+      },
+      "pii": false,
+      "note": "เล่มทะเบียนไม่ระบุความจุถังเป็นลิตร — ถ้าถูกขอหลักฐาน 6,000 ล. ต้องใช้ใบเสร็จ/สเปคถัง",
+      "transportLicense": {
+        "current": "มค.บ. 417/2567",
+        "expires": "2572-07-30"
+      }
+    },
+    {
+      "id": "WK-01-NP5042",
+      "type": "work",
+      "egpItem": "3",
+      "criteria": {
+        "name": "หนึ่งสัญญา ≥ 30 ล้าน",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "route": "นภ.5042 บ้านวังหมื่น–สร้างเสี่ยน",
+      "lengthKm": 4.3,
+      "employer": "จ.หนองบัวลำภู / แขวงทางหลวงชนบทหนองบัวลำภู",
+      "contract": {
+        "no": "ขทช.นภ./004/2568",
+        "signedOn": "2568-01-14",
+        "valueTotal": 34444000,
+        "valueOurs": 34444000,
+        "sharePct": 100
+      },
+      "jointVenture": {
+        "isJV": false,
+        "partner": null,
+        "partnerValue": null,
+        "jvTaxId": null
+      },
+      "egpRefs": {
+        "projectNo": "67109200008",
+        "contractCtrlNo": "680122011247"
+      },
+      "completion": {
+        "declaredInForm": "2568-07-13",
+        "perCertificate": "2568-06-27",
+        "conflict": true
+      },
+      "docs": [
+        "01_ผลงาน\\01-1_นภ5042_หนังสือรับรองผลงาน[ชุดเต็ม].pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "หนังสือรับรองผลงานต้นฉบับ 4 ฉบับ"
+      },
+      "pii": false,
+      "note": "ไฟล์ต้นฉบับตั้งชื่อผิดเป็น 'สทช.15 สายนภ.5025' แต่เนื้อในคือ นภ.5042 — นี่คือตัวที่ผ่านเกณฑ์ 30 ล."
+    },
+    {
+      "id": "WK-02-KS3007",
+      "type": "work",
+      "egpItem": "3",
+      "criteria": {
+        "name": "ผลงานรวม ≥ 60 ล้าน",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "route": "กส.3007 ซ่อมสร้างผิวทาง (Recycling)",
+      "lengthKm": null,
+      "employer": "สำนักงานทางหลวงชนบทที่ 16 (กาฬสินธุ์)",
+      "contract": {
+        "no": "สทช.ที่ 16/15/2568",
+        "signedOn": "2568-01-09",
+        "valueTotal": 10000000,
+        "valueOurs": 10000000,
+        "sharePct": 100
+      },
+      "jointVenture": {
+        "isJV": false,
+        "partner": null,
+        "partnerValue": null,
+        "jvTaxId": null
+      },
+      "egpRefs": {
+        "projectNo": "67119112184",
+        "contractCtrlNo": "680122005829"
+      },
+      "completion": {
+        "declaredInForm": "2568-05-09",
+        "perCertificate": null,
+        "conflict": false
+      },
+      "docs": [
+        "01_ผลงาน\\01-2_กส3007_หนังสือรับรองผลงาน[ชุดเต็ม].pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "หนังสือรับรองผลงานต้นฉบับ 4 ฉบับ"
+      },
+      "pii": false
+    },
+    {
+      "id": "WK-03-TL2346",
+      "type": "work",
+      "egpItem": "3",
+      "criteria": {
+        "name": "ผลงานรวม ≥ 60 ล้าน",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "route": "ทล.2346 ดอนเชียงบาน–นาหว้า",
+      "lengthKm": 1.325,
+      "employer": "แขวงทางหลวงสกลนครที่ 1",
+      "contract": {
+        "no": "สน.35/2569",
+        "signedOn": "2568-12-11",
+        "valueTotal": 14442000,
+        "valueOurs": 5776800,
+        "sharePct": 40
+      },
+      "jointVenture": {
+        "isJV": true,
+        "partner": "หจก. รุ่งเรืองชัยสุรินทร์ก่อสร้าง",
+        "partnerValue": 8665200,
+        "jvTaxId": "0993000469275"
+      },
+      "egpRefs": {
+        "projectNo": "68109269796",
+        "contractCtrlNo": "681222003899"
+      },
+      "completion": {
+        "declaredInForm": "2569-05-10",
+        "perCertificate": null,
+        "conflict": false
+      },
+      "docs": [
+        "01_ผลงาน\\01-3_ทล2346_หนังสือรับรองผลงาน[ชุดเต็ม].pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "หนังสือรับรองผลงานต้นฉบับ 4 ฉบับ"
+      },
+      "pii": false,
+      "note": "ร่วมค้า — e-GP จะดึงวงเงินเต็มสัญญามา ต้องแก้ช่องวงเงินที่ยื่นเป็นส่วนของ RMN เอง"
+    },
+    {
+      "id": "WK-04-NP5025",
+      "type": "work",
+      "egpItem": "3",
+      "criteria": {
+        "name": "ผลงานรวม ≥ 60 ล้าน",
+        "pass": true
+      },
+      "owner": "หจก. อาร์เอ็มเอ็น เอ็นเตอร์ไพส์",
+      "route": "นภ.5025 แยก ทช.นภ.4001–บ้านห้วยยาง",
+      "lengthKm": 4.0,
+      "employer": "สทช.15 อุดรธานี / แขวงทางหลวงชนบทหนองบัวลำภู",
+      "contract": {
+        "no": "ขทช.นภ./030/2567",
+        "signedOn": "2567-06-28",
+        "valueTotal": 25988000,
+        "valueOurs": 12734120,
+        "sharePct": 49
+      },
+      "jointVenture": {
+        "isJV": true,
+        "partner": "หจก. รุ่งเรืองชัยสุรินทร์ก่อสร้าง",
+        "partnerValue": 13253880,
+        "jvTaxId": "0993000469275"
+      },
+      "egpRefs": {
+        "projectNo": "67059265416",
+        "contractCtrlNo": "670622041290"
+      },
+      "completion": {
+        "declaredInForm": "2568-02-23",
+        "perCertificate": null,
+        "conflict": false
+      },
+      "docs": [
+        "01_ผลงาน\\01-4_นภ5025_หนังสือรับรองผลงาน[ชุดเต็ม].pdf"
+      ],
+      "verified": {
+        "on": "2026-08-24",
+        "by": "DA",
+        "source": "หนังสือรับรองผลงานต้นฉบับ 4 ฉบับ"
+      },
+      "pii": false,
+      "note": "ร่วมค้า — แก้ความเข้าใจเดิม: นภ.5025 ไม่ใช่ 34.4 ล. · ตัว 34.4 ล. คือ นภ.5042"
+    }
+  ]
+}
