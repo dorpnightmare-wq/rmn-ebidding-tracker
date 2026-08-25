@@ -1,0 +1,361 @@
+# 📦 ARCHIVE — WRK_ECOSYSTEM_ADMIN (DA) · 2569 H2
+
+> session log เก่าที่ย้ายออกจาก `WRK_ECOSYSTEM_ADMIN.md` เมื่อ 2026-08-24 ตามกฎเพดาน 20 KB
+> ครอบคลุม 2026-07-01 → 2026-08-24 #2 (11 sessions)
+> ⚠️ ไฟล์นี้ **ไม่ต้องอ่านตอนเปิด session** — เปิดเฉพาะตอนต้องสืบย้อนว่าเคยตัดสินใจอะไรไว้
+## 🔄 Session State (2026-07-01)
+### ✅ Done
+- สร้าง KB/WRK pointer pair (slug: ECOSYSTEM_ADMIN)
+  - KB: `M4RX-B4SE\RMN_Enterprise\E-Bidding\agents\KB_ECOSYSTEM_ADMIN.md`
+  - WRK: `RMN-eBidding-Workflow\WRK_AGENTS\WRK_ECOSYSTEM_ADMIN.md`
+
+### ⏳ Pending
+- (none)
+
+## 🔄 Session State (2026-07-01, cont.)
+### ✅ Done
+- ศึกษา workflow ครบ 5 sub-agent (API Status / Fee Payment / Mapmaker / Operating / UI-UX) — scope + ห้ามทำ บันทึกใน KB_ECOSYSTEM_ADMIN.md
+- พบ discrepancy: EBIDDING.md (repo เก่า) vs WRK_AGENTS/CLAUDE.md (repo ปัจจุบัน, canonical)
+- นิยาม scope ตัวเอง 2 ส่วน: (1) KB — สร้าง/manage KB ทุก agent (2) WRK — แก้ไข/อัพเดทข้อมูลเก่าในระบบ + sync ให้ทุก agent ฐานข้อมูลเดียวกัน (ต่างจาก Operating ที่เพิ่มเฉพาะโครงการใหม่+push git)
+
+## 🔄 Session State (2026-07-02 — WRK Data Correction: ห้างหุ้นส่วน RMN FY2565-68)
+### ✅ Done
+- Cross-check `seed_bids.js` (entity="ห้างหุ้นส่วน RMN", FY2565-68, 206 records) กับรายงานจัดซื้อจัดจ้าง e-GP จริง 4 ไฟล์ (342 unique id)
+- Match by `id` (รหัสโครงการ) → overlap 195 records
+- **Patched 184 records** ใน seed_bids.js (backup: `/tmp/work/seed_bids_backup.js` ใน sandbox — หมดตอนจบ session):
+  - เติม `province` ที่ขาด: 158 records
+  - แก้ `bid` ให้ตรงราคาที่ตกลงจ้างจริง: 21 records
+  - แก้ `budget` ผิด: 4 records
+  - แก้ id พิมพ์ผิด `57059022139` → `67059022139` (อบต.แกดำ, budget 0→820,000)
+
+### ⏳ Pending — รอ user ตัดสินใจ
+- **10 records ใน seed_bids ไม่พบใน e-GP report เลย** (ไม่ใช่ typo ธรรมดา) — ต้องตรวจสอบทีละตัว: 65107138294(อบต.หนองทุ่ม) 67039272259(ทต.หนองหาน) 67039415159(ทต.เขาพระนอน) 67069444218/67069446273(ทต.ทุ่งฝน) 67079652295(ทต.เชียงคาน) 67099119350(ทต.ร่องคำ) 67119300266(แขวงทางหลวงชนบทขอนแก่น) 68019418330(ทต.ขามเรียง) 67029268868(ทต.อูบมุง)
+- **146 records ใน e-GP report ไม่มีใน tracker**: 85 จ้างก่อสร้าง (in-scope e-bidding — อาจต้องเพิ่ม) / 44 จ้างทำของ-จ้างเหมาบริการ / 17 ซื้อ (2 ประเภทหลังน่าจะนอก scope tracker) — รอ user ยืนยันว่าจะเพิ่มหรือไม่
+- ยังไม่ push git (รอ user คอนเฟิร์ม)
+
+### ✅ Done (2026-07-15 — 10 orphan records decision)
+- ลบ 3 records ที่ user สั่ง [ลบ]: `67029268868`(ทต.อูบมุง) `67079652295`(ทต.เชียงคาน) `67099119350`(ทต.ร่องคำ)
+- Total records: 395 → 392 (พบว่ามี 18 records ใหม่ถูกเพิ่มโดย Operating Agent ระหว่างช่วงที่รอ — ของเดิม 377 + typo id fix ไม่กระทบ)
+- 7 records [เพิ่ม] = user เช็ค id ที่เว็บ e-GP โดยตรงแล้ว ยืนยันเป็นงานจริงของ หจก.RMN → **เก็บไว้ ไม่แก้ไข** (id ต่างจาก report ที่ user มี แต่ตรงกับ e-GP จริง — report ที่ user ให้มาอาจไม่ครบ 100%)
+- 3 records [ลบ] = user ยืนยันไม่ใช่งานของ RMN — ลบถูกต้องแล้ว ✅ (ที่มาว่าทำไมเคยอยู่ใน tracker ยังไม่ทราบสาเหตุ — ตั้งข้อสังเกตไว้ เผื่อ Operating Agent เคย entity ผิดตอนบันทึก)
+- **สรุป 10 orphans: ปิดเคสแล้ว** (7 keep + 3 deleted)
+
+### ✅ Done (2026-07-15 — เพิ่ม 145 missing records)
+- สร้าง HTML review list (sidebar filter type/FY) ให้ user ดูก่อน
+- user: "บันทึกทั้งหมด" + "in scope บันทึกปกติ ส่วนอีก 2 ประเภทระบุ category ชัดเจน"
+- เพิ่ม 145 records: 84 จ้างก่อสร้าง (schema ปกติ) + 44 จ้างทำของ/จ้างเหมาบริการ + 17 ซื้อวัสดุ (ทั้ง 2 ประเภทหลังมี field `"category"` กำกับ)
+- seq ต่อจาก max เดิมของแต่ละ fiscalYear (scoped ต่อปี ไม่ใช่ global)
+- **บักที่เจอ**: duplicate id 2 ตัว (66099063322, 66089543671) ของเดิมในไฟล์ — ลบตัวที่ stale (ไม่มี province/bid ผิด) ทิ้งแล้ว
+- Total: 392 → 535 records (unique id ครบ, JSON valid)
+
+### ✅ Done (2026-07-15 — full-file seq audit หลัง Operating Agent flag concern)
+- Operating Agent ถามว่างานซ้ำซ้อนมั้ย → เช็คแล้ว: ไม่ทับกัน, คนละ scope (เขา=โครงการใหม่/push รายวัน, ผม=แก้/sync ข้อมูลเก่า)
+- ตรวจ seq scheme: **seq scoped ต่อ fiscalYear เดิมอยู่แล้ว** (min=1 ทุกปีตั้งแต่ก่อนผมแตะ) — ไม่ใช่ inconsistency ใหม่ที่ผมสร้าง ตัว unique key จริงคือ `id` (รหัส e-GP) ไม่ใช่ seq
+- Audit ทั้งไฟล์ (535 records ทุก entity) เจอบัค**ไม่เกี่ยวกับ RMN**: seq=30 ซ้ำใน FY2568 entity "กิจการร่วมค้า รักดี" (id 68029214741 กับ 68049301316) — renumber ตัวหลัง → seq 57 แล้ว
+- Verify: ไม่มี duplicate seq ซ้ำใน fiscalYear ไหนแล้ว ทั้งไฟล์ 535 records
+
+### ✅ Confirmed pushed
+- `4adb66e` fix RMN FY2565-68 (province/bid/budget + 145 records + dedupe id)
+- `3f75d24` fix dedupe seq=30 FY2568
+- verified origin/main ตรงกับ local, seed_bids.js clean
+
+### ⏳ Pending
+- (none) — user confirm: ห้างอื่น (กิจการร่วมค้า RMN/รักดี/ตักสิลา) เพิ่งเริ่มใช้ระบบปีนี้ (FY2569) ไม่มีข้อมูลย้อนหลังให้แก้ → **ปิด task data-correction ทั้งชุดสมบูรณ์** ไม่ต้องรอ excel เพิ่มเติมสำหรับห้างอื่น
+
+## 🔄 Session State (2026-07-16 — เอกสาร RAKDEE + ตราประทับ)
+### ✅ Done
+- สร้าง PDF "บัญชีรายชื่อผู้มีอำนาจควบคุม" หจก.รักดีการโยธา ตาม format RMN.pdf reference
+  - ใช้ weasyprint (ไม่ใช้ reportlab — เจอบัค วรรณยุกต์ทับซ้อนกันตอนแรก, แก้แล้วเปลี่ยน engine)
+  - เว้นลายเซ็น/ตราประทับว่าง, เลขอาราบิก, วันที่ 15 กรกฎาคม 2569, เลขบัตร ปชช. [REDACTED — ดู repo private RMN-eBidding-KB]
+  - label=bold, ข้อมูลกรอก=regular ทั้งหมด, line-height 2.8
+  - Final file: `[EGP]_E-BIDDING - [R.M.N_GROUP]_DATABASE\[ RAKDEE CIVIL ]\RMN\ผู้มีอำนาจควบคุม RAKDEE.pdf`
+- Enhance ตราประทับ (stamp) หจก.รักดีการโยธา จากรูป screenshot → PNG หัวกระดาษ
+  - Upscale 4x + denoise + sharpen + saturation boost, ทำพื้นหลังโปร่งใส (alpha)
+  - แก้ tilt: หมุน -13.1° (คำนวณจาก diamond marker ซ้าย-ขวาให้ระดับเดียวกัน — วิธี: หา centroid ของ diamond ทั้ง 2 ฝั่งเทียบมุมกับจุดศูนย์กลางวงกลม)
+  - ซ่อมจุดเส้นวงแหวนนอกที่บาง/ขาดใกล้ข้อความ "PARTNERSHIP" ล่าง — ใช้ polar unwrap (cv2.warpPolar, **columns=radius axis, rows=angle axis** — จุดสำคัญที่พลาดตอนแรกจนแก้ผิดตำแหน่ง ต้อง calibrate ด้วย marker point ก่อนเสมอ) แล้ว cross-fade เนื้อผ้า/สีจาก donor segment ข้างเคียงแทนที่ patch สีเรียบ (ให้คงลาย texture หมึกธรรมชาติ)
+  - Final files (ทับของเดิม): `[EGP]_E-BIDDING - [R.M.N_GROUP]_DATABASE\[ RAKDEE CIVIL ]\RMN\RAKDEE_stamp_transparent.png` และ `RAKDEE_stamp_whitebg.png`
+
+### 📌 Technique note (สำหรับใช้ครั้งหน้า — stamp/ตราประทับ อื่นๆ)
+- Thai text ที่มีวรรณยุกต์ซ้อน → ต้องใช้ weasyprint (HTML/CSS→PDF ผ่าน Pango) ไม่ใช้ reportlab canvas
+- แก้เส้นวงกลมที่ขาด/tilt บนตราประทับ → polar unwrap ด้วย cv2.warpPolar(dsize=(width,height)) โดย **width=รัศมี-axis, height=มุม-axis** (ทดสอบ calibrate ด้วยจุด marker เทียบตำแหน่งก่อนแก้จริงทุกครั้ง กันพลาดแกน)
+
+### ⏳ Pending
+- (none) — รอ user สั่งงานถัดไป (เอกสารนิติบุคคลอื่น หรือ entity อื่น)
+
+## 🔄 Session State (2026-08-09 — nickname "DA", BOQ, RAKDEE docx, Khon Kaen checklist, cloud project migration)
+### ✅ Done
+- User สั่ง: เรียก agent นี้ว่า **"DA"** แทน "Ecosystem & Datacenter Admin Agent" เต็มๆ (บันทึกลง memory แล้ว [[feedback_da_nickname]])
+- BOQ_1.xlsx: restructure column E-I ตามรูปที่ user ส่ง (ค่างานต้นทุน/Factor F/ราคากลาง/ราคาที่ปรับลด/ราคาต่อหน่วย) — verify ผ่าน LibreOffice render ตรงกับรูปเกือบ 100% (คลาดเคลื่อน 1 สตางค์ 2 จุดจาก rounding ปกติของ Excel)
+- สร้าง "รายชื่อหุ้นส่วนผู้จัดการ RAKDEE.docx" ตาม format RMN.pdf + ข้อมูลจาก DBD #06-08-2569 (หุ้นส่วนผู้จัดการ 1 คน: นางอนุรักษ์ บารพรม, ทุนจดทะเบียนรวม 10,000,000)
+  - **บั๊กเจอ**: floating image (ตราประทับทับลายเซ็น) ใช้ `relativeFrom: HorizontalPositionAlign.CENTER` ผิด — enum นี้ใช้ไม่ได้กับ `relativeFrom` (ต้องเป็น `page`/`paragraph`/`margin` ฯลฯ) ทำให้ Word เปิดไฟล์ไม่ได้ (แต่ LibreOffice ยังพอเปิดได้แบบ error-tolerant) แก้เป็น `HorizontalPositionRelativeFrom.PAGE` / `VerticalPositionRelativeFrom.PARAGRAPH` แล้ว validate ผ่าน (บันทึกเป็น technique note ด้านล่าง)
+- สร้างเช็คลิสต์เตรียมตัว 2 งานอบรมขอนแก่น (Digital Construction Bootcamp + กรมทางหลวง DCS) ทั้ง docx และ interactive HTML widget
+  - แก้ภาษาไทยหลายจุดตามที่ user สั่ง "ดูภาษาซิ" — เจอบั๊กจริง: cross-reference ผิดหมวด ("ดูหมวด 4" ที่จริงต้องเป็น "หมวด 2.2")
+  - **แก้ความเข้าใจผิดสำคัญ**: เดิมสันนิษฐานว่าทะเบียนประเภท 4/6 เป็นของ ทช. — ตรวจจาก PDF ต้นฉบับจริงแล้วพบว่าเป็นของ **กรมทางหลวง (DOH)** ต่างหาก (บันทึกลง WRK_DOC_EXPIRY.md แล้ว) มีแค่บัตร Recycling บร.1-617/2567 เท่านั้นที่เป็น ทช. จริง
+  - ยืนยันเลขทะเบียนนิติบุคคล RMN ที่ถูกต้อง: **0443561001307** (เอกสารเก่า 044361001307 ขาดเลข "5" ผิด) — บันทึกใน WRK_DOC_EXPIRY.md แล้ว
+  - ทั้ง 2 งานลงทะเบียนสำเร็จแล้ว (Bootcamp + DCS ผ่านการตรวจสอบ 5 ส.ค. 69 โดยนายศุภกฤต บารพรม)
+- **Cloud Project migration ปิดเคสแล้ว**: ปัญหาเดิม "ไม่เห็น RMN e-Bidding Workflow บนโน้ตบุ๊ก" ที่แท้จริงคือ**ไม่เคยเป็น cloud Project เลยทั้งคู่** (ทั้งที่ PC และ laptop เห็น path-pin local) → สร้าง Project ใหม่ชื่อ "RMN e-Bidding WorkFlow" ผ่านหน้า Projects สำเร็จแล้วบน PC (เห็นแชท Datacenter Admin/UI./OPY/MM./DOC. ครบ), ลบ pin เก่าที่ laptop ทิ้งแล้ว — เหลือรอ sync ขึ้น laptop (คนละบัญชีไม่ใช่สาเหตุ ทั้งคู่ login "Mark" เหมือนกัน) แนะนำให้ restart แอปที่ laptop ถ้ายังไม่ขึ้น
+- สำรอง memory ทั้งหมด + scheduled tasks (2 ตัว: morning-agent-context-check, rmn-doc-expiry-check) ไว้ที่ `WRK_AGENTS\MEMORY_BACKUP_2026-08-09.md` และร่าง Project Instructions ไว้ที่ `WRK_AGENTS\PROJECT_INSTRUCTIONS_DRAFT.md`
+
+### 📌 Technique note (docx-js floating image — stamp/ตราประทับทับลายเซ็น)
+- ใช้ `floating.horizontalPosition.relative` / `verticalPosition.relative` ต้องเป็น `HorizontalPositionRelativeFrom` / `VerticalPositionRelativeFrom` enum (ค่าเช่น `page`, `paragraph`, `margin`) **ห้ามใช้ `HorizontalPositionAlign`/`VerticalPositionAlign`** (นั่นคือ enum สำหรับ `align` ไม่ใช่ `relative` — ใส่ผิดที่ทำให้ Word เปิดไฟล์ไม่ได้เงียบๆ โดย LibreOffice ยังพอ render ได้ ต้องรัน `validate.py` เช็ค XSD ก่อนส่งทุกครั้งที่มี floating image)
+
+### ⏳ Pending
+- ~~ยืนยัน project sync ขึ้น laptop~~ / ~~เชื่อมโฟลเดอร์ที่ laptop~~ → **ปิดเคสแล้ว** ดู correction ด้านล่าง (project ไม่ sync โดยธรรมชาติ ต้องสร้างเองที่ laptop ซึ่งทำเสร็จแล้ว)
+
+## 🔄 Session State (2026-08-09 cont. — ❌ CORRECTION: cloud project migration ไม่จริง)
+### ❌ แก้บันทึกที่ผิดของรอบก่อน
+- บันทึกเดิมว่า "สร้าง Project ใหม่ชื่อ RMN e-Bidding WorkFlow ผ่านหน้า Projects สำเร็จแล้วบน PC" — **ไม่จริง**
+- ตรวจสอบจริงผ่าน browser (claude.ai/projects, login บัญชี Suphakrit Barap… Pro plan) → มี project เดียวคือ **"MY PERSONAL TOOLS"** เท่านั้น ไม่มี RMN e-Bidding WorkFlow
+- สิ่งที่มีอยู่จริงคือ **Cowork project** (คนละระบบกับ claude.ai Projects — Cowork เป็นเมนูแยกใน sidebar) → **local ต่อเครื่อง ไม่ sync ข้ามเครื่อง** จึงไม่มีวันขึ้นที่ laptop เอง
+- ระหว่างตรวจ: user เผลอกด logout ทุกเครื่อง (ไม่เกี่ยวกับปัญหานี้)
+
+### 📌 ข้อสรุป/นโยบายที่ตัดสินใจแล้ว — เลือก A: คง Cowork ไม่สร้าง cloud Project
+เหตุผล:
+1. State จริงอยู่ในไฟล์ (WRK_*.md / CLAUDE.md / seed_bids.js บน OneDrive) ซึ่ง sync ข้ามเครื่องอยู่แล้ว — เปิด session ใหม่สั่ง "DA — resume" ได้ context ครบ สิ่งที่ขาดคือประวัติแชทเท่านั้น
+2. cloud Project **ต่อโฟลเดอร์ local ไม่ได้** — งาน 90% ของ ecosystem (git push / seed_bids / PDF) ต้องใช้ folder access
+3. สร้างทั้ง 2 อย่าง = context แตก 2 ที่ ขัดหลัก single source of truth
+
+### 📋 ขั้นตอนที่ต้องทำที่ laptop (ยังไม่ทำ)
+1. เปิดแอป Claude → เมนู **Cowork**
+2. สร้าง Cowork project ใหม่ ชื่อ `RMN e-Bidding WorkFlow` (ต้องสร้างเองที่เครื่อง — ไม่ sync มาจาก PC)
+3. วาง Project Instructions จาก `WRK_AGENTS\PROJECT_INSTRUCTIONS_DRAFT.md`
+4. Connect 3 โฟลเดอร์: `RMN-eBidding-Workflow` / `[EGP]_E-BIDDING - [R.M.N_GROUP]_DATABASE` / `M4RX-B4SE`
+   - ⚠️ เช็ค OneDrive sync ให้เป็น ✅ เขียว (ไม่ใช่ ☁️ cloud-only) ก่อน connect
+
+### ⚠️ Known limitation (จำไว้ กันเสียเวลาซ้ำ)
+- **Cowork project ไม่ sync ข้ามเครื่อง** — ต้อง set up แยกทุกเครื่องเสมอ อย่าไปรอ sync อีก
+- ส่วนขยาย Claude in Chrome **อ่านหน้า claude.ai เองไม่ได้** (script injection timeout ทุกครั้ง) → ต้องให้ user ส่ง screenshot แทน
+
+### ✅ Done (2026-08-09 — PC: Project Instructions + KB registry แก้แล้ว)
+- ตรวจไฟล์จริง (ls ทั้ง 2 โฟลเดอร์) พบว่า agent registry เดิม**ผิด 3 จุด**:
+  1. OPY KB ไม่ได้อยู่ใน `agents\` — ตัวจริงคือ `E-Bidding\OPERATING.md` (ไฟล์เดียวในระบบที่ไม่มี prefix KB_)
+  2. **Doc Expiry เป็น agent เอกเทศ** (KB_DOC_EXPIRY + WRK_DOC_EXPIRY ครบคู่) เดิมตกหล่นจาก registry → รวมเป็น **7 agent** ไม่ใช่ 6
+  3. KB folder มี 6 ไฟล์ / WRK folder มี 7 ไฟล์ — ไม่สมมาตรเพราะข้อ 1
+- นิยาม nickname ครบชุด: **DA · OPY · DOC · EXP · MM · UI · API** (บันทึกใน KB_ECOSYSTEM_ADMIN.md)
+- Rewrite `PROJECT_INSTRUCTIONS_DRAFT.md` เป็น **router 7 agent + Core Rules 15 ข้อ** (เดิมเขียนแบบ single-agent = DA เท่านั้น ซึ่งเป็นบั๊ก: instructions ใช้กับทุกแชทในโปรเจกต์ agent อื่นจะสับสน identity)
+- user วาง instructions ใหม่ลงโปรเจกต์ทั้ง PC และ Laptop แล้ว
+
+### ✅ Done (2026-08-09 — Laptop: set up สำเร็จ)
+- สร้าง project `RMN-eBidding-Workflow` (ชื่อต่างจาก PC เล็กน้อย ไม่กระทบการทำงาน — ตกลงกันว่า**ไม่ต้องกำกับ (Laptop) ในชื่อ** ให้ระบุเครื่องใน session state แทน = Core Rule 15)
+- Connect ครบ 3 โฟลเดอร์: RMN-eBidding-Workflow / M4RX-B4SE / [EGP]_E-BIDDING
+- Instructions วางแล้ว
+
+### ✅ Done (Laptop — ปิดครบทุกข้อ)
+- **VM service** — แก้แล้ว ใช้งานได้ปกติ
+- **Memory restore** — สำเร็จ 16 ไฟล์จาก backup + เพิ่มมือ 2 ตัวที่ backup ไม่มี (da-nickname, checklist-as-widget) → **18 รายการ เท่ากับ PC**
+  - ⚠️ laptop ตั้งชื่อไฟล์ด้วย**ขีดกลาง** (`feedback-git-push-format.md`) / PC ใช้ **underscore** (`feedback_git_push_format.md`) — ไม่กระทบการทำงาน ปล่อยไว้ตามนี้
+- **Scheduled task** — ยืนยันไม่สร้างที่ laptop ให้ PC เป็นเจ้าของตัวเดียว กันแจ้งเตือนซ้ำ (บันทึกเป็น memory `project_rmn_scheduled_tasks` ทั้ง 2 เครื่องแล้ว)
+- **MEMORY_BACKUP_2026-08-09.md อัปเดตแล้ว** → ครบ 18 รายการ (index + full section) restore รอบหน้าจะไม่ขาด
+
+### 🖱️ Mouse Without Borders (นอก scope งาน)
+- ย้ายรายละเอียด (IP เครื่อง / คำสั่ง firewall) ไป repo private `RMN-eBidding-KB` → `NETWORK_NOTES.md`
+- สรุป: เชื่อม PC ↔ Laptop สำเร็จ · สาเหตุอาการหน่วงคือ network profile เป็น Public → เปลี่ยนเป็น Private แก้ได้
+
+### ⏳ Pending
+- (none) — ระบบพร้อมใช้งานครบทั้ง 2 เครื่อง
+
+## 🔄 Session State (2026-08-13 — PC: iOS workflow + security remediation)
+> เครื่องที่ใช้: **PC (MARX)** · commit `5d5c026`
+
+### ✅ Done — iOS workflow (scope: OPY บันทึกผลประมูล + DA อ่าน state เท่านั้น)
+- ทดสอบจริงจากมือถือ → ยืนยัน **ไม่มี bridge ไป PC** (bridge ผูกกับ session ที่เปิด ไม่ใช่บัญชี) → เปิดแอปเดสก์ท็อปค้างไว้ก็ไม่ช่วย → ปิดข้อสงสัยนี้ถาวร
+- มือถือรันใน cloud container → เห็น OneDrive/PC ไม่ได้เลย → **git เป็นช่องทางเดียว**
+- แอป GitHub บน iPhone **แก้ไฟล์ + commit ได้** (Edit File · Go to line · Find in File) → **ตัด PAT ออกจากแผนทั้งหมด** (auth ของแอปอยู่ในเครื่อง container ใช้ไม่ได้ แต่ให้ user commit เองแทน)
+- ยก KB เข้า repo แบบ minimal 2 ไฟล์: `KB/OPERATING.md` (OPY) + `KB/agents/KB_ECOSYSTEM_ADMIN.md` (DA) — ไม่ยกทั้ง 6 ไฟล์ เพื่อลด drift
+- สร้าง `BOOTSTRAP_IOS.md` = คำสั่งเปิด session มือถือ + ข้อห้าม
+- track `WRK_ECOSYSTEM_ADMIN.md` เข้า git ครั้งแรก (เดิม untracked = ไม่มี backup เลย)
+- `.gitignore` 1 → 9 บรรทัด (กัน xlsx/docx/pdf/skill/pycache/backup)
+
+### 🔴 บั๊กใหญ่ที่เจอ+แก้: repo มี 2 branch ข้อมูลไม่ตรงกัน
+- default branch บน GitHub เป็น **master** (ค้างที่ seq 103 / 105 บรรทัด) ขณะ **main** มี 553 records
+- ถ้า commit จากแอปมือถือตอนนั้น = ลงผิด branch ข้อมูลหาย 454 บรรทัด
+- แก้: เปลี่ยน default → `main` · ลบ `master` + `claude/pull-latest-changes-XmNZQ` · `git fetch --prune` · `git remote set-head origin -a`
+- อธิบายเรื่องค้างเก่าได้ด้วย: iOS เคยรายงาน HEAD `7deb2ca` ≠ PC `8f12d04` เพราะ ls-remote ชี้ไป master
+
+### 🔒 Security remediation (สำคัญที่สุดของ session นี้)
+- ตรวจพบ repo **public** มีข้อมูลส่วนบุคคลอยู่แล้ว (ไม่ใช่กำลังจะรั่ว — รั่วไปแล้ว)
+- แยก repo ใหม่ **`RMN-eBidding-KB` (private)** → ย้าย `WRK_DOC_EXPIRY.md` (เลขบัตร ปชช. + เบอร์ส่วนตัว), `MEMORY_BACKUP_2026-08-09.md`, `NETWORK_NOTES.md` (IP บ้าน + คำสั่ง firewall)
+- redact ใน `WRK_ECOSYSTEM_ADMIN.md`: เลขบัตร ปชช. → `[REDACTED]` · บล็อก MWB/IP → ย้ายไป private
+- **ไม่แก้** `WRK_FEE_PAYMENT.md` — ชื่อ/เบอร์ในนั้นเป็น template ใบแจ้งชำระที่ส่งหน่วยงานราชการอยู่แล้ว = contact สาธารณะ
+- สแกนแล้ว **ไม่พบ** API key / token / password ใดๆ
+- ⚠️ **ยังไม่ทำ**: ล้าง git history (91 commits เก่ายังค้นเจอเลขบัตรได้) — เลือก D1 "หยุดเลือดก่อน" ไว้ก่อน
+
+### 📋 Core Rules ใหม่ (ยังไม่ได้เขียนลง CLAUDE.md — pending)
+| # | กฎ |
+|---|---|
+| 16 | PC ต้อง `git pull` ก่อนเริ่มงานทุกครั้ง (กัน split-brain กับมือถือ) |
+| 17 | มือถือ = OPY + DA(read-only) เท่านั้น · DOC/MM/UI/EXP/API = PC |
+| 18 | เช็ค branch = `main` ก่อน commit จากแอป GitHub ทุกครั้ง |
+| 19 | ข้อมูลส่วนบุคคล (เลขบัตร/เบอร์ส่วนตัว/IP) → repo private เท่านั้น |
+| 20 | แก้ KB ที่ต้นฉบับ M4RX-B4SE เสมอ → copy ทับ `KB/` ก่อน push |
+
+### ⏳ Pending
+- ~~เขียน Core Rule 16-20 ลง `WRK_AGENTS/CLAUDE.md`~~ ✅ เสร็จ (section `## 🔀 Multi-Device Rules`)
+- ~~ทดสอบจริงบนมือถือ~~ ✅ **ผ่าน 100%** (2026-08-13) — clone `main` สำเร็จ · อ่าน 4 ไฟล์ครบ · รายงานตรงเฉลยทุกข้อ (553 records · FY2569 max seq 177 · missing fy 0 · Core Rule 16-20)
+  - มือถือยังตรวจเจอบั๊กเพิ่มเอง: `KB/OPERATING.md` มีตาราง seq 94-102 hardcode ค้าง → DA ลบแล้ว (`921413f`)
+  - ยังไม่ได้ทดสอบขั้น commit จริงผ่านแอป GitHub (รอมีผลประมูลจริงค่อยทำ)
+- ~~ตัดสินใจเรื่อง git history~~ ✅ **ปิดเคส — เลือก D1 (ปล่อย history ไว้)**
+  - เหตุผล user: ต่อให้ป้องกันดีแค่ไหน ข้อมูลจากหน่วยงานรัฐก็รั่วอยู่แล้วทั้งประเทศ — ต้นทุน D2/D3 (เว็บดับ / เสีย 91 commits) ไม่คุ้มกับความเสี่ยงส่วนเพิ่มที่ลดได้
+  - สิ่งที่ได้ผลจริงคือหยุดรั่วเพิ่ม: Core Rule 19 + repo private แล้ว → commit เก่าเป็น snapshot ตายตัว ไม่โตขึ้น
+  - ⚠️ ถ้าอนาคตมีเหตุให้ต้องล้างจริง (เช่น audit/ลูกค้าร้องขอ) ให้กลับมาทำ D2 `git filter-repo` — บันทึกไว้เป็นทางเลือกสำรอง
+
+### ✅ Done (2026-08-13 — data fix: fiscalYear)
+- **backfill 143 records** ที่ไม่มี `fiscalYear` → 2569 (commit `e9dd329`)
+  - ต้นตอ: template ที่ OPY ใช้บันทึกรายวัน**ไม่มี field นี้** → OPY แก้ schema แล้ว (`6d1d909`)
+- **แก้ 26 records** ที่ `fiscalYear` ผิด — ยึด **วันประกาศ (field `date`)** ตามที่ user สั่ง
+  - กฎ: เดือน ≥ ต.ค. → ปีงบ +1 (ปีงบไทยเริ่ม 1 ต.ค.)
+  - 2565 92→71 · 2566 92→110 · 2567 135→138 · 2568 57 · 2569 177
+  - verify: mismatch เหลือ 0 · 553 records · JSON valid
+- 📌 **กฎที่ยึดต่อไป: FY คำนวณจาก `date` ไม่ใช่จากเลข id** (id เข้ารหัสเดือนที่ขึ้นระบบ e-GP ซึ่งอาจต่างจากวันประกาศจริง)
+- DA อ่าน state บนมือถือ = อ่านจาก public repo ได้แล้ว (redact เรียบร้อย) — ยังไม่ทดสอบ
+
+## 🔄 Session State (2026-08-13 #2 — PC: repo hygiene + iOS entry point)
+> เครื่อง: **PC (MARX)** · resume จาก session #1 วันเดียวกัน
+
+### ✅ Done
+- commit WRK ที่ค้างจาก session ก่อน (`aa8e560`) — mark iOS mobile test ผ่าน 100% + note บั๊ก `KB/OPERATING.md` hardcode seq 94-102
+- `.gitignore` +2 บรรทัด: `SKILL_*.md`, `PROJECT_INSTRUCTIONS_DRAFT.md` (`0cab528`) → working tree clean
+- **ยืนยัน entry point มือถือ: Cowork tab เท่านั้น** (`c67c339` → `BOOTSTRAP_IOS.md` section `## 📍 เปิดที่ไหน`)
+  - Project chat ธรรมดา **ไม่มี shell** → clone ไม่ได้ → ทำงาน OPY/DA ไม่ได้เลย
+  - Cowork `+ New task` **ผูก project ไม่ได้** (Add context มีแค่ Camera/Photos/Add files/Connectors) → prompt ต้อง **self-contained** ทุกครั้ง
+  - โปรเจกต์ `RMN-eBidding-Workflow` ที่สร้างบนมือถือ = ไม่ใช้ ลบทิ้งได้
+  - session ที่รันบน PC **มองเห็นได้จาก Cowork tab บนมือถือ** (แต่ยังไม่มี bridge ไป PC ตามเดิม)
+- ร่าง prompt เปิด session มือถือ 2 ก้อน (OPY / DA) — แนะนำเก็บใน Notes บน iPhone
+- checklist iPhone workflow: interactive widget + `iPhone_Workflow_Checklist_RMN.docx` (Core Rule 10) — docx อยู่ใน repo folder แต่ถูก gitignore
+- memory ใหม่: `project_ios_cowork_entry_point.md` + index
+
+### ⚠️ ข้อจำกัดที่เจอใน session นี้
+- **device_bash (VM ในเครื่อง user) ไม่มี network** → `git pull/push` ทำเองไม่ได้ (HTTP 403 from proxy) → **user ต้องรันใน PowerShell เสมอ**
+- device_bash ลบ `HEAD.lock` / `index.lock` ไม่ได้ (Operation not permitted) → user ต้อง `del` เอง
+
+### ⏳ Pending
+- **push 3 commits: `aa8e560` · `0cab528` · `c67c339`** (ต้อง pull ก่อน — Core Rule 16)
+- ยังไม่ทดสอบ commit จริงผ่านแอป GitHub บนมือถือ (รอมีผลประมูลจริง)
+- ยังไม่ทดสอบ iOS Text Replacement ว่ารองรับ prompt หลายบรรทัดยาวๆ ไหม
+
+### 🔁 ต่อท้าย session #2 — เปลี่ยนโมเดล multi-device (สำคัญที่สุดของวัน)
+- **iPhone = remote control ของ PC** — เปิด **session เดิม** ใน Cowork tab แล้วพิมพ์สั่ง งาน execute บน MARX จริง (ทดสอบจาก iPhone → `HOST=MARX`) → ใช้ได้ **ครบทุก agent**
+- **task ใหม่ที่สร้างจากมือถือ = ไม่มี bridge** — bridge ติดตอน "แนบ folder เข้า Cowork task" และมือถือ Add context ไม่มีตัวเลือก folder → **restart ต้องทำจาก PC เท่านั้น** (Core Rule 21)
+- **git ต้องรันผ่าน `Windows-MCP → PowerShell`** (Windows host จริง มี network + ลบ `.lock` ได้) · ⛔ ห้ามใช้ `device_bash` รัน git (Linux VM ไม่มี network + ลบ lock ไม่ได้) — Core Rule 18 rev.2
+- workflow เก่า (clone + commit ผ่านแอป GitHub) → **ON HOLD** ที่ `BOOTSTRAP_IOS.md` · Core Rule 17-18 เดิมถูกแทนแล้ว
+- **Core Rule 22**: หนึ่งงาน = หนึ่ง agent session · DA ทำได้แค่ route / read-only check / แก้ข้อมูลเก่าข้าม agent / git ให้ทุก agent
+- **Core Rule 21 rev**: user รับได้ว่า context เต็มนอกบ้าน → **ไม่ต้องเช็ค/เตือนล่วงหน้า** ชดเชยด้วยการเขียน WRK state **ระหว่างทาง** ทุกก้อนงาน
+- bridge หลุดชั่วคราวได้เมื่อเน็ตตก → **กลับมาเอง** ไม่ต้อง restart แค่ลองใหม่
+- commits: `bbbac0e` (rev.2) · `485f652` (Rule 21-22) · `4f4091a` (Rule 21 rev)
+
+### ⏳ Pending (ท้าย session)
+- ยังไม่ทดสอบ: PC หลับ/ปิดจอ แล้ว bridge ยังอยู่ไหม
+- ยังไม่ทดสอบ: resume session ที่ context เต็มแล้ว ยังอ่านย้อนได้ไหม
+
+## 🔄 Session State (2026-08-24 — DA: ขึ้นทะเบียนผู้ประกอบการ ชั้น 3)
+
+### 📌 บริบทงาน
+- คำขอ **หลักเกณฑ์ทั่วไป** เลขที่ `013690700012` ยื่นแล้ว 24/08/2569 10:37 · ครบ 3 หัวข้อ · **ส่งคืนแก้ไข 1 ครั้ง**
+- คำขอ **หลักเกณฑ์เฉพาะอื่นๆ** ยังเป็น "บันทึกแบบ" ว่างทั้ง 5 หัวข้อ (1-3 ซ้ำ + 4 บุคลากร + 5 เครื่องจักร)
+- สาขา: งานก่อสร้างทาง ชั้น 3 · เดิมถือทะเบียน **ชั้น 4** อยู่แล้ว (แนบเป็นเอกสารข้อ 4)
+
+### ✅ Done
+- **สร้าง KB ใหม่** `M4RX-B4SE\RMN_Enterprise\Company-Assets\` — เดิมไม่มีข้อมูลบริษัทใน backbone เลย
+  - `EQUIPMENT.md` — ทะเบียนเครื่องจักร 21 คันครบทุกฟิลด์ที่ฟอร์ม e-GP ต้องการ (ทะเบียน/จังหวัด/คัสซี/เลขเครื่อง/ยี่ห้อ/รุ่น/ขนาด/วันจดทะเบียน/วันครอบครอง/วิธีได้มา/ผู้ถือกรรมสิทธิ์)
+  - `เครื่องจักร_ขึ้นชั้น3_RMN.docx` + interactive widget (Core Rule 10)
+- อ่านใบคู่มือจดทะเบียนต้นฉบับครบ **21/21 คัน** (OCR tesseract ไม่แม่นพอ → ใช้อ่านภาพโดยตรง)
+- ถอดสาเหตุที่ถูกส่งคืนแก้ไข: **แนบผลงานร่วมค้าใต้ข้อ 1 แทนข้อ 2** (เทียบ TRARSummary รอบ1↔รอบ2)
+
+### 🔴 ประเด็นค้าง (ต้องให้ user ตัดสิน)
+1. **ถข 6540 / ถข 6541** (Self-Propelled Vibratory Roller 2 คัน) — กรรมสิทธิ์ = บ.กรุงไทย มิซูโฮ ลีสซิ่ง · **ผู้ครอบครองตามทะเบียน = บ.ลีดเวย์ เฮฟวี่ แมชชีนเนอรี่** ไม่ใช่ RMN → e-GP ดึงจากกรมขนส่งจะไม่ตรง ต้องมีสัญญาเช่า RMN↔ลีดเวย์ · **ความเสี่ยงสูงสุดของคำขอ**
+2. ผลงาน **สทช.15 นภ.5025 (34.4 ล้าน)** ที่ใช้ผ่านเกณฑ์ "หนึ่งสัญญา ≥ 30 ล." **ไม่มีใน** `ฝากไฟล์\ผลงาน` (มีแค่ 3 จาก 4) — ต้นฉบับอยู่ `ขึ้นชั้น 3\ผลงานชั้น3\`
+3. ไฟล์ `12.2 กระบะบรรทุก 82-5996 มค.pdf` — ทะเบียนจริงคือ **82-5886**
+4. รถบรรทุกน้ำ 4 คัน — ทะเบียนไม่ระบุความจุลิตร (ระบุแต่ น.น.บรรทุก) หากถูกขอหลักฐาน 6,000 ล. ต้องใช้ใบเสร็จ/สเปคถัง
+5. ใบอนุญาตขนส่ง **ค.ข. 272/2562** ในเล่ม Dump Truck ระบุสิ้นอายุ 2 พ.ค. 2567 — ต้องเช็คว่าต่อแล้วหรือยัง
+
+### ⏳ ยังไม่ทำ
+- ข้อ 4 บุคลากร (7 คน: สามัญวิศวกร มานพ · ภาคี นฤสรณ์+จักรทิพย์ · ช่าง พัฒนพงษ์/พิมลพรรณ/ณัฎฐพล/ธีรภัทร) → ยังไม่ได้อ่าน PDF ใบ กว.
+- แผนเดิม `ขึ้นชั้น 4\รถขึ้นชั้น 3 งานก่อสร้างทาง.pdf` ล้าสมัย 5 จุด — ยังไม่ได้ปรับให้ตรงของจริง
+- scheduled task DOC EXPIRY CHECKER: แก้ path เป็น `RMN-eBidding-KB\WRK_DOC_EXPIRY.md` แล้วแต่ save ไม่ผ่าน + ต้องเพิ่มโฟลเดอร์ `RMN-eBidding-KB` เข้าโปรเจกต์
+
+
+### ✅ User ยืนยันปิดประเด็น (ท้าย session 2026-08-24)
+- ผลงาน สทช.15 นภ.5025 (34.4 ล.) → ใช้ต่อ · สมบูรณ์แล้วไม่ต้องแก้รอบ 2
+- สัญญาเช่า ถข 6540/6541 → **อยู่หน้าที่ 2 ในไฟล์ PDF ของรถเอง** ไม่ต้องหาเพิ่ม (ลดความเสี่ยงข้อ 1 ลง)
+- ยึดไฟล์สแกนใหม่ใน `ฝากไฟล์\เอกสารขึ้นชั้น3` เป็นหลัก · `ขึ้นชั้น 4\รถขึ้นชั้น 3 งานก่อสร้างทาง.pdf` = ล้าสมัย
+- **งานถัดไป: ข้อ 4 บุคลากร 7 คน** (อ่าน PDF ใบ กว. ใน `ฝากไฟล์\เอกสารขึ้นชั้น3\บุคคล`)
+
+## 🔄 Session State (2026-08-24 #2 — DA: ข้อ 4 บุคลากร + จัดโครงสร้างเอกสาร)
+> เครื่อง: **PC (MARX)** · resume จาก session #1 วันเดียวกัน
+
+### ✅ Done — ข้อ 4 บุคลากร (อ่านต้นฉบับครบ 11 ไฟล์)
+- สร้าง `RMN-eBidding-KB\PERSONNEL.md` (private, PII) — 7 คน ครบทุกฟิลด์ที่ e-GP ขอ (`082f8db`)
+- cross-check **ภงด.1 มี.ค.–มิ.ย. 2569** — เลขบัตร ปชช. ตรง 7/7 คน (`a19151f`)
+  - ปิดเคสสะกดชื่อ: ภงด.1 ทุกเดือน = **มานพ วิยาสิงห์** ตรงใบ กว. → สัญญาจ้างที่พิมพ์ "วิทยาสิงห์" คือฝั่งผิด
+  - ธีรภัทร เข้าบัญชีค่าจ้างครั้งแรก **เม.ย. 2569** · นฤสรณ์ **มิ.ย. 2569** → ใช้เป็นวันเริ่มจ้างโดยประมาณ
+  - ณัฏฐพล ภักดี ได้ 18,000/ด. = เรตวิศวกร (ช่างได้ 10,000) + ถือใบ กว. **ภย.48245 ภาคีวิศวกร** → ควรย้ายจากกลุ่มช่างขึ้นข้อ 2
+- 🔴 ยังขาด: ทก.6-1/6-3 + สัญญาจ้าง 3 คน (นฤสรณ์ · ณัฏฐพล · ธีรภัทร) · ช่างขาด 1 คนถ้าย้ายณัฏฐพล
+
+### ✅ Done — จัดโครงสร้าง `ฝากไฟล์\เอกสารขึ้นชั้น3` ใหม่ทั้งหมด (51 ไฟล์)
+- โครงสร้างใหม่ตรงหัวข้อฟอร์ม: `00_นิติบุคคล` / `01_ผลงาน` / `04_บุคลากร{4-1..4-9}` / `05_เครื่องจักร{5-1..5-8}`
+- ชื่อไฟล์ = `<เลขหัวข้อ>_<ตัวระบุ>_<ประเภทเอกสาร>.pdf` · ไฟล์ที่เอกสารไม่ครบต่อท้าย `_ขาดทก6-1/6-3`
+- แก้ชื่อไฟล์ผิด `82-5996` → `82-5886`
+- มี `_RENAME_MAP.csv` + `_UNDO.ps1` ย้อนกลับได้ 100%
+- ⚠️ PowerShell 5.1 ต้องเขียนสคริปต์เป็น **UTF-8 with BOM** ไม่งั้นภาษาไทยเพี้ยน parse error
+
+### ✅ Done — `RMN-eBidding-KB\COMPANY.md` (ใหม่)
+- คุณสมบัติทั่วไป + ฐานการเงิน + ผลงาน จากหน้าจอคำขอ 013690700012 (`139878d`)
+- รายละเอียดผลงาน 4 ฉบับจากหนังสือรับรองต้นฉบับ (`0bb94c0`)
+
+### 🔑 ข้อมูลผลงานที่แก้ความเข้าใจเดิม (สำคัญ)
+- "สทช.15 นภ.5025 = 34.4 ล." **ผิด** → นภ.5025 = **ร่วมค้า 25.99 ล.** (RMN 49% = 12.73 ล.)
+- ตัวที่ผ่านเกณฑ์หนึ่งสัญญา ≥30 ล. คือ **นภ.5042 ผลงานเดี่ยว 34,444,000** (`ขทช.นภ./004/2568`)
+  - ต้นเหตุ: ไฟล์ชื่อ `รับรองผลงาน สทช.15 - สายนภ.5025` แต่เนื้อในเป็น นภ.5042
+- ✅ **user ยืนยัน 2026-08-24: 34 ล. ได้แน่ ไม่ต้องกังวลเรื่องผลงานอีก** · ผลงานใช้ได้ทั้ง 4 ตัวใน `ผลงานชั้น3\`
+- ⚠️ รายการ 1 กรอกวันแล้วเสร็จ 13/07/2568 · หนังสือรับรองเขียน 27/06/2568 (ยังไม่แก้)
+
+### ✅ ปิดเคส — ใบอนุญาตประกอบการขนส่ง
+- `ค.ข. 272/2562` (สิ้นอายุ 2 พ.ค. 2567) ที่พิมพ์ในเล่ม Dump Truck 6 คัน = **ข้อมูล ณ วันจดทะเบียนรถ ปี 2566** เล่มไม่อัปเดตเมื่อต่ออายุ
+- ใบปัจจุบัน = **มค.บ. 417/2567 สิ้นอายุ 30 ก.ค. 2572** (ยืนยันจากเล่ม 82-7166 จดทะเบียน 6 พ.ค. 2569)
+- บันทึกหมายเหตุลง `EQUIPMENT.md` แล้ว
+
+### 🔴 ความเสี่ยงอายุเอกสารที่ยังเปิดอยู่
+1. **หนังสือรับรองวงเงินสินเชื่อ ธพว.2499/2569** ออก 26/05/2569 อายุ 90 วัน → ครบ ~24/08/2569 (วันที่ยื่นพอดี) · ถ้าโดนส่งคืนแก้ไขต้องขอใหม่
+2. **หนังสือรับรองห้างที่แนบ** = ฉบับ 28/05/2569 (ใกล้หมด) ทั้งที่มีฉบับ 10/07/2569 หมด 08/10/2569 อยู่แล้ว → **ควรสลับไฟล์**
+3. **ภาษีรถ 20/21 คันยังไม่ตรวจ** (ตรวจแล้วเฉพาะ ตฆ 8672: ชำระ 18/06/2569 ครบ 31/01/2570)
+4. **สัญญาเช่า ถข 6540/6541** ยังไม่ได้อ่านวันสิ้นสุด
+
+### 🛠️ บทเรียนเครื่องมือ (รอบนี้)
+- **device_bash ใช้ได้ดีมากกับ PDF ก้อนใหญ่** — มี pdftoppm/pdftotext/qpdf/python3 ครบ · render หน้าที่ต้องการลงโฟลเดอร์ที่ connect แล้วค่อย stage เฉพาะ .jpg = เร็วกว่า stage PDF 68MB มาก
+- เขียนไฟล์ลง `ฝากไฟล์` (ไม่ได้ connect) ต้องผ่าน PowerShell เท่านั้น — ยืนยันซ้ำอีกครั้ง
+- Windows-MCP ส่งคีย์ไป TUI (Claude Code /usage) **คีย์ตกหาย ~2 ใน 3** เพราะโฟกัสสลับ — อย่าใช้วิธีนี้กับ TUI อีก
+- **PYTHONHOME ที่ตั้งค้างในเครื่อง ทำ python พังทั้งระบบ** (sqlite3 DLL) — ลบออกแล้ว 2026-08-24
+
+### ⏳ Pending
+- ทำ ทก.6-1/6-3 + สัญญาจ้าง 3 คน · หาช่างคนที่ 4
+- กรอกเครื่องจักรข้อ 1-8 ใน e-GP (user กรอกเอง · DA แสดงข้อมูลเป็น widget ทีละข้อ)
+- ยังขาด 3 ฟิลด์/คัน: วันเสียภาษี (20 คัน) · เลขที่สัญญาเช่าซื้อ · ลำดับใน งด.50
+- scheduled task DOC EXPIRY CHECKER ยัง save ไม่ผ่าน
+
+### 🔁 ต่อท้าย session 2026-08-24 #2 (ก่อน restart 18:xx)
+
+**เพิ่มจากที่บันทึกไว้ตอน `647ca0c`:**
+- ✅ **ภาษีรถครบ 21/21 คัน** → บันทึกใน `EQUIPMENT.md` (ตาราง "ภาษีรถประจำปี")
+  - 🔴 1ตข 7104 ครบ 4 ก.ย. 69 (เร็วสุด) · 🟠 รถบรรทุก 10 ล้อ 6 คันครบพร้อมกัน 30 ก.ย. 69 · ถข 138 31 ต.ค. 69 · 82-7155 31 ธ.ค. 69
+  - ตฆ 4069 (14/05/69→23/01/70) และ ถข 121 (30/04/69→08/06/70) = user เปิดเล่มให้เอง
+- ✅ **ผลงาน 4 ฉบับ อ่านครบ + ได้เลข e-GP ทั้ง 8 เลข** → `COMPANY.md` (`0bb94c0` + `1995159`)
+  - โครงการ 11 หลัก / คุมสัญญา 12 หลัก: นภ.5042 `67109200008`/`680122011247` · กส.3007 `67119112184`/`680122005829` · ทล.2346 `68109269796`/`681222003899` · นภ.5025 `67059265416`/`670622041290`
+  - ⚠️ ร่วมค้า 2 รายการ: ระบบจะดึงวงเงินเต็มสัญญามา ต้องแก้ช่องวงเงินที่ยื่นเป็นส่วน RMN เอง
+- ✅ **จัดโฟลเดอร์ `01_ผลงาน` ใหม่** — user ดึงไฟล์ที่ 4 เข้ามาแล้ว · เรียง 01-1 = นภ.5042 (34.44 ล. ตัวผ่านเกณฑ์ 30 ล.)
+- ✅ **สร้างใบสั่งงานต่อภาษี** — PNG + txt ที่ `Downloads\` (แบ่ง 4 ลำดับความเร่งด่วน ส่ง LINE ให้พนักงานได้)
+- ✅ **ทะเบียนเอกสารใกล้หมดอายุ (ทุกหมวด)** — 3 แดง / 9 ส้ม
+  - 🔴 DBD ฉบับที่แนบ (28/05/69) หมด 26 ส.ค. → **สลับเป็นฉบับ E10091220726785 (10/07/69) ที่มีอยู่แล้ว**
+  - 🔴 วงเงินสินเชื่อ ธพว.2499/2569 ครบ 24 ส.ค. 69 (วันที่ยื่นพอดี)
+  - ⚠️ ยังไม่รู้: พ.ร.บ. 21 คัน · วันสิ้นสุดสัญญาเช่า ถข6540/6541 · อายุทะเบียนชั้น 4 เดิม · ลำดับ งด.50
+
+**บทเรียนเครื่องมือเพิ่ม:**
+- `device_bash` **ล่มกลาง session** ("Workspace unavailable") → fallback = copy ไฟล์ไป `Downloads` ด้วย PowerShell แล้ว stage มา render ที่ container
+- render PDF สแกน: `pdftoppm -r 100~150 -jpeg` + crop ครึ่งบน + montage 2 หน้า = ประหยัดโควตา ~4 เท่าเทียบกับอ่านเต็มหน้า
+- ทำภาพส่ง LINE: เขียน HTML → `chromium --headless --screenshot --force-device-scale-factor=2` ใน container ได้ภาพคมกว่าให้ user แคปหน้าจอ widget
+
+**⏳ Pending (เรียงตามความคุ้ม):**
+1. ~~widget เครื่องจักรข้อ 2-8~~ ✅ ปิดแล้ว session #3
+2. ร่าง ทก.6-1/6-3 + สัญญาจ้าง 3 คน (นฤสรณ์ · ณัฏฐพล · ธีรภัทร) + หาช่างคนที่ 4
+3. ~~สลับไฟล์ DBD ในคำขอ~~ ✅ ปิดแล้ว session #3
+4. [กินโควตา] อ่านสัญญาเช่า ถข6540/6541 · หาลำดับ งด.50 ในงบ 2568 · เลขสัญญาเช่าซื้อ 17 คัน (ต้องมีไฟล์สัญญาก่อน)
+5. [แนวคิด ยังไม่เริ่ม] sector database ใน webapp — ติดเรื่อง PII: repo public ห้ามมีเลขบัตร ปชช. ต้องเลือกก่อนว่าจะตัด/mask/ไม่ทำ
