@@ -50,3 +50,25 @@
 - ✅ แก้ 3 จุดที่ DB ตรวจเจอผิดใน `KB_ECOSYSTEM_ADMIN.md` — verified line (WRK 7→6 ไฟล์) · API Status mark disabled · nickname line ตัด API
 - 🔴 **ยังไม่แก้ — ไม่ใช่ scope DA (Core Rule 22):** `WRK_OPERATING.md` 59,707 B ต้องให้ **OPY** archive ในเซสชันของตัวเอง
   - วิธีเดียวกัน: เก็บ state ปัจจุบัน + pending · ที่เหลือ → `WRK_OPERATING_ARCHIVE_2569H2.md`
+
+### ✅ ปิดวง — เพดาน 20 KB ทำครบทุกไฟล์แล้ว (2026-08-24 ท้าย session)
+| ไฟล์ที่ agent อ่านทุก session | ก่อน | หลัง | สถานะ |
+|---|---|---|---|
+| WRK_ECOSYSTEM_ADMIN.md (DA) | 59,501 | **7,921** | ✅ archive → `_ARCHIVE_2569H2` 53,827 |
+| WRK_OPERATING.md (OPY) | 59,707 | **14,923** | ✅ OPY ทำเอง → `_ARCHIVE_2569H2` 60,350 · commit `8659e25` |
+| WRK_FEE_PAYMENT.md | 16,066 | 16,066 | ✅ ใต้เพดาน |
+| WRK_MAPMAKER.md | 12,555 | 12,555 | ✅ ใต้เพดาน |
+| WRK_UIUX.md | 4,891 | 4,891 | ✅ ใต้เพดาน |
+| WRK_API_STATUS.md | 1,235 | 1,235 | 🚫 agent disabled |
+
+**🔴 ไฟล์ที่ยังเกินเพดาน และทุก agent อ่านทุก session:**
+- `WRK_AGENTS\CLAUDE.md` = **21,353 B** — ไม่ใช่ session log ตัดเข้า archive ไม่ได้ตรงๆ ต้องรีไรต์/แยกส่วน
+  → **เรื่องออกแบบ ส่งไป DB** ไม่ใช่งานที่ DA แก้เองได้ (กระทบทุก agent)
+- `seed_bids.js` = **473,873 B** — เป็นข้อมูล ไม่ใช่ log · ถ้าจะลดต้องเปลี่ยนวิธีโหลด (แยกตามปี) → **DB**
+
+### 🔁 ผลจาก UI session เดียวกัน (บันทึกไว้กันลืม)
+- UI ทำ tab `🏗️ Assets` (read-only) ใน tracker แล้ว — commit `344fbb8` · fetch assets.json แบบ 404-safe · filter `pii:true` ตอน ingestion ✅ ไม่แตะไฟล์ data
+- 🐛 **ความผิดของ DA**: บล็อก guide ที่ผมส่งให้ UI เขียนว่า `const ASSETS = []` + fetch assets.json แต่**ไม่ได้ระบุรูปร่างข้อมูล** — ของจริงผม generate เป็น `{meta, assets:[...]}` envelope ไม่ใช่ bare array
+  → UI ต้องแก้ handler เอง (`968de1f`) ให้รับทั้งสองแบบ
+  → **บทเรียน: guide ที่ส่งข้าม agent ต้องแนบ shape ของข้อมูลจริง ไม่ใช่แค่ชื่อไฟล์+URL**
+- ⚠️ tab Assets อยู่ใน tracker (public) ตอนนี้ — ตามแผน 2 BASE มันควรย้ายไป RMN DATABASE · **ยังไม่ต้องรื้อ** รอ DB ตัดสินเรื่อง 2 BASE ให้จบก่อน
