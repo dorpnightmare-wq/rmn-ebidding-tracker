@@ -37,6 +37,11 @@ Senior UI/UX Designer — ปรับ UI/UX ของ `rmn_ebidding_tracker_2.h
   - `toggleDocFeeEmail()` function ยังอยู่ (ไม่มีปุ่มเรียกแล้ว — เก็บไว้เผื่อย้อนกลับ ไม่ลบเพื่อลด risk)
 - (ต่อ) ซ่อนที่เหลือเพิ่ม: Add Bid form dropdown "สถานะ Email ยืนยัน" (L831) + emailTo display ใน Doc Fee tab (L2024) — ใช้ `style="display:none"` ไม่ลบโค้ด เพื่อ unhide ได้ทันทีถ้า workflow เปลี่ยนกลับ (ตามคำสั่ง user)
 
+### ✅ Done (2026-08-25)
+- เพิ่ม tab "🏗️ Assets" (read-only) — L656(button), L806-822(section+filters), L1164-1167(ASSETS const), L1215(TABS), L1229-1234(navigate), L2062-2160(renderAssets + helpers), L2447(expose), L2627-2639(fetch assets.json sync, pattern เดียวกับ doc_fees.json, 404-safe, filter pii:true ที่ ingestion)
+- ไม่แตะ assets.json/personnel.json/seed_bids.js/doc_fees.json ตาม scope · commit 344fbb8 pushed เอง (user อนุญาตรอบนี้)
+- 🐛 fix (968de1f): DA generate assets.json มาเป็น `{meta, assets:[]}` envelope ไม่ใช่ bare array ตามที่คุยกันตอนแรก — เจอตอนตรวจ data จริงหลัง DA push (0bda2ab) เลยแก้ fetch handler ให้รองรับทั้งสองแบบ (`Array.isArray(data) ? data : data?.assets`)
+
 ### ⏳ Pending UI tasks
 - (none currently open)
 
