@@ -182,5 +182,20 @@
     "status": "no_fee_required",
     "note": "ประกาศระบุดาวน์โหลดผ่าน e-GP/www.dongmafai.go.th ไม่มีค่าซื้อเอกสาร",
     "checkedDate": "2569-08-26"
+  },
+  {
+    "id": "69029099286",
+    "agency": "เทศบาลตำบลเมืองเก่า",
+    "amount": 1000,
+    "bank": null,
+    "bankAccNo": null,
+    "email": null,
+    "paymentMethod": null,
+    "submitMethod": null,
+    "payWindowStart": "2569-08-21",
+    "payWindowEnd": "2569-08-27",
+    "status": "pending",
+    "note": "ประกาศข้อ ๔ ระบุค่าซื้อเอกสาร 1,000฿ ชำระ 'ภายในวันและเวลาเสนอราคา' (27 ส.ค.69 ก่อน 12:00) - annoudoc ไม่มี bank/email ต้องดู doc_*.pdf ข้อ ๔.๘(๖)",
+    "checkedDate": "2569-08-26"
   }
 ]
