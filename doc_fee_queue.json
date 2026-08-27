@@ -187,15 +187,16 @@
     "id": "69029099286",
     "agency": "เทศบาลตำบลเมืองเก่า",
     "amount": 1000,
-    "bank": null,
-    "bankAccNo": null,
+    "bank": "กรุงไทย",
+    "bankAccNo": "405-6-06787-2",
     "email": null,
-    "paymentMethod": null,
-    "submitMethod": null,
+    "paymentMethod": "bank_transfer",
+    "submitMethod": "e-GP",
     "payWindowStart": "2569-08-21",
     "payWindowEnd": "2569-08-27",
     "status": "pending",
-    "note": "ประกาศข้อ ๔ ระบุค่าซื้อเอกสาร 1,000฿ ชำระ 'ภายในวันและเวลาเสนอราคา' (27 ส.ค.69 ก่อน 12:00) - annoudoc ไม่มี bank/email ต้องดู doc_*.pdf ข้อ ๔.๘(๖)",
-    "checkedDate": "2569-08-26"
+    "note": "doc ข้อ ๔.๘(๖): โอน 1,000฿ เข้า KTB 405-6-06787-2 ชื่อบัญชี เทศบาลตำบลเมืองเก่า + ยื่นหลักฐานพร้อมข้อเสนอผ่าน e-GP ภายในวันและเวลาเสนอราคา (27 ส.ค.69 ก่อน 12:00) เท่านั้น",
+    "checkedDate": "2569-08-26",
+    "accName": "เทศบาลตำบลเมืองเก่า"
   }
 ]
