@@ -197,20 +197,5 @@
     "status": "no_fee_required",
     "note": "ประกาศข้อ ๓ ดาวน์โหลดผ่าน e-GP/www.nongsor.go.th ไม่มีค่าซื้อเอกสาร",
     "checkedDate": "2569-08-27"
-  },
-  {
-    "id": "69089473825",
-    "agency": "องค์การบริหารส่วนตำบลดอนหัน",
-    "amount": 500,
-    "bank": null,
-    "bankAccNo": null,
-    "email": null,
-    "paymentMethod": null,
-    "submitMethod": null,
-    "payWindowStart": "2569-08-24",
-    "payWindowEnd": "2569-08-28",
-    "status": "pending",
-    "note": "ประกาศข้อ ๔ ค่าซื้อเอกสาร 500฿ ชำระ 'ภายในวันและเวลาเสนอราคา' (28 ส.ค.69 ก่อน 12:00) - annoudoc ไม่มี bank/email ต้องดู doc_*.pdf ข้อ ๔.๘(๖)",
-    "checkedDate": "2569-08-27"
   }
 ]
