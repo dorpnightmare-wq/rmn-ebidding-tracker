@@ -197,5 +197,20 @@
     "status": "no_fee_required",
     "note": "ประกาศข้อ ๓ ดาวน์โหลดผ่าน e-GP/www.nongsor.go.th ไม่มีค่าซื้อเอกสาร",
     "checkedDate": "2569-08-27"
+  },
+  {
+    "id": "69069406325",
+    "agency": "เทศบาลตำบลหนองกุง",
+    "amount": 0,
+    "bank": null,
+    "bankAccNo": null,
+    "email": null,
+    "paymentMethod": null,
+    "submitMethod": null,
+    "payWindowStart": null,
+    "payWindowEnd": "2569-08-31",
+    "status": "no_fee_required",
+    "note": "ประกาศข้อ ๓ ดาวน์โหลดผ่าน e-GP/www.nongkung.go.th ไม่มีค่าซื้อเอกสาร",
+    "checkedDate": "2569-08-31"
   }
 ]
