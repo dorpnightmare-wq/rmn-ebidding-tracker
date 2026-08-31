@@ -43,19 +43,31 @@ Senior UI/UX Designer — ปรับ UI/UX ของ `rmn_ebidding_tracker_2.h
 - 🐛 fix (968de1f): DA generate assets.json มาเป็น `{meta, assets:[]}` envelope ไม่ใช่ bare array ตามที่คุยกันตอนแรก — เจอตอนตรวจ data จริงหลัง DA push (0bda2ab) เลยแก้ fetch handler ให้รองรับทั้งสองแบบ (`Array.isArray(data) ? data : data?.assets`)
 
 ### ⏳ Pending UI tasks
-- (none currently open)
+- (none currently open — Assets tab live, verified working end-to-end against real assets.json)
+
+### 🗒️ Context carried over (not a UI task, FYI for continuity)
+- Mark กำลังคิดสถาปัตยกรรมใหญ่: แยกเป็น 2 BASE — "E-BIDDING BASE" (ของเดิม, public) vs "RMN DATABASE" (Employees/Stats-KPI/Asset+expiry/เอกสารสแกนจริง, ต้อง login ID/Pass, มี PII)
+- แนะนำ Supabase ไปแล้ว (Postgres+Auth+Storage, free tier พอใช้ตอนนี้, Pro $25/mo ถ้าโต) — ยังไม่ตัดสินใจ/ยังไม่เริ่มสร้าง
+- ถ้า session หน้าคุยเรื่องนี้ต่อ: นี่เป็น infra decision ข้าม repo (พาดพิง PII → ต้องเป็น DA เป็นคน design schema ก่อน ไม่ใช่ UI agent ทำเอง)
 
 ## 🚫 Out of Scope
 - seed_bids.js / data logic / API calls
-- Git push (user does manually)
+- assets.json / personnel.json / doc_fees.json (ข้อมูล — DA/Fee Payment Agent ดูแล)
 - TaskCreate / AskUserQuestion
 
 ## 📁 Files I touch
 - `rmn_ebidding_tracker_2.html` (primary)
 - `seed_bids.js` (data typo fixes only)
+- `WRK_AGENTS/WRK_UIUX.md` (session log — ตัวนี้)
+
+## 📂 Working folder ที่ต้อง connect
+- `RMN-eBidding-Workflow` (OneDrive) — repo หลัก มี tracker + WRK_AGENTS/ + seed_bids.js + assets.json/doc_fees.json (fetched, read-only ฝั่งฉัน)
+- ไม่ต้องใช้ `RMN-eBidding-KB` (private repo, personnel.json) — UI agent ไม่ควรแตะ PII เลย
 
 ## ⚙️ My Rules
 - Diff/changelog only — ห้าม output full file
-- grep/bash หา section ก่อน — ห้าม Read ทั้งไฟล์
+- grep/Read หา section ก่อน — ห้าม Read ทั้งไฟล์รวด
 - คำนวณ context ก่อน Edit — ถ้าไม่พอ แจ้ง user
-- Verify end-of-file หลัง Edit ทุกครั้ง (ป้องกัน truncation)
+- Verify end-of-file + line count หลัง Edit ทุกครั้ง (ป้องกัน truncation)
+- Git commit+push เองผ่าน Windows-MCP PowerShell (ลบ .git/HEAD.lock, .git/index.lock ก่อนทุกครั้ง) — ห้ามส่ง git command ให้ user รัน [[feedback_git_push_format]]
+- ก่อน commit เช็ค `git status` เสมอ — ถ้ามีไฟล์อื่นค้าง (ไม่ใช่ไฟล์ที่ฉันแก้) ห้ามแตะ/commit รวม เดี๋ยว agent อื่นเสียงาน (พบเคสจริง 2026-08-25: `.gitignore` + `WRK_MAPMAKER.md` ค้างจาก Mapmaker agent ระหว่าง session นี้ — ข้ามไป ไม่ยุ่ง)
