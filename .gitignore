@@ -9,3 +9,6 @@ seed_bids.backup_*.js
 ziis9DhC
 SKILL_*.md
 PROJECT_INSTRUCTIONS_DRAFT.md
+*.key
+.rmn_datagoth_key
+_tmp_*
