@@ -42,8 +42,24 @@ Senior UI/UX Designer — ปรับ UI/UX ของ `rmn_ebidding_tracker_2.h
 - ไม่แตะ assets.json/personnel.json/seed_bids.js/doc_fees.json ตาม scope · commit 344fbb8 pushed เอง (user อนุญาตรอบนี้)
 - 🐛 fix (968de1f): DA generate assets.json มาเป็น `{meta, assets:[]}` envelope ไม่ใช่ bare array ตามที่คุยกันตอนแรก — เจอตอนตรวจ data จริงหลัง DA push (0bda2ab) เลยแก้ fetch handler ให้รองรับทั้งสองแบบ (`Array.isArray(data) ? data : data?.assets`)
 
+### ✅ Done (2026-08-31)
+- **STATUS.DISQUALIFIED — รวมคำเรียกให้เหลือชุดเดียว** "แพ้ ขาดคุณสมบัติ / ถูกปรับตก" (เดิมมี 4 แบบ: "แพ้ เนื่องจากโดนปรับตก" / "แพ้ขาดคุณสมบัติ" / "แพ้ ถูกปรับตก" / "ตัดสิทธิ์" → คนอ่านนึกว่าเป็นคนละช่อง)
+  - display เท่านั้น 9 จุด: L744 pill · L1425 count label · L1516 badge · L1619/1722 section title · L2525 modal tag · L2239 inline select (สั้น "🚫 ขาดคุณสมบัติ/ปรับตก") · L1884 dashboard stat row
+  - L756/790/881 `<option>` เดิม text = value (ไม่มี attr) → pin `value="แพ้ เนื่องจากโดนปรับตก"` ก่อนเปลี่ยน text = enum ไม่ขยับ
+  - ❌ ไม่แตะ L952 enum + L1022 normalize map (635 records อ้างค่าเดิม)
+- **ซ่อน Doc Fee UI ทั้งหมดใน tracker** (workflow เปลี่ยนถาวร — จ่ายพร้อมยื่นประมูล ฟอร์มเก่าไม่ได้ใช้ประโยชน์เลย ยืนยันจาก Marx)
+  - L656 tab button `display:none` · L1238 ตัด 'docfee' ออกจาก TABS
+  - L690 Dashboard card "ค่าเอกสารประมูล — สถานะ" `display:none`
+  - L2585 บล็อกค่าเอกสารใน popup รายละเอียดโครงการ `display:none`
+  - L846-849 ฟอร์มเพิ่ม/แก้โครงการ 4 ช่อง (ยอด/วันที่/วิธีจ่าย/ธนาคาร) `display:none` — email dropdown ซ่อนไปแล้วตั้งแต่ 2569-08-09
+  - ทุก function + fetch doc_fees.json + DOC_FEES คงไว้ครบ → unhide ได้ทันที · DOC agent ทำงานต่อได้ปกติ
+- **คู่แข่งที่ได้งานไปแทน → Top 10 + ปุ่มขยาย**
+  - L1922 `COMP_TOP=10` · L1925 แถว 11+ ใส่ `data-comp-extra` + display:none (render ครบ ไม่ตัดข้อมูล → bar scale เทียบ maxComp เดิม)
+  - L1931 ปุ่ม text-link "ดูทั้งหมด (N) ▾" ⇄ "ย่อ ▴" · L2469 `toggleCompetitorAll()` · L2514 expose
+- Verify: 2661→2674 บรรทัด · `node --check` ทั้ง 3 script block ผ่าน
+
 ### ⏳ Pending UI tasks
-- (none currently open — Assets tab live, verified working end-to-end against real assets.json)
+- (none currently open)
 
 ### 🗒️ Context carried over (not a UI task, FYI for continuity)
 - Mark กำลังคิดสถาปัตยกรรมใหญ่: แยกเป็น 2 BASE — "E-BIDDING BASE" (ของเดิม, public) vs "RMN DATABASE" (Employees/Stats-KPI/Asset+expiry/เอกสารสแกนจริง, ต้อง login ID/Pass, มี PII)
