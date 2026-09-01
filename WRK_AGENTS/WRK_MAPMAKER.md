@@ -13,7 +13,7 @@
 - ระยะทาง (km.)
 
 ## Output
-PDF → `C:\Users\Advice\OneDrive\E-BIDDING\Log\แผนที่แสดงเส้นทางขนส่ง\`
+PDF → `C:\Users\Advice\OneDrive\[EGP]_E-BIDDING - [R.M.N_GROUP]_DATABASE\Log\แผนที่แสดงเส้นทางขนส่ง\`
 
 ## Layout (จาก DOCX template)
 ```
@@ -33,7 +33,9 @@ fallback (ถ้า folder ไม่ได้ mount): `Downloads/YYYY-MM-DD/`
 
 ## Tech Stack
 - reportlab + Sarabun font
-- Script: `skills/mapmaker/scripts/create_map_pdf.py` (bundled — ใช้ผ่าน `python3 ...create_map_pdf.py --agency ... --project ... --dist ... --out ...`)
+- Script (bundled skill): path เปลี่ยนทุก session → หาแบบนี้เสมอ
+  `SRC=$(find /root/.claude/skills/synced -path '*/mapmaker/scripts/create_map_pdf.py' | head -1)`
+- Flags จริงของ script: `--agency --project --dist --out --img` (ไม่มี `--company`)
 - Font: `/tmp/Sarabun-Regular.ttf` + `/tmp/Sarabun-Bold.ttf`
 - Download font: `https://github.com/google/fonts/raw/main/ofl/sarabun/Sarabun-Regular.ttf`
 - รูปใน Downloads อยู่ใน subfolder → `find` ก่อน `cp /tmp/map_input.png`
@@ -44,6 +46,12 @@ fallback (ถ้า folder ไม่ได้ mount): `Downloads/YYYY-MM-DD/`
 - `seed_bids.js` path: `C:\Users\Advice\OneDrive\Claude\Projects\RMN-eBidding-Workflow\seed_bids.js` (READ-ONLY — ห้าม edit จาก mapmaker)
 - วิธีใช้: copy script ไป `/tmp/create_map_pdf_rakdee.py` แล้ว `sed` แทนที่ข้อความชื่อห้างก่อนรันทุก session ใหม่ (ไฟล์ /tmp ไม่ persist ข้าม session)
 - ปัจจุบัน (ข้อมูล ณ 2026-07-27): ทุก entry ใน seed_bids ใช้ `หจก.รักดี การโยธา` ยื่นทั้งหมด ไม่ว่า plant ต้นทางจะเป็นมหาสารคาม/ศรีบุญเรือง/สกลนคร
+
+## ⚠️ Known Issues (2026-08-31)
+- `ls`/`cp` บน mount `$HOME/mnt/แผนที่แสดงเส้นทางขนส่ง` = **Input/output error** (ไฟล์เยอะ/OneDrive)
+  → ห้ามใช้ device_bash cp เข้า output folder. ใช้ `device_commit_files` ด้วย Windows path เต็มแทน
+  → ตรวจไฟล์ในโฟลเดอร์ด้วย `device_list_dir` (ใช้ได้ปกติ)
+- ชื่อไฟล์ซ้ำ = ทับของเดิมเงียบๆ → **เช็ค device_list_dir ก่อน commit ทุกครั้ง** ถ้าซ้ำต่อท้าย `_<projectID>`
 
 ## ✅ PDFs Created
 | ไฟล์ | หน่วยงาน | km |
@@ -81,7 +89,7 @@ fallback (ถ้า folder ไม่ได้ mount): `Downloads/YYYY-MM-DD/`
 | แผนที่_อบต_สำโรง.pdf | อบต.สำโรง (69059191317) | 69.4 |
 | แผนที่_อบต_กุดธาตุ_โรงเรียนนาหม่อโนนลาน.pdf | อบต.กุดธาตุ (69079037715) | 16.4 |
 | แผนที่_อบต_กุดธาตุ_สี่แยกพ่อหนูล้วน.pdf | อบต.กุดธาตุ (69079031596) | 16.4 |
-| แผนที่_อบต_ทุ่งเขาหลวง.pdf | อบต.ทุ่งเขาหลวง (69079151298) | 77.9 |
+| แผนที่_อบต_ทุ่งเขาหลวง.pdf | อบต.ทุ่งเขาหลวง (69079151298) | 77.9 | ⚠️ ทับไฟล์ 77.4 เดิม (ชื่อซ้ำ ไม่ได้ต่อ _projectID) — ถ้าต้องใช้ 77.4 ต้องสร้างใหม่ |
 | แผนที่_ทต_หนองแปน.pdf | ทต.หนองแปน (69079122770) | 24.3 |
 | แผนที่_อบจ_บึงกาฬ.pdf | อบจ.บึงกาฬ (69079109557) | 61.1 |
 | แผนที่_อบต_โนนแหลมทอง.pdf | อบต.โนนแหลมทอง (69079189741) | 88.1 |
@@ -100,6 +108,25 @@ fallback (ถ้า folder ไม่ได้ mount): `Downloads/YYYY-MM-DD/`
 | แผนที่_ทต_สุวรรณคูหา_69089150896.pdf | ทต.สุวรรณคูหา (69089150896) | 102 |
 | แผนที่_ทต_เขื่อนอุบลรัตน์.pdf | ทต.เขื่อนอุบลรัตน์ (69079253957) | 73.4 |
 | แผนที่_ทต_โคกสูงสัมพันธ์.pdf | ทต.โคกสูงสัมพันธ์ (69089123180) | 60.3 |
+| แผนที่_อบต_ดงมะไฟ.pdf | อบต.ดงมะไฟ (69079170169) | 57.5 |
+| แผนที่_ทต_เมืองเก่า.pdf | ทต.เมืองเก่า (69029099286) | 70.8 |
+
+| แผนที่_ทต_หนองกุง.pdf | ทต.หนองกุง (69069406325) | 48.8 |
+
+## 🔄 Session State (last updated 2026-08-31)
+- 2026-08-31: สร้าง `แผนที่_ทต_หนองกุง.pdf` (69069406325) — entity ยืนยันจาก seed_bids.js = หจก.รักดี การโยธา, plant มหาสารคาม, 48.8 km. (route 213→12) → commit เข้า Log/แผนที่แสดงเส้นทางขนส่ง/ แล้ว
+- ⚠️ แก้: รอบแรกใส่ --project เป็นเลขที่โครงการ (69069406325) แทนชื่อโครงการเต็ม (user จับได้) → สร้างใหม่ด้วยชื่อโครงการจริงจาก seed_bids.js.name แล้ว commit ทับ
+- font Sarabun: GitHub raw ถูกบล็อกใน session นี้ → ใช้ jsdelivr mirror แทน `https://cdn.jsdelivr.net/gh/google/fonts@main/ofl/sarabun/Sarabun-Regular.ttf` (และ -Bold.ttf)
+- แก้ก่อนหน้า: script path → ใช้ find (synced UUID เปลี่ยนทุก session), เพิ่ม Known Issues, mark แถว ทุ่งเขาหลวง ที่ถูกทับ
+- ไม่มีงานค้าง
+
+## 🔄 Session State (last updated 2026-08-27)
+- 2026-08-27: สร้าง `แผนที่_ทต_เมืองเก่า.pdf` (69029099286) — entity ยืนยัน = หจก.รักดี การโยธา, plant มหาสารคาม, 70.8 km. → copy เข้า output folder แล้ว
+- ไม่มีงานค้าง
+
+## 🔄 Session State (last updated 2026-08-26)
+- 2026-08-26: สร้าง `แผนที่_อบต_ดงมะไฟ.pdf` (69079170169) — entity ยืนยัน = หจก.รักดี การโยธา, plant สกลนคร, 57.5 km. → copy เข้า output folder แล้ว
+- ไม่มีงานค้าง
 
 ## 🔄 Session State (last updated 2026-08-20)
 - 2026-08-20: สร้าง `แผนที่_ทต_โคกสูงสัมพันธ์.pdf` (seq 181 / 69089123180) — entity ยืนยัน = หจก.รักดี การโยธา, plant ศรีบุญเรือง, 60.3 km. → copy เข้า output folder แล้ว
