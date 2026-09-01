@@ -71,6 +71,9 @@ FY2568 ไม่กระทบ                308,197,279
 - WRK ตัวที่ 6 = **`RMN-eBidding-KB\WRK_DOC_EXPIRY.md`** (16,447 B) ย้ายออกตาม Core Rule 19 (PII)
 - `RMN_Enterprise\DESIGN_PRINCIPLES.md` = เอกสารหลักการ + Decision log · **เจ้าของ = DA** · ไม่มี session แยก
 - ที่ปรึกษาภายนอก: **ChatGPT RMN Command Center = Strategic Advisor** (ไม่ถือ scope/ไม่แตะไฟล์/ไม่ commit) · **Claude = Operate & Execute**
+- 🚦 **2 ราง อย่าปนกัน** (แก้ตาม Advisor review รอบเดียวกัน — เดิมเขียนกว้างเกิน ทำให้ DA เป็นคอขวดทุกงาน = ตกข้อ 9)
+  - *เปลี่ยนระบบ / เพิ่มเครื่องมือ / เปลี่ยน source of truth* → Advisor เสนอ → **user อนุมัติ** → DA บันทึก Decision log → ดำเนินการ
+  - *งานปกติตาม scope เดิม* → **DA route → Claude execute ได้เลย** ไม่ต้องผ่าน Advisor ไม่ต้องรออนุมัติ
 
 ### ✅ แก้ไปแล้ว (3 ไฟล์ที่ grep แล้วเจอจริง)
 - `KB_ECOSYSTEM_ADMIN.md` — ถอด row API Status + row Design Board ออกจาก Agent Registry → ย้ายเข้าตาราง "ยกเลิกแล้ว" · ตัด `DB=Design Board` ออกจาก nickname · แทนบล็อก `🔀 DA ↔ DB` ด้วยบล็อก "DESIGN_PRINCIPLES = เอกสาร ไม่ใช่ agent" + เส้นแบ่งที่ปรึกษาภายนอก · แก้ path EXP → `RMN-eBidding-KB\WRK_DOC_EXPIRY.md` · refresh verified list เป็น 2026-09-01
