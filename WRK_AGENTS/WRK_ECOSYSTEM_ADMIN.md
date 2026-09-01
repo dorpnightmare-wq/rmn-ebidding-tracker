@@ -58,3 +58,26 @@ FY2568 ไม่กระทบ                308,197,279
 2. 10 records เก่าที่ pct คิดจาก midPrice — ควร normalize เป็น budget-based
 3. `date` ของ 28 แถวใหม่ = วันประกาศ · ถ้าได้วันยื่นซองจริงมาให้แก้ทับ
 4. เช็คว่า หจก.รักดีการโยธา ชนะงานอะไรไปแล้วหรือยัง (ชุด 2569 ว่าง) — ต้องข้อมูลใหม่กว่า มี.ค. 69
+
+---
+
+## 🔄 Session State (2026-09-01 — DA: cleanup โครงสร้าง workflow ตามมติใหม่)
+> คำสั่ง: ยกเลิก DB · คง DESIGN_PRINCIPLES.md เป็นเอกสาร DA เป็นเจ้าของ · ประกาศ ChatGPT RMN Command Center = Strategic Advisor นอก workflow · ล้าง reference DB/API-disabled/path EXP · **ห้ามลบไฟล์หรือ archive ใด ๆ**
+
+### 🗂️ โครงสร้างหลังจัดใหม่ (ยืนยันจากไฟล์จริง device_list_dir 2026-09-01)
+- **agent ใช้งานจริง 6 ตัว**: DA · OPY · DOC · EXP · MM · UI — ไม่มีตัวที่ 7
+- **ยกเลิกแล้ว 2 ของ** (ไฟล์ยังอยู่ ห้ามลบ): API Status (disabled) · Design Board/DB (2026-09-01)
+- `agents\` = 6 KB (+ โฟลเดอร์ `maps`) · `WRK_AGENTS\` = WRK ใช้จริง 5 + `WRK_API_STATUS.md`(disabled) + archive 2
+- WRK ตัวที่ 6 = **`RMN-eBidding-KB\WRK_DOC_EXPIRY.md`** (16,447 B) ย้ายออกตาม Core Rule 19 (PII)
+- `RMN_Enterprise\DESIGN_PRINCIPLES.md` = เอกสารหลักการ + Decision log · **เจ้าของ = DA** · ไม่มี session แยก
+- ที่ปรึกษาภายนอก: **ChatGPT RMN Command Center = Strategic Advisor** (ไม่ถือ scope/ไม่แตะไฟล์/ไม่ commit) · **Claude = Operate & Execute**
+
+### ✅ แก้ไปแล้ว (3 ไฟล์ที่ grep แล้วเจอจริง)
+- `KB_ECOSYSTEM_ADMIN.md` — ถอด row API Status + row Design Board ออกจาก Agent Registry → ย้ายเข้าตาราง "ยกเลิกแล้ว" · ตัด `DB=Design Board` ออกจาก nickname · แทนบล็อก `🔀 DA ↔ DB` ด้วยบล็อก "DESIGN_PRINCIPLES = เอกสาร ไม่ใช่ agent" + เส้นแบ่งที่ปรึกษาภายนอก · แก้ path EXP → `RMN-eBidding-KB\WRK_DOC_EXPIRY.md` · refresh verified list เป็น 2026-09-01
+- `DESIGN_PRINCIPLES.md` — เขียน header ใหม่ (เอกสาร ไม่ใช่ KB ของ DB · เจ้าของ DA · advisor boundary) · ปิดข้อละเมิด #2 (EXP path) + #3 (API agent) เป็น ✅ แก้แล้ว · เพิ่ม Decision log 3 บรรทัด (2026-09-01)
+- `WRK_AGENTS\CLAUDE.md` — **ไม่แก้** · grep แล้ว **ไม่มี reference ของ DB / API_STATUS / "7 agent" / netlify เลย** · `L31` (path EXP → RMN-eBidding-KB) ถูกอยู่แล้ว
+
+### ⚠️ ที่ DA แก้ให้ไม่ได้ — user ต้องทำเอง
+- **Cowork project instructions** (อยู่นอก git · DA อ่าน/แก้ไม่ได้) — ยังลิสต์ 7 agent และอาจยังชี้ `WRK_AGENTS\WRK_DOC_EXPIRY.md`
+- `DESIGN_PRINCIPLES.md:307` ยังเขียนว่างานลบ netlify เป็นของ DA (ทำเสร็จ 2026-08-31 แล้ว) — **นอกขอบเขตคำสั่งรอบนี้ จึงไม่แตะ**
+- `WRK_AGENTS\CLAUDE.md` ยัง 21,573 B = เกินเพดาน 20 KB (ยกมาจากรอบก่อน)
