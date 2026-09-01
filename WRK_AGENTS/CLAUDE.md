@@ -45,7 +45,6 @@ ToolSearch → โหลดเฉพาะเมื่อ tool ไม่มี�
 ## 📁 Files & URLs
 - Main: `rmn_ebidding_tracker_2.html` (single source of truth)
 - Logo: `assets/logo.png`
-- Proxy: `netlify/functions/proxy.js`
 - Live: https://m4dm4rx.github.io/RMN-eBidding-Workflow/
 - Repo: https://github.com/m4dm4rx/RMN-eBidding-Workflow.git
 
