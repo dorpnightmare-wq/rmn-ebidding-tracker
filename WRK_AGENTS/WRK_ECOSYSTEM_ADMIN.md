@@ -106,3 +106,25 @@ FY2568 ไม่กระทบ                308,197,279
 - **skill `fee-payment` + `e-bidding-operating`** อาจยังเขียนว่า "dispatch ไป DOC" — skill เป็น read-only cache **DA แก้จากดิสก์ไม่ได้** ต้อง propose ให้ user save → **ยังไม่ตรวจเนื้อหา skill จริง อย่าเพิ่งสรุปว่าต้องแก้**
 - `CLAUDE.md` = **22,087 B เกินเพดาน 20 KB** (เดิม 21,573) — ยุบได้จริงคือ § Doc Fee + § Slip Verification ที่ทับกับ skill แต่นั่นเป็นการเปลี่ยนระบบ **รอ user อนุมัติก่อน ไม่ทำเอง**
 - queue `68099553809` ยัง pending — ตอนนี้ **OPY ปิดเองได้แล้ว** ไม่ต้องรอ DOC
+
+---
+
+## 🔄 Session State (2026-09-02 #2 — DA: รับ Codex + File Ownership Matrix)
+> user เลือก **ตัวเลือก B** · Advisor สั่งให้เขียน matrix ก่อนเปลี่ยนชื่อยศลงเอกสารจริง — ทำตามลำดับนั้นแล้ว
+
+### 👑 ชั้นยศ (alias — ไม่เปลี่ยน scope)
+Grand Maester = ChatGPT RMN Command Center (ที่ปรึกษา ไม่แตะไฟล์) · **Lord Commander = Codex** (งานเทคนิค/ข้ามระบบ · แก้เฉพาะไฟล์ที่เป็น Codex owner) · Lord DA = DA (KB/registry/routing/Decision log) · Sir OPY/EXP/MM/UI = เจ้าของงานตาม domain · ~~Sir DOC~~ ปลดแล้ว
+
+### 🗂️ File Ownership Matrix (เขียนจาก `git ls-files` จริง)
+- `RMN-eBidding-Workflow` **26 ไฟล์ tracked** → OPY: seed_bids.js, doc_fee_queue.json, doc_fees.json, handoff csv · UI: tracker html, index.html, logo · MM: map_input.png · แต่ละ agent: WRK ตัวเอง · **DA**: CLAUDE.md, KB/, assets.json, BOOTSTRAP_IOS, PROJECT_INSTRUCTIONS_DRAFT, morning-prompt
+- **Codex owner (5 ไฟล์)**: `scripts/harvest_all.ps1` · `scripts/harvest_egp.ps1` · `scripts/pull_egp.py` · `WRK_AGENTS/scripts/generate_fee_pdf_fixed.py` · `.gitignore` + `.claude/launch.json` → Claude **รันได้ แก้ไม่ได้**
+- `M4RX-B4SE` = 20 .md + 5 .gitkeep **ไม่มีโค้ดเลย** → DA ทั้ง repo · `RMN-eBidding-KB` = DA + EXP · **Codex ไม่แตะ (PII/Core Rule 19)**
+- **ไฟล์ที่ไม่อยู่ใน matrix = ยังไม่มีเจ้าของ ต้องถามก่อนแก้**
+
+### ⚠️ จุดเสี่ยงที่ flag ไว้ในไฟล์แล้ว
+`generate_fee_pdf_fixed.py` = ตัว generate PDF ที่ OPY ใช้ทุกงาน · ถ้า Codex เป็นเจ้าของแล้วสคริปต์พังกลางงาน **OPY แก้เองไม่ได้ ต้องรอ Codex** → ถ้ารับไม่ได้ ให้ย้ายมาเป็นของ Sir OPY แล้วบันทึกทับ (ยังไม่ตัดสิน)
+
+### ⏳ ค้างจากรอบก่อน (ยังไม่แตะ)
+1. skill `fee-payment` / `e-bidding-operating` อาจยังเขียน dispatch ไป DOC — ยังไม่เปิดอ่าน skill จริง
+2. `CLAUDE.md` 22,087 B เกินเพดาน 20 KB — ยุบได้แต่เป็นการเปลี่ยนระบบ รออนุมัติ
+3. queue `68099553809` pending — OPY ปิดเองได้แล้ว
