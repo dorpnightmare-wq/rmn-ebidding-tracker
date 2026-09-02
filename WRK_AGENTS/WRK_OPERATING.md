@@ -1,14 +1,14 @@
 # E-bidding Operating Assistance — OPY
 
-> 📦 **ประวัติเต็มถึง 2569-08-20 ย้ายไปที่ `WRK_AGENTS/WRK_OPERATING_ARCHIVE_2569H2.md`** (ตาราง seq 94–174, Done This Session, Session State 2569-07-24 / 07-27 / 08-04 x2, prompt เก่า)
-> ไฟล์นี้เก็บเฉพาะ **กฎที่ยังใช้จริง + state ปัจจุบัน + pending** ตามกฎเพดาน 20 KB (DB ตั้งไว้ 2026-08-24)
+> 📦 ประวัติถึง 2569-08-20 → `WRK_OPERATING_ARCHIVE_2569H2.md`
+> เก็บเฉพาะ **กฎที่ใช้จริง + state ปัจจุบัน + pending** · เพดาน 20 KB (DB 2026-08-24)
 > ❌ ห้าม hardcode ตาราง seq ที่นี่อีก — `seed_bids.js` = source of truth เสมอ (หา seq ถัดไป: กรอง fiscalYear ล่าสุด → max(seq)+1)
 
 ---
 
 ## 🎯 Task Scope
 รับข้อมูลการประมูล → เพิ่ม/แก้ `seed_bids.js` → widget card + diff → commit + push เอง
-อ่าน annoudoc PDF → ตรวจค่าซื้อเอกสาร → append `doc_fee_queue.json` → dispatch fee-payment ถ้าต้องจ่าย
+อ่าน annoudoc PDF → ตรวจค่าซื้อเอกสาร → append `doc_fee_queue.json` → **ทำ fee-payment เองทั้งเส้นจนปิด `doc_fees.json`**
 
 ---
 
@@ -48,17 +48,24 @@ entity ยื่น ≠ ผู้ถือครอง → **แจ้งเต�
 
 **ตัดสิน:** มี "ชำระเงินค่าซื้อเอกสาร ราคาชุดละ X บาท" → ต้องจ่าย · มีแต่ "ดาวน์โหลดผ่าน e-GP" → ไม่ต้องจ่าย
 
-**ทั้งสองกรณีต้อง append `doc_fee_queue.json`** (Read ใหม่ก่อนเสมอ — Doc Fee Agent แก้ไฟล์นี้นอก session · append/read เท่านั้น ห้ามลบ entry เอง):
+**ทั้งสองกรณีต้อง append `doc_fee_queue.json`** (Read ใหม่ก่อนเสมอ · ห้ามลบ entry เอง):
 - ต้องจ่าย → `"status":"pending"`, amount, bank/bankAccNo/email (null ได้ถ้าประกาศไม่ระบุ — ห้ามไปขุดหาที่อื่น), payWindowStart/End, paymentMethod, submitMethod
-- ไม่ต้องจ่าย → `"status":"no_fee_required"`, `"amount":0` (ต้อง append ด้วย ไม่งั้น Doc Fee Agent flag เป็นงานค้าง — เคยเกิดกับ SEQ163/164/167/171)
+- ไม่ต้องจ่าย → `"status":"no_fee_required"`, `"amount":0` (ต้อง append ด้วย ไม่งั้นถูก flag เป็นงานค้าง — เคยเกิดกับ SEQ163/164/167/171)
 - ก่อน append: grep id ใน `doc_fees.json` ก่อน — ถ้าเจอ = จ่ายแล้ว ห้ามสร้าง pending ซ้ำ (bug จริง 2569-08-04)
 - ขัดแย้งกัน → ยึด `doc_fees.json` เป็น source of truth
 
-**ถ้า pending + amount > 0 → dispatch Agent tool (subagent_type: general-purpose) ทันที** โหลด skill `fee-payment` ประมวลผลในเซสชันเดียวกัน ส่ง id/agency/amount/bank/email/deadline/paymentMethod/submitMethod ไปให้ครบ
-⛔ **ห้าม subagent web search / fetch เว็บหน่วยงานเด็ดขาด** — ใช้เฉพาะไฟล์ที่แนบมา · ข้อมูลไม่พอ = รายงานว่าขาด ห้ามเดา
-`no_fee_required` → ไม่ต้อง dispatch, ไม่ต้องเปิด doc_*.pdf เลย
-
-**ข้อจำกัด dispatch:** subagent รันครั้งเดียวจบ รอสลิปไม่ได้ · ทำแค่ first-pass ไม่ monitor ต่อ
+**pending + amount > 0 → OPY ทำเองทั้งเส้น** (โหลด skill `fee-payment` ในเซสชันนี้ · ⛔ ห้าม dispatch subagent · ⛔ ห้าม web search หา bank/email — ใช้เฉพาะไฟล์ที่แนบ ข้อมูลไม่พอ = บอกว่าขาด):
+1. อ่าน queue → แสดง pending · 2. อ่าน entity จาก `seed_bids.js` (local) · 3. รอ user ส่งสลิป
+4. **Slip Verification (MANDATORY ห้ามข้าม)** → output ตาราง 6 จุด รอ user ยืนยันก่อนเสมอ:
+   ธนาคาร / เลขบัญชี / ชื่อบัญชีผู้รับ / ยอดเงิน / วันที่ (อยู่ใน payWindow) / **ชื่อผู้ฝาก = entity ที่ยื่นงาน**
+   └ มี ❌ → หยุด แจ้ง user ทันที · ประกาศไม่ระบุเลขบัญชี = "เทียบไม่ได้" ไม่ใช่ ❌ แต่ต้องบอก
+   └ ผู้จ่าย ≠ entity → ถาม "หน่วยงานอาจปฏิเสธ ดำเนินการต่อ?" ห้ามสร้าง PDF เอง
+5. user ยืนยัน → สร้าง **PDF ใบแจ้งชำระ** · ช่องทางส่ง default = **แนบ e-GP** (user 2569-09-02 "No email from now on")
+   └ Email text + Email Check Box widget → เฉพาะเมื่อหน่วยงาน**ระบุให้ส่งอีเมล**
+6. รอ user แจ้ง "ส่งแล้ว" — ⛔ ห้ามอัป `doc_fees.json` ก่อน
+7. **OPY เขียน `doc_fees.json` เอง** (paidDate + submitMethod + payerName + ref) → queue `"status":"done"` → push เอง
+   ⚠️ `doc_fees.json` format = **1 บรรทัด/entry** ห้าม pretty-print ทั้งไฟล์ (พลาดจริง 2569-09-02 diff โป่ง 467 บรรทัด)
+`no_fee_required` → ไม่ต้องทำอะไรต่อ ไม่ต้องเปิด doc_*.pdf
 
 ---
 
@@ -69,13 +76,11 @@ entity ยื่น ≠ ผู้ถือครอง → **แจ้งเต�
 
 ---
 
-## ⚖️ แบ่งงาน OPY (ที่นี่) vs Doc Fee Agent
-**OPY ผ่าน dispatch:** เจอ fee ตอนเพิ่ม SEQ → append queue + เรียก subagent ทันที · ใช้เฉพาะไฟล์ที่มี · ข้อมูลไม่พอ = mark ว่าขาด · จบที่ first-pass เดียว
-**Doc Fee Agent (dispatch ทำแทนไม่ได้):**
-1. รับสลิปจริง → ยืนยันเลขบัญชีจากสลิป (บางครั้งต่างจากประกาศ เช่น SEQ166 สลิป 404-6-21164-4 vs ประกาศ 406-2-61616-4 — **ยึดสลิป**) → PDF สุดท้าย + ส่งตาม submitMethod
-2. Monitor queue แบบ recurring (เคส pending ค้างนาน)
-3. ดูแลไฟล์ skill `fee-payment` / `e-bidding-operating` — **OPY ห้ามแตะ**
-4. Correction ที่ต้องคุยกับ user หลายรอบ
+## ⚖️ DOC agent — DISABLED 2026-09-02 (CLAUDE.md `8c46853`)
+scope fee-payment **โอนมาที่ OPY ทั้งหมด** — ห้าม route/dispatch งานไป DOC · ไฟล์ `KB_FEE_PAYMENT.md`/`WRK_FEE_PAYMENT.md` เก็บไว้ ห้ามลบ
+เหตุผล: ไม่มีคนเปิด session DOC เลย (WRK แก้ครั้งสุดท้าย 04-08-69) → queue ค้างขั้น "รอ DOC ปิด" ตายเงียบ
+สิ่งที่ OPY รับมาเพิ่ม: รับสลิป → ยืนยันเลขบัญชีจากสลิป (**ยึดสลิปเสมอ** เช่น SEQ166 สลิป 404-6-21164-4 vs ประกาศ 406-2-61616-4) → PDF → ส่งตาม submitMethod → ปิด `doc_fees.json` → monitor queue เอง
+ยังห้ามแตะ: ไฟล์ skill `*.skill` ทั้งหมด
 
 ---
 
@@ -97,8 +102,15 @@ entity ยื่น ≠ ผู้ถือครอง → **แจ้งเต�
 ---
 
 ## 🚀 Git / Push
-- **OPY push เองได้** ผ่าน Windows-MCP PowerShell (sandbox bash ไม่มี credential):
-  `cd C:\Users\Advice\OneDrive\Claude\Projects\RMN-eBidding-Workflow; git push origin main`
+- ⛔ **ห้ามรัน git ผ่าน `device_bash` เด็ดขาด** (CLAUDE.md ข้อ 18) — VM ไม่มี network + ลบ `.lock` ไม่ได้ · device_bash = อ่าน/แก้ไฟล์เท่านั้น
+- **git ทั้งหมด (add/commit/push) รันผ่าน Windows-MCP PowerShell**:
+  ```
+  $r="$env:USERPROFILE\OneDrive\Claude\Projects\RMN-eBidding-Workflow"
+  Remove-Item "$r\.git\HEAD.lock","$r\.git\index.lock" -Force -ErrorAction SilentlyContinue
+  git -C $r add <file>; git -C $r commit -m "msg"; git -C $r push
+  git -C $r rev-parse --short HEAD; git -C $r rev-parse --short origin/main
+  ```
+  ปิดงานต้องรายงาน HEAD = origin/main ทุกครั้ง
   ข้อความสีแดงใน PS = progress output ของ git **ไม่ใช่ error** · ตรวจซ้ำ `git fetch` แล้วเทียบ local vs origin
 - ⛔ **ห้าม `git add .` / `git add -A`** — มีไฟล์ agent อื่นค้าง uncommitted (`WRK_MAPMAKER.md`, `PROJECT_INSTRUCTIONS_DRAFT.md`, `SKILL_build.md`, `SKILL_ebidding.md` ฯลฯ) → `git add` เจาะจงชื่อไฟล์เสมอ
 - `.git/index.lock` / `HEAD.lock` ค้างบ่อย → sandbox ลบได้หลังเรียก `allow_cowork_file_delete` ครั้งเดียว (สิทธิ์ค้างทั้ง session) ไม่ต้องรบกวน user
@@ -109,39 +121,32 @@ entity ยื่น ≠ ผู้ถือครอง → **แจ้งเต�
 
 ### 📂 Working folder / scope
 - หลัก: `C:\Users\Advice\OneDrive\Claude\Projects\RMN-eBidding-Workflow`
-- แก้ได้: `seed_bids.js` · `doc_fee_queue.json` (append/read) · `WRK_AGENTS\WRK_OPERATING.md`
-- อ่านอย่างเดียว: `doc_fees.json` · `WRK_OPERATING_ARCHIVE_2569H2.md`
+- แก้ได้: `seed_bids.js` · `doc_fee_queue.json` · **`doc_fees.json` (เขียนได้แล้ว 2026-09-02)** · `WRK_AGENTS\WRK_OPERATING.md`
+- อ่านอย่างเดียว: `WRK_OPERATING_ARCHIVE_2569H2.md`
 - ห้ามแตะ: `rmn_ebidding_tracker_2.html`, `*.skill` ทั้งหมด, ไฟล์ของ agent อื่น
 
 **📄 ปลายทาง PDF ใบแจ้งชำระค่าเอกสาร (ยืนยันจาก user 2569-08-27) — ห้ามทิ้งไว้ในโฟลเดอร์โปรเจกต์:**
 `C:\Users\Advice\OneDrive\[EGP]_E-BIDDING - [R.M.N_GROUP]_DATABASE\Log\ใบแจ้งการชำระเงินค่าซื้อเอกสารประกวดราคา\`
 ชื่อไฟล์: `ใบแจ้งชำระเงินค่าซื้อเอกสาร_<ชื่อหน่วยงานเต็ม>_<id>.pdf` (ชื่อเต็ม ใช้ `_` ไม่ใช่ `.` — ตาม convention ไฟล์เดิมในโฟลเดอร์)
 โฟลเดอร์นี้ **ไม่ได้ connect เป็น default** → เรียก `device_request_folder_access` ครั้งเดียวต่อ session
-⚠️ skill `fee-payment` ยังชี้ path เก่า (E-BIDDING/Log fallback Downloads) — **OPY แก้ skill เองไม่ได้** ต้องให้ Doc Fee Agent แก้ · workaround: สั่ง subagent ให้สร้าง PDF ไว้ในคอนเทนเนอร์ + `SendUserFile` เท่านั้น (ห้าม commit) แล้ว OPY เป็นคน `device_commit_files` ไปโฟลเดอร์ Log เอง
+⚠️ skill `fee-payment` ยังชี้ path เก่า (E-BIDDING/Log fallback Downloads) — **OPY แก้ skill เองไม่ได้** · workaround: สร้าง PDF ในคอนเทนเนอร์ → `SendUserFile` → `device_commit_files` ไป Log folder ด้วยมือ
 
 ---
 
 > ประวัติ session ก่อน 2569-08-28 → `WRK_OPERATING_ARCHIVE_2569H2.md` + git log · ชื่อเรียก agent = **"OPY"**
 
-## 🔄 Session State (2569-08-28) — ปิด session, verified
-- **Last SEQ (FY2569) = 217** · seed_bids.js **634 records** · commit ล่าสุด `e418c7c` push แล้ว (local = origin verified)
-- SEQ ที่เพิ่ม/ปิดผลรอบนี้ (2569-08-26 → 08-28):
-
-| seq | id | หน่วยงาน | ยื่น | วงเงิน | pct | plant | ผล |
-|-----|----|---------|------|--------|-----|-------|-----|
-| 182 | 69079170169 | อบต.ดงมะไฟ (สน.) | 1,348,000 | 2,074,000 | 35.00 | สกลนคร ⚠ | ✅ ต่ำสุด |
-| 215 | 69029099286 | ทต.เมืองเก่า (ขก.) | 888,000 | 1,492,000 | 40.48 | มหาสารคาม | ❌ −148,500 (ต่ำสุด 739,500) |
-| 216 | 69079482739 | ทต.หนองสอ (กส.) | 698,000 | 1,164,721 | 40.07 | มหาสารคาม | ❌ −2,155 (ต่ำสุด 695,845) |
-| 217 | 69089473825 | อบต.ดอนหัน (ขก.) | 398,000 | 500,000 | 20.40 | มหาสารคาม | ✅ ต่ำสุด |
-
-- ค่าเอกสารรอบนี้ **ปิดครบ 2 รายการ** (queue 15 entries · **pending = 0**):
-  1. `69029099286` 1,000฿ KTB 405-6-06787-2 · จ่าย 27 ส.ค. 10:01 · payer นางอนุรักษ์ บารพรม · แนบ e-GP · PDF ลง Log folder
-  2. `69089473825` 500฿ KTB (สลิปโชว์ XXX-X-XX324-5 · ประกาศไม่ระบุเลขเต็ม · ไม่มี doc_*.pdf) · จ่าย 28 ส.ค. 10:46 · user แนบ e-GP เอง · PDF ลง Log folder
-- ⚠️ SEQ 217 วงเงินในตาราง user พิมพ์ผิดเป็น 50,000 — user ยืนยันจริง **500,000** (ราคากลาง 707,000) · เจอเคสแบบนี้อีกให้ถาม ห้ามเดา
-- Recheck ก่อนปิด session (script): 634 records · FY2569 max=217 · ไม่มี seq/id ซ้ำ · fiscalYear ครบทุก record · pct ของ seq ≥175 ถูกทุกตัว · status ↔ lowest สอดคล้อง — **ไม่พบ error ในงานของ OPY**
-- 📌 พบแต่ไม่แก้ (นอกขอบเขต): FY2569 มี 33 records `pct` ไม่ตรงสูตร — ทั้งหมด **seq ≤ 158** (ข้อมูล backfill ของ DA ไม่ใช่ของ OPY) ให้ DA ตรวจเอง
-- 🆕 กฎที่บันทึกรอบนี้: (1) การ์ดเดียวรวมทุกอย่าง (2) ห้าม force commit ต้อง re-stage (3) seq space แชร์กับ DA (4) ปลายทาง PDF = Log folder
+## 🔄 Session State (2569-09-02)
+- **Last SEQ (FY2569) = 219** · `seed_bids.js` **636 records** · HEAD = origin `5cf6c8f`
+- 218 `69069406325` ทต.หนองกุง (กส.) ยื่น 1,818,000 / วงเงิน 3,498,000 / pct 48.03 / มหาสารคาม → **✅ ต่ำสุด** · ไม่มีค่าเอกสาร
+- 219 `68099553809` อบจ.บึงกาฬ ยื่น 6,865,000 / วงเงิน 6,870,000 / pct 0.07 / สกลนคร · entity **ห้างหุ้นส่วน RMN** (plant = ตักสิลา ⚠ แจ้งเตือน) → **❌ −133,000** (ต่ำสุด 6,732,000)
+- ค่าเอกสาร `68099553809` **5,000฿** KTB 447-0-29255-9 ฝากเงินสด 02/09/2569 · แนบ e-GP · ปิดเข้า `doc_fees.json` (35 entries) · queue **pending 0**
+- 🆕 กฎที่รับมารอบนี้ (CLAUDE.md `8c46853`): DOC disabled → OPY ทำ fee ทั้งเส้น · Slip Verification บังคับ · git ผ่าน PowerShell เท่านั้น · doc_fees.json เขียนได้
+- ⚠️ บทเรียน: id ขึ้นต้น 68 แต่ fiscalYear 2569 ได้ (คิดจาก `date` เท่านั้น) · user แก้ entity กลางทางได้ ยึดครั้งล่าสุด
+- 📌 พบแต่ไม่แก้ (นอกขอบเขต): FY2569 มี 33 records `pct` ไม่ตรงสูตร ทั้งหมด seq ≤ 158 = backfill ของ DA
 
 ## ⏳ Pending
-- **ไม่มี pending งานจริง** — ผลประมูลครบทุกตัว · queue pending 0 · push ครบ
-- งานเอกสารค้าง (ไม่เร่ง): แจ้ง Doc Fee Agent ให้แก้ path ปลายทาง PDF ใน skill `fee-payment` → Log folder
+- **ไม่มี pending งานจริง** — ผลครบ · queue pending 0 · push ครบ
+- ไม่เร่ง: skill `fee-payment` ยังชี้ path ปลายทาง PDF ผิด (ต้องเป็น Log folder) — OPY แก้ `*.skill` เองไม่ได้ ต้องให้ user/DA แก้
+
+> 📜 state 2569-08-28 (seq 182/215/216/217 · queue 15 pending 0 · commit `e418c7c`) → ดู `git log` + `WRK_OPERATING_ARCHIVE_2569H2.md`
+> ⚠️ บทเรียนที่ยังใช้: SEQ217 วงเงินในตาราง user พิมพ์ผิด 50,000 จริง 500,000 — ตัวเลขไม่สมเหตุผล = ถาม ห้ามเดา
