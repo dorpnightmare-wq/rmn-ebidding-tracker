@@ -129,4 +129,4 @@ Grand Maester = ChatGPT RMN Command Center (ที่ปรึกษา ไม�
 ### ⏳ ค้างจากรอบก่อน (ยังไม่แตะ)
 1. skill `fee-payment` / `e-bidding-operating` อาจยังเขียน dispatch ไป DOC — ยังไม่เปิดอ่าน skill จริง
 2. `CLAUDE.md` 22,087 B เกินเพดาน 20 KB — ยุบได้แต่เป็นการเปลี่ยนระบบ รออนุมัติ
-3. queue `68099553809` pending — OPY ปิดเองได้แล้ว
+3. ~~queue `68099553809` pending~~ → ✅ **ปิดแล้ว** (ตรวจ 2026-09-02: queue `status:done` · `doc_fees.json` มี entry `paidDate 2569-09-02` `submitMethod e-GP`) · OPY sync WRK แล้วที่ 2722f2d — **รายการค้างข้อ 3 ของผมเป็นข้อมูลเก่า แก้แล้ว**
