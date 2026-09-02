@@ -7,60 +7,6 @@
 > 📦 session log ก่อน 2026-08-24 #3 ย้ายไป `WRK_ECOSYSTEM_ADMIN_ARCHIVE_2569H2.md` — ไม่ต้องอ่านตอนเปิด session
 > 📏 เพดานไฟล์นี้ 20 KB · เกินเมื่อไหร่ตัดท้ายเข้า archive ก่อนเริ่มงานใหม่
 
-## 🔄 Session State (2026-08-26 — DA: backfill 28 e-bidding FY2569 ลง seed_bids)
-> ต่อจาก session 08-25 · DB ส่ง dataset id + กับดักมาให้ (memory `project_egp_open_data.md`)
-> ⚖️ **user มอบงานเติมข้อมูลนี้ให้ DA โดยตรง** (ทับ note เก่า 2026-07-14 ที่ให้ seed_bids เป็น read-only สำหรับ agent อื่น)
-
-### ✅ เจอ budget แล้ว — ปลดล็อกที่ค้างเมื่อวาน
-- `Downloads\2569-egp-contract\*.csv` มี **28 คอลัมน์** · คอลัมน์ 9 = `วงเงินงบประมาณ (บาท)`
-- 🔑 **CSV ในเครื่องไม่มี column shift** (shift +7 เป็นปัญหาของ **API** เท่านั้น) → ใช้ชื่อคอลัมน์ได้ตรงๆ
-- สแกน 2,745,560 บรรทัด (6 ไฟล์ 2.9 GB) ด้วย StreamReader + pre-filter keyword → 272 แถว → กรองแม่น 81 โครงการ
-
-### ✅ พิสูจน์วิธีดึงด้วยของจริงก่อนเขียน
-- เอา **28 โครงการที่มีใน tracker แล้ว** มาเทียบ: `budget` `bid` `midPrice` **ตรงเป๊ะ 28/28**
-- cross-check ด้วย **TIN 6 ห้าง** ได้ผลเท่ากับกรองด้วยชื่อทุกตัว (49/18/11/3 = 81) → ไม่มีตกหล่นจากชื่อสะกดผิด
-- `pct = (1 − bid/budget)×100` = สูตรมาตรฐาน (306 records ใช้สูตรนี้)
-  - 🟠 **หนี้ข้อมูลเก่า**: เจอ 10 records ที่ pct คิดจาก `midPrice` ไม่ใช่ `budget` → ยังไม่แก้ บันทึกไว้
-
-### 🔴 "ขาด 53" ไม่ใช่ 53 สำหรับ tracker นี้ — แยก 2 กอง
-| กอง | n | มูลค่า | ตัดสิน |
-|---|---|---|---|
-| **e-bidding** | **28** | **292,336,000** | ✅ เติมแล้ว |
-| เฉพาะเจาะจง | 25 | 5,372,493 (7,500–491,400) | ⏸️ ไม่เติม — ซื้อวัสดุ/จ้างเฉพาะเจาะจง ไม่ใช่งานประมูล · 28 ตัวที่อยู่ใน tracker เดิมเป็น e-bidding 28/28 |
-
-### 🔑 สาเหตุที่หาย — เชิงระบบ ไม่ใช่หายสุ่ม
-28 e-bidding ที่ขาด แยกตามผู้ยื่น: **กิจการร่วมค้า ตักสิลา 14 · กิจการร่วมค้า RMN 9 · กิจการร่วมค้า รักดี 3 · หจก. RMN เอง 2**
-→ **26/28 เป็นงานที่ยื่นในนามกิจการร่วมค้า** — งาน JV ไม่ได้ถูกคีย์เข้า tracker
-
-### 📊 ผลที่เปลี่ยน
-```
-seed_bids.js  558 → 586 records   seq FY2569 183-210 (seq เป็นเลขต่อปีงบ · เดิม 1-182 unique)
-FY2569 bid (สถานะทำสัญญาแล้ว)  131,708,423 → 424,044,423
-FY2568 ไม่กระทบ                308,197,279
-```
-> 📌 **user ยืนยัน: เกิน 300 ล. ไม่ใช่เรื่องใหม่** — RMN overrate SME → ต่ออายุ SME ไม่ได้ → ยื่นงานในนาม RMN ไม่ได้ → **เปลี่ยนไปใช้ รักดี** · ตัวเลขที่เพิ่มมาแค่ทำให้ tracker ตรงกับความจริงที่เกิดขึ้นแล้ว
-> 🔎 แต่ในชุด 2569 **หจก.รักดีการโยธา (TIN 0443567000931) ชนะ 0 โครงการ** — มีแค่ `กิจการร่วมค้า รักดี` 3 · ถ้ารักดีคือตัวยื่นหลักตอนนี้ ควรเช็คว่ายังไม่ชนะจริง หรือข้อมูลชุดนี้เก่าเกิน (ถึง ~มี.ค.–เม.ย. 69)
-
-### ⚠️ 2 ฟิลด์ที่ทำให้ตรงของเดิมไม่ได้ — ใส่แบบไม่เดา
-- `date` — seed ใช้ **วันยื่นซอง** ซึ่งชุดข้อมูลรัฐไม่มี · วัดจาก 28 ตัวที่ทับกัน = วันประกาศ + 6…18 วัน (กลาง 8)
-  → ใส่ **วันประกาศตรงๆ ไม่บวกเดา** + เขียนกำกับใน `note` ทุกแถว
-- `name` — OPY ย่อชื่อเอง (ตรงเป๊ะ 0/28) → ใส่ชื่อเต็มจากต้นฉบับรัฐ
-- `plant` `workType` `plantDist` `lowest` เว้นว่าง — ปกติของ schema (มีค่าแค่ 112/105/75/113 จาก 558)
-
-### 🛠️ บทเรียน
-- **API shift ≠ CSV shift** — ปัญหา column shift +7 อยู่ที่ API ของ opend เท่านั้น ไฟล์ CSV ที่โหลดตรงเรียงถูก
-- ก่อนเติมข้อมูลก้อนใหญ่ ให้เอา **records ที่ทับกันอยู่แล้วมาเทียบก่อน** = ได้ ground truth ฟรีว่าวิธีดึงถูกไหม
-- ตรวจ scope ของตารางก่อนเติม — tracker นี้เก็บเฉพาะ e-bidding ถ้าใส่เฉพาะเจาะจงเข้าไปจะเพี้ยนทั้ง dashboard
-- 🧹 ลบ `_tmp_egp2569_match.csv` ออกจาก repo แล้ว
-
-### ⏳ Pending
-1. 25 รายการเฉพาะเจาะจง (5.37 ล.) — user ตัดสินว่าจะเก็บที่ไหน (ไม่ควรอยู่ tracker ประมูล)
-2. 10 records เก่าที่ pct คิดจาก midPrice — ควร normalize เป็น budget-based
-3. `date` ของ 28 แถวใหม่ = วันประกาศ · ถ้าได้วันยื่นซองจริงมาให้แก้ทับ
-4. เช็คว่า หจก.รักดีการโยธา ชนะงานอะไรไปแล้วหรือยัง (ชุด 2569 ว่าง) — ต้องข้อมูลใหม่กว่า มี.ค. 69
-
----
-
 ## 🔄 Session State (2026-09-01 — DA: cleanup โครงสร้าง workflow ตามมติใหม่)
 > คำสั่ง: ยกเลิก DB · คง DESIGN_PRINCIPLES.md เป็นเอกสาร DA เป็นเจ้าของ · ประกาศ ChatGPT RMN Command Center = Strategic Advisor นอก workflow · ล้าง reference DB/API-disabled/path EXP · **ห้ามลบไฟล์หรือ archive ใด ๆ**
 
@@ -130,3 +76,29 @@ Grand Maester = ChatGPT RMN Command Center (ที่ปรึกษา ไม�
 1. skill `fee-payment` / `e-bidding-operating` อาจยังเขียน dispatch ไป DOC — ยังไม่เปิดอ่าน skill จริง
 2. `CLAUDE.md` 22,087 B เกินเพดาน 20 KB — ยุบได้แต่เป็นการเปลี่ยนระบบ รออนุมัติ
 3. ~~queue `68099553809` pending~~ → ✅ **ปิดแล้ว** (ตรวจ 2026-09-02: queue `status:done` · `doc_fees.json` มี entry `paidDate 2569-09-02` `submitMethod e-GP`) · OPY sync WRK แล้วที่ 2722f2d — **รายการค้างข้อ 3 ของผมเป็นข้อมูลเก่า แก้แล้ว**
+
+---
+
+## 🔄 Session State (2026-09-02 #3 — DA: Skills Governance + ยุบ CLAUDE.md)
+
+### ✅ 1. Skills Governance เข้า matrix แล้ว
+- `e-bidding-operating` · `fee-payment` → steward **Sir OPY** · `mapmaker` → **Sir MM** · `uiux-editor` → **Sir UI** · governance ทั้งหมด = **Lord DA**
+- **Flow บังคับ:** agent propose → DA review/apply → บันทึก changelog (Decision log + WRK ของ agent)
+- DA review เฉพาะว่าขัด registry/CLAUDE.md/matrix ไหม — **ไม่เขียนเนื้อหาวิชาชีพแทน agent** (Core Rule 22)
+- skill แก้จากดิสก์ไม่ได้ (read-only cache) · เปลี่ยนได้ทางเดียว = propose แล้ว user กดเซฟ · **แทนทั้งไฟล์ ไม่ใช่ patch**
+
+### 📤 ใบสั่งงานถึง Sir OPY — propose `e-bidding-operating` ฉบับแก้ 4 จุด
+> DA ตรวจไฟล์ `e-bidding-operating/SKILL.md` (16,660 B) แล้ว **4 จุดที่ต้องแก้ + เลขบรรทัดจริง**:
+1. **L146** `"doc_fees.json read-only — never write to this file, it belongs to the fee-payment / Doc Fee Agent side"` → **เขียนได้แล้ว** (OPY ปิด entry เอง)
+2. **L185** `§ 4. Dispatch to fee-payment (subagent)` → **ยกเลิก dispatch** · โหลด skill `fee-payment` ใน session เดียวกันแล้วทำต่อทั้งเส้น
+3. **L202 + L210-213** `"has to happen in the dedicated Doc Fee Payment session"` / `"Dispatch doesn't make the Doc Fee Agent unnecessary … What stays with the Doc Fee Agent"` → **ยกเลิก dedicated DOC session** (DOC ปลด 2026-09-02)
+4. **L235** `"doc_fees.json is read-only from this skill's side — never edit or commit it here"` → **ลบข้อห้าม** · `git add` เฉพาะชื่อไฟล์ตามเดิม (ห้าม `git add .`) ยังคงอยู่
+> ⚠️ propose = **เขียน SKILL.md ใหม่ทั้ง 16.6 KB** โดยคงของเดิมครบ แก้แค่ 4 จุดนี้ · เสร็จแล้วส่งให้ DA review ก่อน user กดเซฟ
+> ℹ️ `fee-payment/SKILL.md` (20,115 B) ตรวจแล้ว **ใช้ต่อได้ ไม่ต้องแก้** — รองรับ `submitMethod: e-GP/email/both` อยู่แล้ว และมีกฎ "อย่าเดาว่าเป็น email" ตรงกับ default ใหม่
+
+### ✅ 2. CLAUDE.md ต่ำกว่าเพดานแล้ว — 22,087 → **15,847 B**
+- ย้าย `Session State (2026-06-16)` + `(2026-06-25)` + `(2026-06-25 OPY)` **6,640 B** → `WRK_AGENTS/CLAUDE_ARCHIVE_2569H1.md` (ไฟล์ใหม่ 7,294 B) **ไม่ลบเนื้อหาข้อไหน**
+- รวม section `🖥️ Multi-Machine` ที่ซ้ำ 2 ที่ (L54 + L253) เป็นอันเดียว + ล้าง `+ -` ที่ค้างจาก diff เก่า → ปิดการละเมิดกฎข้อ 6
+- เพิ่ม `## 📦 Archive` ท้ายไฟล์ + ประกาศเพดาน 20 KB พร้อมวิธีปฏิบัติ (**ย้าย log เก่า ห้ามยุบ section ที่เป็นกฎ**)
+- **ไม่แตะ** `§ Doc Fee` (3,121 B) และ `§ Slip Verification` (1,519 B) — เป็นกฎที่ใช้จริง
+- 📌 บรรทัด `push doc_fees.json — OPY push เอง` เดิมอยู่ใน Pending ของ session log เก่า จึงย้ายไป archive ด้วย · **กฎยังอยู่ในไฟล์แม่ 3 ที่** (L61 · L98 · L124) ไม่หาย
