@@ -117,12 +117,14 @@ Grand Maester = ChatGPT RMN Command Center (ที่ปรึกษา ไม�
 
 ### 🗂️ File Ownership Matrix (เขียนจาก `git ls-files` จริง)
 - `RMN-eBidding-Workflow` **26 ไฟล์ tracked** → OPY: seed_bids.js, doc_fee_queue.json, doc_fees.json, handoff csv · UI: tracker html, index.html, logo · MM: map_input.png · แต่ละ agent: WRK ตัวเอง · **DA**: CLAUDE.md, KB/, assets.json, BOOTSTRAP_IOS, PROJECT_INSTRUCTIONS_DRAFT, morning-prompt
-- **Codex owner (5 ไฟล์)**: `scripts/harvest_all.ps1` · `scripts/harvest_egp.ps1` · `scripts/pull_egp.py` · `WRK_AGENTS/scripts/generate_fee_pdf_fixed.py` · `.gitignore` + `.claude/launch.json` → Claude **รันได้ แก้ไม่ได้**
+- **Codex owner (5 ไฟล์)**: `scripts/harvest_all.ps1` · `scripts/harvest_egp.ps1` · `scripts/pull_egp.py` · `.gitignore` · `.claude/launch.json` → Claude **รันได้ แก้ไม่ได้**
+- ✅ **แก้แล้ว 2026-09-02:** `WRK_AGENTS/scripts/generate_fee_pdf_fixed.py` → **owner = Sir OPY** (ไม่ใช่ Codex) · Codex review/ช่วยแก้ได้เมื่อได้รับมอบหมาย
+  → **เส้นแบ่งที่ได้:** ไฟล์ที่ agent ใช้ทุกงาน = agent เป็น owner · เครื่องมือ/infra ที่ใช้เป็นครั้งคราว = Lord Commander
 - `M4RX-B4SE` = 20 .md + 5 .gitkeep **ไม่มีโค้ดเลย** → DA ทั้ง repo · `RMN-eBidding-KB` = DA + EXP · **Codex ไม่แตะ (PII/Core Rule 19)**
 - **ไฟล์ที่ไม่อยู่ใน matrix = ยังไม่มีเจ้าของ ต้องถามก่อนแก้**
 
-### ⚠️ จุดเสี่ยงที่ flag ไว้ในไฟล์แล้ว
-`generate_fee_pdf_fixed.py` = ตัว generate PDF ที่ OPY ใช้ทุกงาน · ถ้า Codex เป็นเจ้าของแล้วสคริปต์พังกลางงาน **OPY แก้เองไม่ได้ ต้องรอ Codex** → ถ้ารับไม่ได้ ให้ย้ายมาเป็นของ Sir OPY แล้วบันทึกทับ (ยังไม่ตัดสิน)
+### ✅ จุดเสี่ยงที่ปิดแล้ว
+`generate_fee_pdf_fixed.py` = ตัว generate PDF ที่ OPY ใช้ทุกงาน → ย้าย owner มาเป็น **Sir OPY** ตามที่ user สั่ง · กันคอขวดแบบเดียวกับที่เพิ่งยุบ DOC ไป
 
 ### ⏳ ค้างจากรอบก่อน (ยังไม่แตะ)
 1. skill `fee-payment` / `e-bidding-operating` อาจยังเขียน dispatch ไป DOC — ยังไม่เปิดอ่าน skill จริง
