@@ -86,13 +86,14 @@ git -C $r rev-parse --short HEAD; git -C $r rev-parse --short origin/main
 | Agent | แก้ได้ | ห้ามแตะ |
 |---|---|---|
 | MAPMAKER | PDF แผนที่ | อื่นทั้งหมด |
-| E-BIDDING DOC FEE | `doc_fees.json` เท่านั้น | tracker HTML |
-| BIDDING OPERATING | `seed_bids.js` เท่านั้น | tracker HTML, doc_fees.json |
+| BIDDING OPERATING | `seed_bids.js` · **`doc_fee_queue.json`** · **`doc_fees.json`** | tracker HTML |
 | UI/UX EDITOR | tracker HTML (UI/CSS/layout/logic) | `DOC_FEES` array, fetch URL |
+| ~~E-BIDDING DOC FEE~~ | 🚫 **DISABLED 2026-09-02** — ห้าม route งานมา · ไฟล์ `KB_FEE_PAYMENT.md`/`WRK_FEE_PAYMENT.md` เก็บไว้ ห้ามลบ | — |
 
-## 🔄 Doc Fee Agent — Full Workflow (STRICT ORDER)
-> Operating Agent อ่าน PDF + dispatch ลง `doc_fee_queue.json` ให้อัตโนมัติ
-> Doc Fee Agent เปิด session → อ่าน queue → เจอ pending → เริ่มงานได้เลย
+## 🔄 Doc Fee — Full Workflow (STRICT ORDER)
+> 🔁 **เปลี่ยนเจ้าของ 2026-09-02: OPY ทำเองทั้งเส้น** ผ่าน skill `fee-payment` — ไม่ต้อง dispatch ไป DOC ไม่ต้องรอ agent อื่นปิด entry
+> เหตุผล: DOC ไม่มีคนเปิด session ให้เลย (WRK_FEE_PAYMENT.md แก้ครั้งสุดท้าย 04-08-69) · OPY มี skill + push ได้เอง → queue ค้างที่ขั้น "รอ DOC ปิด" ตายเงียบ
+> OPY อ่าน PDF → เขียน `doc_fee_queue.json` → จ่าย/ตรวจสลิป → **ปิด entry เข้า `doc_fees.json` เอง** → push เอง
 
 **เปิด session ทุกครั้ง → อ่าน queue ก่อน:**
 ```python
@@ -114,17 +115,15 @@ for p in pending:
    ✅ ธนาคาร / ✅ เลขบัญชี / ✅ ชื่อบัญชีผู้รับ
    ✅ ยอดเงิน / ✅ วันที่ (อยู่ใน payWindow) / ✅ ชื่อผู้ฝาก = entity
    └─ มีจุดใด ❌ → หยุด แจ้ง user ทันที
-5. User ยืนยัน → output พร้อมกันในครั้งเดียว:
-   📄 PDF ใบแจ้งชำระเงิน
-   ✉️  Email text (To / Subject / Body / แนบไฟล์)
-   ☑️  Email Check Box — interactive widget (mcp__visualize__show_widget)
+5. User ยืนยัน → output: 📄 **PDF ใบแจ้งชำระเงิน**
+   ช่องทางส่งหลักฐาน default = **แนบเข้า e-GP** (ยืนยันจาก user 2569-09-02 "No email from now on")
+   └─ Email text + Email Check Box widget → ทำเฉพาะเมื่อหน่วยงาน**ระบุให้ส่งอีเมล** เท่านั้น
 6. รอ user แจ้ง "ส่งแล้ว"
-7. หลัง user confirm → อัป doc_fees.json (paidDate + emailSent:true) → แจ้ง user push จาก PowerShell
+7. หลัง user confirm → **OPY อัป doc_fees.json เอง** (paidDate + submitMethod) → **push เอง**
 ```
 **⚠️ ห้าม output PDF/Email ก่อน user ยืนยัน slip verification**
 **⚠️ ห้าม อัป doc_fees.json ก่อน user แจ้ง "ส่งแล้ว"**
-**⚠️ Email Check Box ต้องมาพร้อมกับ PDF + Email text เสมอ — ห้าม output แยก**
-**⚠️ Email Check Box ต้องเป็น interactive widget — ห้ามใช้ markdown ☐**
+**⚠️ ถ้าหน่วยงานระบุให้ส่งอีเมล → Email Check Box ต้องมาพร้อม PDF + Email text เสมอ (interactive widget ห้ามใช้ markdown ☐)**
 
 ## 🔍 Slip Verification (MANDATORY — ก่อน generate PDF ทุกครั้ง)
 ต้อง output ตารางนี้และรอ user ยืนยันก่อนเสมอ — ห้าม generate PDF โดยไม่ผ่านขั้นตอนนี้
@@ -249,7 +248,7 @@ for p in pending:
 
 ### ⏳ Pending
 - (none)
-push doc_fees.json (user ต้องรันเอง)
+push `doc_fees.json` / `doc_fee_queue.json` — **OPY push เอง** (2026-09-02)
 
 ## 🖥️ Multi-Machine
 + - ใช้ PowerShell เป็นหลักเสมอ — ห้ามใช้ CMD
