@@ -7,30 +7,6 @@
 > 📦 session log ก่อน 2026-08-24 #3 ย้ายไป `WRK_ECOSYSTEM_ADMIN_ARCHIVE_2569H2.md` — ไม่ต้องอ่านตอนเปิด session
 > 📏 เพดานไฟล์นี้ 20 KB · เกินเมื่อไหร่ตัดท้ายเข้า archive ก่อนเริ่มงานใหม่
 
-## 🔄 Session State (2026-09-02 #2 — DA: รับ Codex + File Ownership Matrix)
-> user เลือก **ตัวเลือก B** · Advisor สั่งให้เขียน matrix ก่อนเปลี่ยนชื่อยศลงเอกสารจริง — ทำตามลำดับนั้นแล้ว
-
-### 👑 ชั้นยศ (alias — ไม่เปลี่ยน scope)
-Grand Maester = ChatGPT RMN Command Center (ที่ปรึกษา ไม่แตะไฟล์) · **Lord Commander = Codex** (งานเทคนิค/ข้ามระบบ · แก้เฉพาะไฟล์ที่เป็น Codex owner) · Lord DA = DA (KB/registry/routing/Decision log) · Sir OPY/EXP/MM/UI = เจ้าของงานตาม domain · ~~Sir DOC~~ ปลดแล้ว
-
-### 🗂️ File Ownership Matrix (เขียนจาก `git ls-files` จริง)
-- `RMN-eBidding-Workflow` **26 ไฟล์ tracked** → OPY: seed_bids.js, doc_fee_queue.json, doc_fees.json, handoff csv · UI: tracker html, index.html, logo · MM: map_input.png · แต่ละ agent: WRK ตัวเอง · **DA**: CLAUDE.md, KB/, assets.json, BOOTSTRAP_IOS, PROJECT_INSTRUCTIONS_DRAFT, morning-prompt
-- **Codex owner (5 ไฟล์)**: `scripts/harvest_all.ps1` · `scripts/harvest_egp.ps1` · `scripts/pull_egp.py` · `.gitignore` · `.claude/launch.json` → Claude **รันได้ แก้ไม่ได้**
-- ✅ **แก้แล้ว 2026-09-02:** `WRK_AGENTS/scripts/generate_fee_pdf_fixed.py` → **owner = Sir OPY** (ไม่ใช่ Codex) · Codex review/ช่วยแก้ได้เมื่อได้รับมอบหมาย
-  → **เส้นแบ่งที่ได้:** ไฟล์ที่ agent ใช้ทุกงาน = agent เป็น owner · เครื่องมือ/infra ที่ใช้เป็นครั้งคราว = Lord Commander
-- `M4RX-B4SE` = 20 .md + 5 .gitkeep **ไม่มีโค้ดเลย** → DA ทั้ง repo · `RMN-eBidding-KB` = DA + EXP · **Codex ไม่แตะ (PII/Core Rule 19)**
-- **ไฟล์ที่ไม่อยู่ใน matrix = ยังไม่มีเจ้าของ ต้องถามก่อนแก้**
-
-### ✅ จุดเสี่ยงที่ปิดแล้ว
-`generate_fee_pdf_fixed.py` = ตัว generate PDF ที่ OPY ใช้ทุกงาน → ย้าย owner มาเป็น **Sir OPY** ตามที่ user สั่ง · กันคอขวดแบบเดียวกับที่เพิ่งยุบ DOC ไป
-
-### ⏳ ค้างจากรอบก่อน (ยังไม่แตะ)
-1. skill `fee-payment` / `e-bidding-operating` อาจยังเขียน dispatch ไป DOC — ยังไม่เปิดอ่าน skill จริง
-2. `CLAUDE.md` 22,087 B เกินเพดาน 20 KB — ยุบได้แต่เป็นการเปลี่ยนระบบ รออนุมัติ
-3. ~~queue `68099553809` pending~~ → ✅ **ปิดแล้ว** (ตรวจ 2026-09-02: queue `status:done` · `doc_fees.json` มี entry `paidDate 2569-09-02` `submitMethod e-GP`) · OPY sync WRK แล้วที่ 2722f2d — **รายการค้างข้อ 3 ของผมเป็นข้อมูลเก่า แก้แล้ว**
-
----
-
 ## 🔄 Session State (2026-09-02 #3 — DA: Skills Governance + ยุบ CLAUDE.md)
 
 ### ✅ 1. Skills Governance เข้า matrix แล้ว
@@ -138,4 +114,11 @@ Raven จาก Lord Commander · **DA ตรวจไฟล์จริงก�
 `## 🔄 Doc Fee — Full Workflow` 3,120 B · `## 🔍 Slip Verification` 1,518 B · `## ✍️ Email Signature Rules` 540 B
 → `CLAUDE.md` 20,094 → ~15,300 B
 ⚠️ **DA พบก่อนย้าย:** `Email Signature Rules` มีชื่อบุคคล + เบอร์ `087-223-5093` · ปัจจุบันอยู่ใน repo public อยู่แล้ว การย้ายไม่ทำให้แย่ลง **แต่ถ้าเป็นเบอร์ส่วนตัวต้องไป `RMN-eBidding-KB` ตาม Core Rule 19** — รอ user ยืนยันว่าเป็นเบอร์บริษัทหรือส่วนตัว
+
+### ✅ บันทึก 2026-09-03 #8 — ขั้น 3 เสร็จ ปิดงานแยก procedure
+- **ตรวจงาน Sir OPY ก่อนลงมือ (ไม่เชื่อรายงานเปล่า):** `OPERATING.md` 8,445 B · 3 section ที่ L55/L90/L109 · `KB/OPERATING.md` **hash ตรงกันเป๊ะ** · เทียบเนื้อหา 4 จุดตรงทั้งหมด
+- **`CLAUDE.md` 20,094 → 15,743 B** (−4,351) เหลือ safety gate 2 ข้อห้าม + เจ้าของงาน + default e-GP + pointer
+- ประกาศใน `§ 📢` แล้ว · Decision log 2 บรรทัด
+- 📞 **`087-223-5093` = เบอร์ส่วนตัวที่ใช้เป็นเบอร์ติดต่อทางการ** (user ตอบ "ทั้ง 2") → คงไว้จุดที่จำเป็นต่อการออกเอกสาร · **ห้ามเพิ่มจุดใหม่** · จุดใน `CLAUDE.md` หายไปเองจากการย้ายรอบนี้ เหลือ `OPERATING.md`+`KB` · skill `fee-payment` · หน้า PDF
+- ⚠️ **ยังตรวจไม่ได้: `M4RX-B4SE` เป็น public หรือ private** — `gh` บนเครื่องใช้ไม่ได้ (exit 1) · **ห้ามสรุปว่า Core Rule 19 ถูก/ผิด จนกว่าจะเปิดดูหน้า repo ด้วยตา**
 
