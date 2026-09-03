@@ -17,10 +17,10 @@ ToolSearch → โหลดเฉพาะเมื่อ tool ไม่มี�
 - **09-02 · DOC (Fee Payment) ปลดแล้ว** — ค่าเอกสารทั้งเส้นอยู่ใต้ **OPY** · OPY เขียน `doc_fees.json` + push ได้เอง · **ห้าม route/dispatch ไป DOC**
 - **09-02 · ชั้นยศ + File Ownership Matrix** — `Codex = Lord Commander` (เจ้าของ scripts/infra) · Claude = executor ของไฟล์ตาม domain · **ตารางเจ้าของไฟล์อยู่ใน `KB_ECOSYSTEM_ADMIN.md`** — ไฟล์ที่ไม่อยู่ในตาราง = ถามก่อนแก้
 - **09-02 · Skills Governance** — `agent propose → DA review/apply → บันทึก changelog` · agent ห้าม propose skill ของ agent อื่น
-- **09-03 · แยก session state ออกจาก WRK ได้** — pattern `WRK_<AGENT>_STATE.md` (OPY ทำก่อนที่ 044e5e7)
-  - `WRK_<AGENT>.md` = **กฎ/สเปกเท่านั้น** เพดาน 20 KB · `WRK_<AGENT>_STATE.md` = session state + pending โตได้อิสระ
-  - แยกแล้ว **ต้องใส่ pointer ท้าย WRK** ว่า state อยู่ไฟล์ไหน · **เปิด session อ่านทั้งสองไฟล์**
-  - เจ้าของ = agent ตัวนั้นเอง (อยู่ใน matrix แล้ว) · ทำเมื่อไหร่ก็ได้ ไม่ต้องขอ
+- **09-03 · `WRK_OPERATING_STATE.md` — รับรองแล้ว เฉพาะ Sir OPY** (owner = Sir OPY · มติ Lord Commander)
+  - **Sir OPY เท่านั้น**: `WRK_OPERATING.md` = กฎ/สเปก (เพดาน 20 KB) · `WRK_OPERATING_STATE.md` = session state + pending (เพดาน 20 KB) · **เปิด session อ่านทั้งสองไฟล์**
+  - เกินเพดาน → ตัด session state ก้อนเก่าสุดเข้า archive · **ห้ามตัด pending ที่ยังไม่ปิด**
+  - ❌ **ไม่ใช่กฎทุก agent** — DA · EXP · MM · UI ยังใช้ WRK ไฟล์เดียว · จะแยกต้องขอรับรองเป็นราย agent (แก้จากที่ DA ประกาศกว้างเกินไปเมื่อ 09-03)
 
 ## ⚙️ Core Rules
 - Diff/changelog only — ห้าม output full file/table
@@ -47,8 +47,8 @@ ToolSearch → โหลดเฉพาะเมื่อ tool ไม่มี�
 - **21. Restart session → ทำจาก PC เท่านั้น** (ทดสอบแล้ว 2026-08-13)
   - bridge ติดตอน **แนบ folder เข้า Cowork task** ตอนเริ่มงาน · มือถือ Add context **ไม่มีตัวเลือก folder** → task ใหม่จากมือถือ = **ไม่มี bridge** ทำงานไม่ได้
   - ⚠️ context เต็มตอนอยู่นอกบ้าน = คุยต่อไม่ได้จนกลับ PC — **user รับได้ ไม่ต้องเช็ค/เตือนล่วงหน้า** เตือนตอนเต็มจริงเท่านั้น
-  - 🛡️ ชดเชยด้วย: **เขียน session state ลง `WRK_<AGENT>_STATE.md` (หรือ `WRK_<AGENT>.md` ถ้ายังไม่แยก) ระหว่างทาง ทุกครั้งที่งานเสร็จเป็นก้อน ห้ามรอตอนจบ** → เต็มกะทันหันก็ไม่มีอะไรหาย
-  - ขั้นตอน: ① เขียน session state → ② commit+push → ③ **สร้าง task ใหม่จาก PC + แนบ folder ตั้งแต่ข้อความแรก** → ④ ตั้งชื่อแชทให้ตรงเดิม → ⑤ **อ่าน `📢 ประกาศ` + KB + WRK + WRK_*_STATE** ต่องาน
+  - 🛡️ ชดเชยด้วย: **เขียน session state ลง `WRK_<AGENT>.md` (Sir OPY → `WRK_OPERATING_STATE.md`) ระหว่างทาง ทุกครั้งที่งานเสร็จเป็นก้อน ห้ามรอตอนจบ** → เต็มกะทันหันก็ไม่มีอะไรหาย
+  - ขั้นตอน: ① เขียน session state → ② commit+push → ③ **สร้าง task ใหม่จาก PC + แนบ folder ตั้งแต่ข้อความแรก** → ④ ตั้งชื่อแชทให้ตรงเดิม → ⑤ **อ่าน `📢 ประกาศ` + KB + WRK** ต่องาน (Sir OPY อ่าน `WRK_OPERATING_STATE.md` เพิ่ม)
 - **22. หนึ่งงาน = หนึ่ง agent session** — ห้ามให้ DA ทำงานแทน (KB/WRK/log จะลงผิดที่ + เปลือง context) · DA ทำได้แค่ บอกว่าใช้ agent ตัวไหน · เช็ค read-only · แก้ข้อมูลเก่าข้าม agent · git ให้ทุก agent
 
 > ✅ ปิดเคส sleep: user ไม่ใช้ sleep mode — **PC เปิดตอนตื่น ปิดตอนนอน** → remote จากมือถือใช้ได้ช่วงเช้า–ดึกทุกวัน (ครอบคลุมรอบ 12:01 / 16:01)

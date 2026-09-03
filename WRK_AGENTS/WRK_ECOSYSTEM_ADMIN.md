@@ -7,32 +7,6 @@
 > 📦 session log ก่อน 2026-08-24 #3 ย้ายไป `WRK_ECOSYSTEM_ADMIN_ARCHIVE_2569H2.md` — ไม่ต้องอ่านตอนเปิด session
 > 📏 เพดานไฟล์นี้ 20 KB · เกินเมื่อไหร่ตัดท้ายเข้า archive ก่อนเริ่มงานใหม่
 
-## 🔄 Session State (2026-09-01 — DA: cleanup โครงสร้าง workflow ตามมติใหม่)
-> คำสั่ง: ยกเลิก DB · คง DESIGN_PRINCIPLES.md เป็นเอกสาร DA เป็นเจ้าของ · ประกาศ ChatGPT RMN Command Center = Strategic Advisor นอก workflow · ล้าง reference DB/API-disabled/path EXP · **ห้ามลบไฟล์หรือ archive ใด ๆ**
-
-### 🗂️ โครงสร้างหลังจัดใหม่ (ยืนยันจากไฟล์จริง device_list_dir 2026-09-01)
-- **agent ใช้งานจริง 6 ตัว**: DA · OPY · DOC · EXP · MM · UI — ไม่มีตัวที่ 7
-- **ยกเลิกแล้ว 2 ของ** (ไฟล์ยังอยู่ ห้ามลบ): API Status (disabled) · Design Board/DB (2026-09-01)
-- `agents\` = 6 KB (+ โฟลเดอร์ `maps`) · `WRK_AGENTS\` = WRK ใช้จริง 5 + `WRK_API_STATUS.md`(disabled) + archive 2
-- WRK ตัวที่ 6 = **`RMN-eBidding-KB\WRK_DOC_EXPIRY.md`** (16,447 B) ย้ายออกตาม Core Rule 19 (PII)
-- `RMN_Enterprise\DESIGN_PRINCIPLES.md` = เอกสารหลักการ + Decision log · **เจ้าของ = DA** · ไม่มี session แยก
-- ที่ปรึกษาภายนอก: **ChatGPT RMN Command Center = Strategic Advisor** (ไม่ถือ scope/ไม่แตะไฟล์/ไม่ commit) · **Claude = Operate & Execute**
-- 🚦 **2 ราง อย่าปนกัน** (แก้ตาม Advisor review รอบเดียวกัน — เดิมเขียนกว้างเกิน ทำให้ DA เป็นคอขวดทุกงาน = ตกข้อ 9)
-  - *เปลี่ยนระบบ / เพิ่มเครื่องมือ / เปลี่ยน source of truth* → Advisor เสนอ → **user อนุมัติ** → DA บันทึก Decision log → ดำเนินการ
-  - *งานปกติตาม scope เดิม* → **DA route → Claude execute ได้เลย** ไม่ต้องผ่าน Advisor ไม่ต้องรออนุมัติ
-
-### ✅ แก้ไปแล้ว (3 ไฟล์ที่ grep แล้วเจอจริง)
-- `KB_ECOSYSTEM_ADMIN.md` — ถอด row API Status + row Design Board ออกจาก Agent Registry → ย้ายเข้าตาราง "ยกเลิกแล้ว" · ตัด `DB=Design Board` ออกจาก nickname · แทนบล็อก `🔀 DA ↔ DB` ด้วยบล็อก "DESIGN_PRINCIPLES = เอกสาร ไม่ใช่ agent" + เส้นแบ่งที่ปรึกษาภายนอก · แก้ path EXP → `RMN-eBidding-KB\WRK_DOC_EXPIRY.md` · refresh verified list เป็น 2026-09-01
-- `DESIGN_PRINCIPLES.md` — เขียน header ใหม่ (เอกสาร ไม่ใช่ KB ของ DB · เจ้าของ DA · advisor boundary) · ปิดข้อละเมิด #2 (EXP path) + #3 (API agent) เป็น ✅ แก้แล้ว · เพิ่ม Decision log 3 บรรทัด (2026-09-01)
-- `WRK_AGENTS\CLAUDE.md` — **ไม่แก้** · grep แล้ว **ไม่มี reference ของ DB / API_STATUS / "7 agent" / netlify เลย** · `L31` (path EXP → RMN-eBidding-KB) ถูกอยู่แล้ว
-
-### ⚠️ ที่ DA แก้ให้ไม่ได้ — user ต้องทำเอง
-- **Cowork project instructions** (อยู่นอก git · DA อ่าน/แก้ไม่ได้) — ยังลิสต์ 7 agent และอาจยังชี้ `WRK_AGENTS\WRK_DOC_EXPIRY.md`
-- `DESIGN_PRINCIPLES.md:307` ยังเขียนว่างานลบ netlify เป็นของ DA (ทำเสร็จ 2026-08-31 แล้ว) — **นอกขอบเขตคำสั่งรอบนี้ จึงไม่แตะ**
-- `WRK_AGENTS\CLAUDE.md` ยัง 21,573 B = เกินเพดาน 20 KB (ยกมาจากรอบก่อน)
-
----
-
 ## 🔄 Session State (2026-09-02 — DA: ยุบ DOC เข้า OPY)
 > คำสั่ง user: "น่าจะต้อง Disable DOC ไว้ก่อน เพราะไม่ได้ใช้เลย OPY ใช้ Skills แล้วสร้างได้ไวกว่าแต่ติดที่กฎเรื่อง push"
 
@@ -127,3 +101,10 @@ Grand Maester = ChatGPT RMN Command Center (ที่ปรึกษา ไม�
 
 ### 📌 DA ควรแยก state เหมือนกัน (ยังไม่ทำ)
 `WRK_ECOSYSTEM_ADMIN.md` โตเร็วมากจาก session state · ควรแยกเป็น `WRK_ECOSYSTEM_ADMIN_STATE.md` รอบหน้า
+
+### 📌 แก้ 2026-09-03 #2 — คำสั่ง Lord Commander (จำกัดขอบเขต)
+- รับรอง `WRK_OPERATING_STATE.md` **owner = Sir OPY** · เพดาน 20 KB · เกินแล้วตัด state เก่าสุดเข้า archive **ห้ามตัด pending ที่ยังไม่ปิด**
+- ❌ **ถอนการประกาศเป็นกฎทุก agent** ที่ผมทำไว้เมื่อเช้า — กฎอ่าน 2 ไฟล์ **ใช้กับ Sir OPY เท่านั้น** · DA/EXP/MM/UI ยังใช้ WRK ไฟล์เดียว จะแยกต้องขอรับรองรายตัว
+- ผมประกาศกว้างเกินขอบเขตที่ควร → ผิดเรื่องเดียวกับที่ Grand Maester เคยทัก (เขียนกฎกว้างกว่าเจตนา)
+- **ไม่แตะไฟล์ของ OPY** — pointer ท้าย `WRK_OPERATING.md` + เพดานในไฟล์ state มีอยู่แล้ว ตรวจจริง 2026-09-03
+- 📌 ยกเลิกแผน `WRK_ECOSYSTEM_ADMIN_STATE.md` ของ DA — ต้องขอรับรองก่อน ไม่ทำเอง
