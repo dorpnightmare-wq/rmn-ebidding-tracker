@@ -102,3 +102,28 @@ Grand Maester = ChatGPT RMN Command Center (ที่ปรึกษา ไม�
 - เพิ่ม `## 📦 Archive` ท้ายไฟล์ + ประกาศเพดาน 20 KB พร้อมวิธีปฏิบัติ (**ย้าย log เก่า ห้ามยุบ section ที่เป็นกฎ**)
 - **ไม่แตะ** `§ Doc Fee` (3,121 B) และ `§ Slip Verification` (1,519 B) — เป็นกฎที่ใช้จริง
 - 📌 บรรทัด `push doc_fees.json — OPY push เอง` เดิมอยู่ใน Pending ของ session log เก่า จึงย้ายไป archive ด้วย · **กฎยังอยู่ในไฟล์แม่ 3 ที่** (L61 · L98 · L124) ไม่หาย
+
+---
+
+## 🔄 Session State (2026-09-03 — DA: ตั้งช่องทางประกาศ · แก้ความผิดของตัวเอง)
+> user ทัก: *"ไม่ได้ update อะไรไห้คนอื่นฟังหรอ"* — **ถูก ผมพลาดจริง**
+
+### ❌ ความผิดที่เกิดขึ้น
+- DA ปลด **DB** ไปตั้งแต่ **09-01** และปลด **DOC** 09-02 · บันทึกครบใน `KB_ECOSYSTEM_ADMIN.md` + `DESIGN_PRINCIPLES.md`
+- แต่ **ไม่เคยเขียนลงไฟล์ที่ agent อื่นอ่าน** → Sir OPY ยังเขียนใน WRK ว่า *"แนะนำให้ DB พิจารณา"* จนถึง **09-03** แล้ว user ต้องพิมพ์บอกเองว่า **"DB is Gone"**
+- **สาเหตุราก:** ผมนึกว่า Decision log = การประกาศ · จริงๆ ไม่มี agent ตัวไหนอ่าน `DESIGN_PRINCIPLES.md` เลย · ไฟล์เดียวที่ทุกตัวอ่านตอนเปิด session = **`WRK_AGENTS\CLAUDE.md`**
+
+### ✅ แก้ที่กลไก ไม่ใช่แค่แก้เคสนี้
+- เพิ่ม **`CLAUDE.md` § 📢 ประกาศถึงทุก agent — อ่านก่อนเริ่มงานทุกครั้ง** (อยู่บนสุด ก่อน Core Rules) ย้อนลงประกาศค้าง 5 เรื่อง: DB ปลด · DOC ปลด · ชั้นยศ+matrix+Codex · Skills Governance · pattern STATE
+- เพิ่มกฎบังคับ DA ใน 2 ที่: `CLAUDE.md § 📢` + `KB_ECOSYSTEM_ADMIN.md § 📢 หน้าที่ประกาศของ Lord DA`
+  → **เปลี่ยน registry/matrix/กฎร่วม = ต้องเขียนประกาศในรอบ commit เดียวกัน** · ไม่ประกาศ = agent ตัดสินใจซ้อนกันเอง
+- แก้ขั้นตอนเปิด session (Core Rule 21) → **อ่าน `📢 ประกาศ` + KB + WRK + `WRK_*_STATE`**
+
+### ✅ รับ pattern ของ Sir OPY เป็นมาตรฐาน (044e5e7)
+`WRK_<AGENT>.md` = **กฎ/สเปกเท่านั้น เพดาน 20 KB** · `WRK_<AGENT>_STATE.md` = session state + pending **โตได้อิสระ**
+- แยกแล้วต้องใส่ pointer ท้าย WRK + เปิด session อ่านทั้งสองไฟล์
+- เจ้าของ = agent ตัวนั้น (เพิ่มในตาราง File Ownership แล้ว) · **ทำเองได้ ไม่ต้องขอ**
+- ✅ ผมตัดสินเองว่ารับเป็นมาตรฐาน เพราะเป็นไฟล์ของแต่ละ agent เอง + แก้ต้นตอ WRK ชนเพดานทุกรอบ — **ถ้าไม่เห็นด้วย สั่งกลับได้**
+
+### 📌 DA ควรแยก state เหมือนกัน (ยังไม่ทำ)
+`WRK_ECOSYSTEM_ADMIN.md` โตเร็วมากจาก session state · ควรแยกเป็น `WRK_ECOSYSTEM_ADMIN_STATE.md` รอบหน้า
