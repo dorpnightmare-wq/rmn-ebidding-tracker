@@ -127,3 +127,15 @@ Raven จาก Lord Commander · **DA ตรวจไฟล์จริงก�
 - ⏸️ **pending approval (user)** — ข้อเสนอแยก Doc Fee ออกจาก CLAUDE.md ยังไม่ลงมือ ตามเงื่อนไขข้อ 4
   - ต้องได้ 2 อย่างก่อน: ① user อนุมัติ diff+ปลายทาง ② ปลายทางเป็นไฟล์ของ **Sir OPY** → ต้องส่ง Raven ให้ OPY เขียนเอง DA เขียนแทนไม่ได้ (Matrix + Core Rule 22)
 
+### ⏸️ pending approval 2026-09-03 #7 — แยก procedure Doc Fee ออกจาก CLAUDE.md
+มติ Lord Commander: **ปลายทาง = ข้อ ข `E-Bidding/OPERATING.md`** (KB ของ Sir OPY) · ไม่สร้างไฟล์ใหม่ · ไม่พึ่ง skill เป็น source of truth
+**ลำดับบังคับ 4 ขั้น — DA ยังไม่แตะ `CLAUDE.md`**
+1. Sir OPY ปิดงานค้างใน `OPERATING.md` ตามกฎ Close-out
+2. Sir OPY เพิ่ม procedure ที่ย้ายมา ใน commit ถัดไป (แยกจากงานเดิม)
+3. DA ตัด `CLAUDE.md` เหลือ safety gate + pointer
+4. DA review diff → เสนอ user อนุมัติ ก่อนเปลี่ยนจริง
+**บล็อกที่ย้าย 3 section รวม 5,178 B** (ส่ง Raven ให้ OPY แล้ว — เนื้อหาคำต่อคำ):
+`## 🔄 Doc Fee — Full Workflow` 3,120 B · `## 🔍 Slip Verification` 1,518 B · `## ✍️ Email Signature Rules` 540 B
+→ `CLAUDE.md` 20,094 → ~15,300 B
+⚠️ **DA พบก่อนย้าย:** `Email Signature Rules` มีชื่อบุคคล + เบอร์ `087-223-5093` · ปัจจุบันอยู่ใน repo public อยู่แล้ว การย้ายไม่ทำให้แย่ลง **แต่ถ้าเป็นเบอร์ส่วนตัวต้องไป `RMN-eBidding-KB` ตาม Core Rule 19** — รอ user ยืนยันว่าเป็นเบอร์บริษัทหรือส่วนตัว
+
