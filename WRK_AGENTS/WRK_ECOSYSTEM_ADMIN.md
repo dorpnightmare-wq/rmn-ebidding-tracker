@@ -7,32 +7,6 @@
 > 📦 session log ก่อน 2026-08-24 #3 ย้ายไป `WRK_ECOSYSTEM_ADMIN_ARCHIVE_2569H2.md` — ไม่ต้องอ่านตอนเปิด session
 > 📏 เพดานไฟล์นี้ 20 KB · เกินเมื่อไหร่ตัดท้ายเข้า archive ก่อนเริ่มงานใหม่
 
-## 🔄 Session State (2026-09-02 #3 — DA: Skills Governance + ยุบ CLAUDE.md)
-
-### ✅ 1. Skills Governance เข้า matrix แล้ว
-- `e-bidding-operating` · `fee-payment` → steward **Sir OPY** · `mapmaker` → **Sir MM** · `uiux-editor` → **Sir UI** · governance ทั้งหมด = **Lord DA**
-- **Flow บังคับ:** agent propose → DA review/apply → บันทึก changelog (Decision log + WRK ของ agent)
-- DA review เฉพาะว่าขัด registry/CLAUDE.md/matrix ไหม — **ไม่เขียนเนื้อหาวิชาชีพแทน agent** (Core Rule 22)
-- skill แก้จากดิสก์ไม่ได้ (read-only cache) · เปลี่ยนได้ทางเดียว = propose แล้ว user กดเซฟ · **แทนทั้งไฟล์ ไม่ใช่ patch**
-
-### 📤 ใบสั่งงานถึง Sir OPY — propose `e-bidding-operating` ฉบับแก้ 4 จุด
-> DA ตรวจไฟล์ `e-bidding-operating/SKILL.md` (16,660 B) แล้ว **4 จุดที่ต้องแก้ + เลขบรรทัดจริง**:
-1. **L146** `"doc_fees.json read-only — never write to this file, it belongs to the fee-payment / Doc Fee Agent side"` → **เขียนได้แล้ว** (OPY ปิด entry เอง)
-2. **L185** `§ 4. Dispatch to fee-payment (subagent)` → **ยกเลิก dispatch** · โหลด skill `fee-payment` ใน session เดียวกันแล้วทำต่อทั้งเส้น
-3. **L202 + L210-213** `"has to happen in the dedicated Doc Fee Payment session"` / `"Dispatch doesn't make the Doc Fee Agent unnecessary … What stays with the Doc Fee Agent"` → **ยกเลิก dedicated DOC session** (DOC ปลด 2026-09-02)
-4. **L235** `"doc_fees.json is read-only from this skill's side — never edit or commit it here"` → **ลบข้อห้าม** · `git add` เฉพาะชื่อไฟล์ตามเดิม (ห้าม `git add .`) ยังคงอยู่
-> ⚠️ propose = **เขียน SKILL.md ใหม่ทั้ง 16.6 KB** โดยคงของเดิมครบ แก้แค่ 4 จุดนี้ · เสร็จแล้วส่งให้ DA review ก่อน user กดเซฟ
-> ℹ️ `fee-payment/SKILL.md` (20,115 B) ตรวจแล้ว **ใช้ต่อได้ ไม่ต้องแก้** — รองรับ `submitMethod: e-GP/email/both` อยู่แล้ว และมีกฎ "อย่าเดาว่าเป็น email" ตรงกับ default ใหม่
-
-### ✅ 2. CLAUDE.md ต่ำกว่าเพดานแล้ว — 22,087 → **15,847 B**
-- ย้าย `Session State (2026-06-16)` + `(2026-06-25)` + `(2026-06-25 OPY)` **6,640 B** → `WRK_AGENTS/CLAUDE_ARCHIVE_2569H1.md` (ไฟล์ใหม่ 7,294 B) **ไม่ลบเนื้อหาข้อไหน**
-- รวม section `🖥️ Multi-Machine` ที่ซ้ำ 2 ที่ (L54 + L253) เป็นอันเดียว + ล้าง `+ -` ที่ค้างจาก diff เก่า → ปิดการละเมิดกฎข้อ 6
-- เพิ่ม `## 📦 Archive` ท้ายไฟล์ + ประกาศเพดาน 20 KB พร้อมวิธีปฏิบัติ (**ย้าย log เก่า ห้ามยุบ section ที่เป็นกฎ**)
-- **ไม่แตะ** `§ Doc Fee` (3,121 B) และ `§ Slip Verification` (1,519 B) — เป็นกฎที่ใช้จริง
-- 📌 บรรทัด `push doc_fees.json — OPY push เอง` เดิมอยู่ใน Pending ของ session log เก่า จึงย้ายไป archive ด้วย · **กฎยังอยู่ในไฟล์แม่ 3 ที่** (L61 · L98 · L124) ไม่หาย
-
----
-
 ## 🔄 Session State (2026-09-03 — DA: ตั้งช่องทางประกาศ · แก้ความผิดของตัวเอง)
 > user ทัก: *"ไม่ได้ update อะไรไห้คนอื่นฟังหรอ"* — **ถูก ผมพลาดจริง**
 
@@ -113,12 +87,32 @@ Raven จาก Lord Commander · **DA ตรวจไฟล์จริงก�
 **บล็อกที่ย้าย 3 section รวม 5,178 B** (ส่ง Raven ให้ OPY แล้ว — เนื้อหาคำต่อคำ):
 `## 🔄 Doc Fee — Full Workflow` 3,120 B · `## 🔍 Slip Verification` 1,518 B · `## ✍️ Email Signature Rules` 540 B
 → `CLAUDE.md` 20,094 → ~15,300 B
-⚠️ **DA พบก่อนย้าย:** `Email Signature Rules` มีชื่อบุคคล + เบอร์ `087-223-5093` · ปัจจุบันอยู่ใน repo public อยู่แล้ว การย้ายไม่ทำให้แย่ลง **แต่ถ้าเป็นเบอร์ส่วนตัวต้องไป `RMN-eBidding-KB` ตาม Core Rule 19** — รอ user ยืนยันว่าเป็นเบอร์บริษัทหรือส่วนตัว
+⚠️ **DA พบก่อนย้าย:** `Email Signature Rules` มีชื่อบุคคล + เบอร์ `087-xxx-xxxx (เลขเต็ม → `OPERATING.md` ใน B4SE private)` · ปัจจุบันอยู่ใน repo public อยู่แล้ว การย้ายไม่ทำให้แย่ลง **แต่ถ้าเป็นเบอร์ส่วนตัวต้องไป `RMN-eBidding-KB` ตาม Core Rule 19** — รอ user ยืนยันว่าเป็นเบอร์บริษัทหรือส่วนตัว
 
 ### ✅ บันทึก 2026-09-03 #8 — ขั้น 3 เสร็จ ปิดงานแยก procedure
 - **ตรวจงาน Sir OPY ก่อนลงมือ (ไม่เชื่อรายงานเปล่า):** `OPERATING.md` 8,445 B · 3 section ที่ L55/L90/L109 · `KB/OPERATING.md` **hash ตรงกันเป๊ะ** · เทียบเนื้อหา 4 จุดตรงทั้งหมด
 - **`CLAUDE.md` 20,094 → 15,743 B** (−4,351) เหลือ safety gate 2 ข้อห้าม + เจ้าของงาน + default e-GP + pointer
 - ประกาศใน `§ 📢` แล้ว · Decision log 2 บรรทัด
-- 📞 **`087-223-5093` = เบอร์ส่วนตัวที่ใช้เป็นเบอร์ติดต่อทางการ** (user ตอบ "ทั้ง 2") → คงไว้จุดที่จำเป็นต่อการออกเอกสาร · **ห้ามเพิ่มจุดใหม่** · จุดใน `CLAUDE.md` หายไปเองจากการย้ายรอบนี้ เหลือ `OPERATING.md`+`KB` · skill `fee-payment` · หน้า PDF
+- 📞 **`087-xxx-xxxx (เลขเต็ม → `OPERATING.md` ใน B4SE private)` = เบอร์ส่วนตัวที่ใช้เป็นเบอร์ติดต่อทางการ** (user ตอบ "ทั้ง 2") → คงไว้จุดที่จำเป็นต่อการออกเอกสาร · **ห้ามเพิ่มจุดใหม่** · จุดใน `CLAUDE.md` หายไปเองจากการย้ายรอบนี้ เหลือ `OPERATING.md`+`KB` · skill `fee-payment` · หน้า PDF
 - ⚠️ **ยังตรวจไม่ได้: `M4RX-B4SE` เป็น public หรือ private** — `gh` บนเครื่องใช้ไม่ได้ (exit 1) · **ห้ามสรุปว่า Core Rule 19 ถูก/ผิด จนกว่าจะเปิดดูหน้า repo ด้วยตา**
 
+### 🔴 บันทึก 2026-09-03 #9 — ผลตรวจ PII ใน repo public (ยืนยันแล้ว)
+**visibility ยืนยัน 2 ทาง** (ภาพหน้า repo + `api.github.com` โดยไม่ใช้ `gh`)
+- `M4RX-B4SE` → api **404** = **private** ✅ ต้นฉบับ `OPERATING.md` ถูกที่ตาม Core Rule 19
+- `RMN-eBidding-Workflow` → api **200** = **public** ⚠️
+
+**🔴 พบเบอร์/ชื่อใน repo public ที่ track อยู่ = 7 ไฟล์ ไม่ใช่ 3 อย่างที่รายงานกันไว้**
+| ไฟล์ (tracked, public) | เบอร์ | ชื่อ | เจ้าของ |
+|---|---|---|---|
+| `KB/OPERATING.md` | ✔ | ✔ | Sir OPY (สำเนา sync ตาม Core Rule 20) |
+| `WRK_AGENTS/WRK_FEE_PAYMENT.md` | ✔ | ✔ | ~~DOC~~ (disabled) → Lord DA |
+| `WRK_AGENTS/scripts/generate_fee_pdf_fixed.py` | ✔ | — | Sir OPY |
+| `assets.json` | ✔ | — | Lord DA |
+| `doc_fees.json` | — | ✔ | Sir OPY |
+| `WRK_AGENTS/WRK_ECOSYSTEM_ADMIN_ARCHIVE_2569H2.md` | — | ✔ | Lord DA |
+| `WRK_AGENTS/WRK_ECOSYSTEM_ADMIN.md` | ✔ | — | **Lord DA — ผมพิมพ์เข้าไปเองวันนี้** |
+
+**⚔️ กฎขัดกันเอง (ของใหม่ ต้องตัดสิน):** Core Rule **20** สั่ง copy KB ทับ `KB/` ใน repo → แต่ repo นั้น **public** → ทุกครั้งที่ sync KB ที่มี PII = ละเมิด Core Rule **19** อัตโนมัติ
+**⚠️ ข้อเท็จจริงที่ต้องรู้:** ลบออกจากไฟล์ **ไม่ลบออกจาก git history** — เบอร์อยู่ใน history ของ repo public มานานแล้ว การแก้ไฟล์วันนี้กันได้แค่ "อ่านจากไฟล์ปัจจุบัน"
+✅ **ผมแก้ของตัวเองแล้ว** — ปิดเลขในข้อความที่ผมเขียนเอง (2 จุด) ชี้ไปต้นฉบับใน B4SE private แทน
+⏸️ **pending approval** — 6 ไฟล์ที่เหลือข้ามเจ้าของหลายคน ผมไม่แตะเอง

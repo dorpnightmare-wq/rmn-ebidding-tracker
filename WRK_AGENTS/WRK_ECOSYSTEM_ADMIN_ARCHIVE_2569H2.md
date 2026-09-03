@@ -609,3 +609,33 @@ Grand Maester = ChatGPT RMN Command Center (ที่ปรึกษา ไม�
 3. ~~queue `68099553809` pending~~ → ✅ **ปิดแล้ว** (ตรวจ 2026-09-02: queue `status:done` · `doc_fees.json` มี entry `paidDate 2569-09-02` `submitMethod e-GP`) · OPY sync WRK แล้วที่ 2722f2d — **รายการค้างข้อ 3 ของผมเป็นข้อมูลเก่า แก้แล้ว**
 
 ---
+
+---
+
+> 📦 ย้ายเข้ามา 2026-09-03 #4
+
+## 🔄 Session State (2026-09-02 #3 — DA: Skills Governance + ยุบ CLAUDE.md)
+
+### ✅ 1. Skills Governance เข้า matrix แล้ว
+- `e-bidding-operating` · `fee-payment` → steward **Sir OPY** · `mapmaker` → **Sir MM** · `uiux-editor` → **Sir UI** · governance ทั้งหมด = **Lord DA**
+- **Flow บังคับ:** agent propose → DA review/apply → บันทึก changelog (Decision log + WRK ของ agent)
+- DA review เฉพาะว่าขัด registry/CLAUDE.md/matrix ไหม — **ไม่เขียนเนื้อหาวิชาชีพแทน agent** (Core Rule 22)
+- skill แก้จากดิสก์ไม่ได้ (read-only cache) · เปลี่ยนได้ทางเดียว = propose แล้ว user กดเซฟ · **แทนทั้งไฟล์ ไม่ใช่ patch**
+
+### 📤 ใบสั่งงานถึง Sir OPY — propose `e-bidding-operating` ฉบับแก้ 4 จุด
+> DA ตรวจไฟล์ `e-bidding-operating/SKILL.md` (16,660 B) แล้ว **4 จุดที่ต้องแก้ + เลขบรรทัดจริง**:
+1. **L146** `"doc_fees.json read-only — never write to this file, it belongs to the fee-payment / Doc Fee Agent side"` → **เขียนได้แล้ว** (OPY ปิด entry เอง)
+2. **L185** `§ 4. Dispatch to fee-payment (subagent)` → **ยกเลิก dispatch** · โหลด skill `fee-payment` ใน session เดียวกันแล้วทำต่อทั้งเส้น
+3. **L202 + L210-213** `"has to happen in the dedicated Doc Fee Payment session"` / `"Dispatch doesn't make the Doc Fee Agent unnecessary … What stays with the Doc Fee Agent"` → **ยกเลิก dedicated DOC session** (DOC ปลด 2026-09-02)
+4. **L235** `"doc_fees.json is read-only from this skill's side — never edit or commit it here"` → **ลบข้อห้าม** · `git add` เฉพาะชื่อไฟล์ตามเดิม (ห้าม `git add .`) ยังคงอยู่
+> ⚠️ propose = **เขียน SKILL.md ใหม่ทั้ง 16.6 KB** โดยคงของเดิมครบ แก้แค่ 4 จุดนี้ · เสร็จแล้วส่งให้ DA review ก่อน user กดเซฟ
+> ℹ️ `fee-payment/SKILL.md` (20,115 B) ตรวจแล้ว **ใช้ต่อได้ ไม่ต้องแก้** — รองรับ `submitMethod: e-GP/email/both` อยู่แล้ว และมีกฎ "อย่าเดาว่าเป็น email" ตรงกับ default ใหม่
+
+### ✅ 2. CLAUDE.md ต่ำกว่าเพดานแล้ว — 22,087 → **15,847 B**
+- ย้าย `Session State (2026-06-16)` + `(2026-06-25)` + `(2026-06-25 OPY)` **6,640 B** → `WRK_AGENTS/CLAUDE_ARCHIVE_2569H1.md` (ไฟล์ใหม่ 7,294 B) **ไม่ลบเนื้อหาข้อไหน**
+- รวม section `🖥️ Multi-Machine` ที่ซ้ำ 2 ที่ (L54 + L253) เป็นอันเดียว + ล้าง `+ -` ที่ค้างจาก diff เก่า → ปิดการละเมิดกฎข้อ 6
+- เพิ่ม `## 📦 Archive` ท้ายไฟล์ + ประกาศเพดาน 20 KB พร้อมวิธีปฏิบัติ (**ย้าย log เก่า ห้ามยุบ section ที่เป็นกฎ**)
+- **ไม่แตะ** `§ Doc Fee` (3,121 B) และ `§ Slip Verification` (1,519 B) — เป็นกฎที่ใช้จริง
+- 📌 บรรทัด `push doc_fees.json — OPY push เอง` เดิมอยู่ใน Pending ของ session log เก่า จึงย้ายไป archive ด้วย · **กฎยังอยู่ในไฟล์แม่ 3 ที่** (L61 · L98 · L124) ไม่หาย
+
+---
