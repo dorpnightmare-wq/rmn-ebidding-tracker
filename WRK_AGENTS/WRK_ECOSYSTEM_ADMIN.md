@@ -7,28 +7,6 @@
 > 📦 session log ก่อน 2026-08-24 #3 ย้ายไป `WRK_ECOSYSTEM_ADMIN_ARCHIVE_2569H2.md` — ไม่ต้องอ่านตอนเปิด session
 > 📏 เพดานไฟล์นี้ 20 KB · เกินเมื่อไหร่ตัดท้ายเข้า archive ก่อนเริ่มงานใหม่
 
-## 🔄 Session State (2026-09-02 — DA: ยุบ DOC เข้า OPY)
-> คำสั่ง user: "น่าจะต้อง Disable DOC ไว้ก่อน เพราะไม่ได้ใช้เลย OPY ใช้ Skills แล้วสร้างได้ไวกว่าแต่ติดที่กฎเรื่อง push"
-
-### 🔎 หลักฐานก่อนแก้ (ไม่เดา — อ่านจากไฟล์/git จริง)
-- `WRK_FEE_PAYMENT.md` แก้ครั้งสุดท้าย **04-08-69** (~4 สัปดาห์) = ไม่มีใครเปิด session DOC เลย
-- `git log doc_fee_queue.json` → commit ล่าสุดทั้งหมดเป็น **`fee(OPY): ...`** · `doc_fees.json` ก็ปิด entry จาก session OPY (e418c7c, 6623292)
-- **ตัวบล็อกจริง = `CLAUDE.md:90`** `| BIDDING OPERATING | seed_bids.js เท่านั้น | tracker HTML, doc_fees.json |` → OPY เขียน doc_fees.json ไม่ได้ → entry ค้าง pending รอ agent ที่ไม่มีใครเปิด
-- queue ปัจจุบัน 17 entries · doc_fees.json 34 entries
-
-### ✅ แก้ไปแล้ว
-- `CLAUDE.md` — ตาราง Agents: OPY แก้ได้ `seed_bids.js` + `doc_fee_queue.json` + `doc_fees.json` (ห้ามแตะแค่ tracker HTML) · row DOC → 🚫 DISABLED · § Doc Fee เปลี่ยนเจ้าของเป็น OPY ผ่าน skill `fee-payment` · step 5 ช่องทางส่งหลักฐาน default = แนบ e-GP (อีเมลเฉพาะเมื่อหน่วยงานระบุ) · step 7 + ท้ายไฟล์ = OPY push เอง
-- `KB_ECOSYSTEM_ADMIN.md` — ถอด row Fee Payment ออกจาก registry → เข้าตาราง "ยกเลิกแล้ว" (เก็บไฟล์ ห้ามลบ) · OPY row รับ scope ค่าเอกสาร · nickname ตัด DOC · **agent ใช้งานจริง 6 → 5 ตัว**
-- `KB_FEE_PAYMENT.md` — ติดป้าย 🚫 DISABLED ที่หัวไฟล์ (เนื้อหาสเปกคงไว้ทั้งหมด อ่านอ้างอิงได้)
-- `DESIGN_PRINCIPLES.md` — Decision log 2 บรรทัด (ยุบ DOC · default e-GP) + แก้จำนวน agent 6→5 ทั้ง 2 จุด
-
-### ⚠️ ค้าง / ที่ DA ทำให้ไม่ได้
-- **skill `fee-payment` + `e-bidding-operating`** อาจยังเขียนว่า "dispatch ไป DOC" — skill เป็น read-only cache **DA แก้จากดิสก์ไม่ได้** ต้อง propose ให้ user save → **ยังไม่ตรวจเนื้อหา skill จริง อย่าเพิ่งสรุปว่าต้องแก้**
-- `CLAUDE.md` = **22,087 B เกินเพดาน 20 KB** (เดิม 21,573) — ยุบได้จริงคือ § Doc Fee + § Slip Verification ที่ทับกับ skill แต่นั่นเป็นการเปลี่ยนระบบ **รอ user อนุมัติก่อน ไม่ทำเอง**
-- queue `68099553809` ยัง pending — ตอนนี้ **OPY ปิดเองได้แล้ว** ไม่ต้องรอ DOC
-
----
-
 ## 🔄 Session State (2026-09-02 #2 — DA: รับ Codex + File Ownership Matrix)
 > user เลือก **ตัวเลือก B** · Advisor สั่งให้เขียน matrix ก่อนเปลี่ยนชื่อยศลงเอกสารจริง — ทำตามลำดับนั้นแล้ว
 
@@ -132,3 +110,13 @@ Raven จาก Lord Commander · **DA ตรวจไฟล์จริงก�
 - 🔒 **ไม่แก้ `.gitignore`** — เป็นไฟล์ของ Codex ตาม Matrix · เห็นชอบ ≠ มอบหมาย · รอเจ้าของเขียนเองหรือมอบหมายมา
 - 📌 **DA พบเพิ่ม 2 เรื่อง ส่งกลับให้เจ้าของวินิจฉัย:** `.gitignore` มี `*.docx` อยู่แล้ว (output ถูก ignore ตั้งแต่ต้น) · `PROJECT_INSTRUCTIONS_DRAFT.md` อยู่ใน `.gitignore` **แต่ถูก track จริง** = ขัดกันเอง
 
+### ✅ บันทึก 2026-09-03 #5 — Git hygiene + Close-out
+- `.gitignore` **+ `tmp/`** (160 → 165 B) — Lord Commander อนุมัติเป็นลายลักษณ์ให้ DA ลง · `*.docx` คงไว้ตามมติ
+- **Git Close-out** เข้า `CLAUDE.md § 🔀 Git Push` + `§ 📢` + registry + Decision log → ใช้กับ Sir ทุกตัว
+- ⚠️ **แย้งข้อ 3 ของ Lord Commander อย่างมีหลักฐาน:** `PROJECT_INSTRUCTIONS_DRAFT.md` มี **2 ไฟล์**
+  - root 4,297 B → ignored+untracked (`!!`) **ตรงที่ท่านตรวจ**
+  - `WRK_AGENTS/` 4,483 B → **tracked จริง** (`git ls-files`)
+  - เหตุที่ `check-ignore` ไม่รายงานตัวหลัง = git ข้ามไฟล์ที่ track อยู่
+  - สรุป: **ไม่ใช่ปัญหา ignore** แต่เป็น **กฎข้อ 6** (ไฟล์ชื่อเดียวกัน 2 ที่ เนื้อหาต่างกัน) · ตัวที่ track = ไฟล์ของ **Lord DA** ตาม Matrix → **งานของ DA**
+  - ⏸️ **pending approval** — รอ user ชี้ว่าฉบับไหนคือตัวจริง แล้วยุบเหลือที่เดียว
+- 📌 `CLAUDE.md` **20,094 B** เหลือที่ว่างแค่ **386 B** · ไม่มี session log ให้ย้ายเข้า archive อีกแล้ว (เป็นกฎล้วน) → รอบหน้าต้องตัดสินว่า **ขยายเพดาน** หรือ **แยก Matrix/Doc Fee ออกเป็นไฟล์ของตัวเอง** — DA ไม่ตัดสินเอง

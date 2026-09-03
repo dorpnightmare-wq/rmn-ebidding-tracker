@@ -555,3 +555,29 @@ FY2568 ไม่กระทบ                308,197,279
 - `WRK_AGENTS\CLAUDE.md` ยัง 21,573 B = เกินเพดาน 20 KB (ยกมาจากรอบก่อน)
 
 ---
+
+---
+
+> 📦 ย้ายเข้ามา 2026-09-03 #2 (WRK_DA ใกล้ชนเพดาน) — เนื้อหาเดิมครบ
+
+## 🔄 Session State (2026-09-02 — DA: ยุบ DOC เข้า OPY)
+> คำสั่ง user: "น่าจะต้อง Disable DOC ไว้ก่อน เพราะไม่ได้ใช้เลย OPY ใช้ Skills แล้วสร้างได้ไวกว่าแต่ติดที่กฎเรื่อง push"
+
+### 🔎 หลักฐานก่อนแก้ (ไม่เดา — อ่านจากไฟล์/git จริง)
+- `WRK_FEE_PAYMENT.md` แก้ครั้งสุดท้าย **04-08-69** (~4 สัปดาห์) = ไม่มีใครเปิด session DOC เลย
+- `git log doc_fee_queue.json` → commit ล่าสุดทั้งหมดเป็น **`fee(OPY): ...`** · `doc_fees.json` ก็ปิด entry จาก session OPY (e418c7c, 6623292)
+- **ตัวบล็อกจริง = `CLAUDE.md:90`** `| BIDDING OPERATING | seed_bids.js เท่านั้น | tracker HTML, doc_fees.json |` → OPY เขียน doc_fees.json ไม่ได้ → entry ค้าง pending รอ agent ที่ไม่มีใครเปิด
+- queue ปัจจุบัน 17 entries · doc_fees.json 34 entries
+
+### ✅ แก้ไปแล้ว
+- `CLAUDE.md` — ตาราง Agents: OPY แก้ได้ `seed_bids.js` + `doc_fee_queue.json` + `doc_fees.json` (ห้ามแตะแค่ tracker HTML) · row DOC → 🚫 DISABLED · § Doc Fee เปลี่ยนเจ้าของเป็น OPY ผ่าน skill `fee-payment` · step 5 ช่องทางส่งหลักฐาน default = แนบ e-GP (อีเมลเฉพาะเมื่อหน่วยงานระบุ) · step 7 + ท้ายไฟล์ = OPY push เอง
+- `KB_ECOSYSTEM_ADMIN.md` — ถอด row Fee Payment ออกจาก registry → เข้าตาราง "ยกเลิกแล้ว" (เก็บไฟล์ ห้ามลบ) · OPY row รับ scope ค่าเอกสาร · nickname ตัด DOC · **agent ใช้งานจริง 6 → 5 ตัว**
+- `KB_FEE_PAYMENT.md` — ติดป้าย 🚫 DISABLED ที่หัวไฟล์ (เนื้อหาสเปกคงไว้ทั้งหมด อ่านอ้างอิงได้)
+- `DESIGN_PRINCIPLES.md` — Decision log 2 บรรทัด (ยุบ DOC · default e-GP) + แก้จำนวน agent 6→5 ทั้ง 2 จุด
+
+### ⚠️ ค้าง / ที่ DA ทำให้ไม่ได้
+- **skill `fee-payment` + `e-bidding-operating`** อาจยังเขียนว่า "dispatch ไป DOC" — skill เป็น read-only cache **DA แก้จากดิสก์ไม่ได้** ต้อง propose ให้ user save → **ยังไม่ตรวจเนื้อหา skill จริง อย่าเพิ่งสรุปว่าต้องแก้**
+- `CLAUDE.md` = **22,087 B เกินเพดาน 20 KB** (เดิม 21,573) — ยุบได้จริงคือ § Doc Fee + § Slip Verification ที่ทับกับ skill แต่นั่นเป็นการเปลี่ยนระบบ **รอ user อนุมัติก่อน ไม่ทำเอง**
+- queue `68099553809` ยัง pending — ตอนนี้ **OPY ปิดเองได้แล้ว** ไม่ต้องรอ DOC
+
+---

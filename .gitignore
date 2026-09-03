@@ -12,3 +12,4 @@ PROJECT_INSTRUCTIONS_DRAFT.md
 *.key
 .rmn_datagoth_key
 _tmp_*
+tmp/

@@ -10,19 +10,16 @@ TaskCreate · TaskUpdate · TaskList · TaskStop · TaskGet · AskUserQuestion �
 ToolSearch → โหลดเฉพาะเมื่อ tool ไม่มีใน schema จริงๆ
 
 ## 📢 ประกาศถึงทุก agent — **อ่านก่อนเริ่มงานทุกครั้ง**
-> DA เขียนที่นี่ทุกครั้งที่เปลี่ยน registry / ownership / กฎร่วม · เก่ากว่า 30 วันย้ายเข้า `CLAUDE_ARCHIVE_*.md`
-> 🔴 **กฎใหม่สำหรับ DA:** เปลี่ยน registry/matrix/กฎร่วมแล้ว **ต้องเขียนประกาศที่นี่ในรอบ commit เดียวกัน** — ไม่ประกาศ = agent อื่นไม่รู้ แล้วไปตัดสินใจซ้อนกันเอง (เกิดจริง 09-03: OPY ไม่รู้ว่า DB ปลดแล้ว)
+> 🔴 **DA ต้องเขียนที่นี่ทุกครั้งที่เปลี่ยน registry/ownership/กฎร่วม — ในรอบ commit เดียวกัน** · ไม่ประกาศ = agent อื่นตัดสินใจซ้อนกันเอง (เกิดจริง 09-03: OPY ไม่รู้ว่า DB ปลด) · เก่ากว่า 30 วัน → `CLAUDE_ARCHIVE_*.md`
 
 - **09-01 · DB (Design Board) ปลดแล้ว** — ไม่ใช่ agent/session · `RMN_Enterprise\DESIGN_PRINCIPLES.md` = **เอกสารหลักการ + Decision log เจ้าของ DA** · **ห้ามรอ DB ตัดสินใจ** เรื่องไฟล์ของตัวเอง ตัดสินเองได้เลย
 - **09-02 · DOC (Fee Payment) ปลดแล้ว** — ค่าเอกสารทั้งเส้นอยู่ใต้ **OPY** · OPY เขียน `doc_fees.json` + push ได้เอง · **ห้าม route/dispatch ไป DOC**
 - **09-02 · ชั้นยศ + File Ownership Matrix** — `Codex = Lord Commander` (เจ้าของ scripts/infra) · Claude = executor ของไฟล์ตาม domain · **ตารางเจ้าของไฟล์อยู่ใน `KB_ECOSYSTEM_ADMIN.md`** — ไฟล์ที่ไม่อยู่ในตาราง = ถามก่อนแก้
 - **09-02 · Skills Governance** — `agent propose → DA review/apply → บันทึก changelog` · agent ห้าม propose skill ของ agent อื่น
+- **09-03 · ✅ Git Close-out** — งานเสร็จ = `git status` scope ตน → commit → push · ห้าม commit ไฟล์นอก ownership · รอ approval ให้เขียน `pending approval` (รายละเอียด § 🔀 Git Push)
 - **09-03 · `build_taksila_letterhead.py` + `tmp/` = Lord Commander** (provisional/untracked) — Claude อ่าน/รันได้ **แก้ไม่ได้**
 - **09-03 · 🐦 Raven Mail = รูปแบบส่งข้อความข้ามฝั่ง** — ส่งถึง Grand Maester / Lord Commander / ข้าม agent ต้องขึ้นหัว `🐦 Raven Mail` + `จาก:` + `ถึง:` + `เรื่อง:` · **ชื่อผู้ส่งต้องตรงตัวจริง ห้ามสลับ** (รายชื่อเต็มใน `KB_ECOSYSTEM_ADMIN.md § 🐦`)
-- **09-03 · `WRK_OPERATING_STATE.md` — รับรองแล้ว เฉพาะ Sir OPY** (owner = Sir OPY · มติ Lord Commander)
-  - **Sir OPY เท่านั้น**: `WRK_OPERATING.md` = กฎ/สเปก (เพดาน 20 KB) · `WRK_OPERATING_STATE.md` = session state + pending (เพดาน 20 KB) · **เปิด session อ่านทั้งสองไฟล์**
-  - เกินเพดาน → ตัด session state ก้อนเก่าสุดเข้า archive · **ห้ามตัด pending ที่ยังไม่ปิด**
-  - ❌ **ไม่ใช่กฎทุก agent** — DA · EXP · MM · UI ยังใช้ WRK ไฟล์เดียว · จะแยกต้องขอรับรองเป็นราย agent (แก้จากที่ DA ประกาศกว้างเกินไปเมื่อ 09-03)
+- **09-03 · `WRK_OPERATING_STATE.md` — owner Sir OPY · เฉพาะ Sir OPY** · OPY เปิด session อ่าน **2 ไฟล์** (`WRK_OPERATING.md`=กฎ + STATE=state/pending · เพดาน 20 KB ทั้งคู่ · เกินแล้วตัด state เก่าสุดเข้า archive ห้ามตัด pending) · ❌ **ไม่ใช่กฎทุก agent** — DA/EXP/MM/UI ใช้ WRK ไฟล์เดียว จะแยกต้องขอรับรองรายตัว
 
 ## ⚙️ Core Rules
 - Diff/changelog only — ห้าม output full file/table
@@ -89,6 +86,15 @@ git -C $r rev-parse --short HEAD; git -C $r rev-parse --short origin/main
 - PC offline → แจ้ง user "execute ไม่ได้ รอ PC ออนไลน์" · ห้ามส่งคำสั่งให้ user ไปรันเอง
 
 > GitHub Pages deploy จาก branch `main` · push ธรรมดาได้เลย
+
+### ✅ Git Close-out — เกณฑ์ "งานเสร็จ" ของทุก Sir (มติ Lord Commander 2026-09-03)
+งานถือว่า **เสร็จและส่งมอบ** เมื่อ owner ทำครบ 3 ข้อ:
+1. ตรวจ `git status` **เฉพาะ scope ของตน**
+2. commit การเปลี่ยนแปลงของตนให้เรียบร้อย
+3. push เมื่อ policy ของงานนั้นกำหนดให้ sync กลาง
+- ⛔ **ห้าม commit ไฟล์นอก ownership ของตน** (ดู File Ownership Matrix ใน `KB_ECOSYSTEM_ADMIN.md`)
+- ⏸️ งานที่รอ user approval → เขียน **`pending approval`** ใน WRK · **ห้ามเรียกว่างานเสร็จ**
+- ใช้กับ **Sir OPY / EXP / MM / UI ทุกคน**
 
 ## 🎨 UI Rules
 - Light mode default · Viewer URL: `?view=1` (mobile) · Editor: no param (desktop)
