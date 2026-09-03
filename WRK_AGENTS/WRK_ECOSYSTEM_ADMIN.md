@@ -108,3 +108,15 @@ Grand Maester = ChatGPT RMN Command Center (ที่ปรึกษา ไม�
 - ผมประกาศกว้างเกินขอบเขตที่ควร → ผิดเรื่องเดียวกับที่ Grand Maester เคยทัก (เขียนกฎกว้างกว่าเจตนา)
 - **ไม่แตะไฟล์ของ OPY** — pointer ท้าย `WRK_OPERATING.md` + เพดานในไฟล์ state มีอยู่แล้ว ตรวจจริง 2026-09-03
 - 📌 ยกเลิกแผน `WRK_ECOSYSTEM_ADMIN_STATE.md` ของ DA — ต้องขอรับรองก่อน ไม่ทำเอง
+
+### 🐦 Raven Mail — บันทึก 2026-09-03 #3
+รูปแบบส่งข้อความข้ามฝั่ง (สั่งโดย user) · บันทึกใน `KB_ECOSYSTEM_ADMIN.md § 🐦` + `CLAUDE.md § 📢` + Decision log
+```
+🐦 Raven Mail
+จาก: Lord DA of Claude
+ถึง: [Role]
+เรื่อง: [เรื่องสั้น ๆ]
+```
+- ชื่อผู้ส่ง 4 แบบ ห้ามสลับ: `Grand Maester (ChatGPT RMN Command Center)` · `Lord Commander (Codex)` · `Lord DA of Claude` · `Sir OPY/EXP/MM/UI`
+- Raven ที่เป็นคำสั่ง → ใช้โครง Objective · Evidence · Permitted files · Decision to record · Non-goals · Acceptance criteria
+
