@@ -17,6 +17,7 @@ ToolSearch → โหลดเฉพาะเมื่อ tool ไม่มี�
 - **09-02 · DOC (Fee Payment) ปลดแล้ว** — ค่าเอกสารทั้งเส้นอยู่ใต้ **OPY** · OPY เขียน `doc_fees.json` + push ได้เอง · **ห้าม route/dispatch ไป DOC**
 - **09-02 · ชั้นยศ + File Ownership Matrix** — `Codex = Lord Commander` (เจ้าของ scripts/infra) · Claude = executor ของไฟล์ตาม domain · **ตารางเจ้าของไฟล์อยู่ใน `KB_ECOSYSTEM_ADMIN.md`** — ไฟล์ที่ไม่อยู่ในตาราง = ถามก่อนแก้
 - **09-02 · Skills Governance** — `agent propose → DA review/apply → บันทึก changelog` · agent ห้าม propose skill ของ agent อื่น
+- **09-03 · `build_taksila_letterhead.py` + `tmp/` = Lord Commander** (provisional/untracked) — Claude อ่าน/รันได้ **แก้ไม่ได้**
 - **09-03 · 🐦 Raven Mail = รูปแบบส่งข้อความข้ามฝั่ง** — ส่งถึง Grand Maester / Lord Commander / ข้าม agent ต้องขึ้นหัว `🐦 Raven Mail` + `จาก:` + `ถึง:` + `เรื่อง:` · **ชื่อผู้ส่งต้องตรงตัวจริง ห้ามสลับ** (รายชื่อเต็มใน `KB_ECOSYSTEM_ADMIN.md § 🐦`)
 - **09-03 · `WRK_OPERATING_STATE.md` — รับรองแล้ว เฉพาะ Sir OPY** (owner = Sir OPY · มติ Lord Commander)
   - **Sir OPY เท่านั้น**: `WRK_OPERATING.md` = กฎ/สเปก (เพดาน 20 KB) · `WRK_OPERATING_STATE.md` = session state + pending (เพดาน 20 KB) · **เปิด session อ่านทั้งสองไฟล์**

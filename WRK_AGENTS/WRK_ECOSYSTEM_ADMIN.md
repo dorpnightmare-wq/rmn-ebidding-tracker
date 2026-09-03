@@ -120,3 +120,15 @@ Grand Maester = ChatGPT RMN Command Center (ที่ปรึกษา ไม�
 - ชื่อผู้ส่ง 4 แบบ ห้ามสลับ: `Grand Maester (ChatGPT RMN Command Center)` · `Lord Commander (Codex)` · `Lord DA of Claude` · `Sir OPY/EXP/MM/UI`
 - Raven ที่เป็นคำสั่ง → ใช้โครง Objective · Evidence · Permitted files · Decision to record · Non-goals · Acceptance criteria
 
+### 🟡 บันทึก 2026-09-03 #4 — ownership: letterhead tool + tmp/
+Raven จาก Lord Commander · **DA ตรวจไฟล์จริงก่อนบันทึก ยืนยันหลักฐานครบทุกข้อ**
+| อ้าง | ตรวจพบจริง |
+|---|---|
+| สร้าง `.docx` | ✅ `L16` → `TAKSILA_RMN_หัวกระดาษเปล่า.docx` (ไฟล์ 6,838 B) |
+| `tmp/` = render artefact | ✅ `certificate-render/` · `letterhead-render/` · `taksila_logo_cropped.png` 579 KB |
+| path ตายตัวนอก repo | ✅ `L14` → `OneDrive\งานเอกสาร RMN\Signature\S__43835413.jpg` |
+| `.gitignore` ไม่ครอบ `tmp/` | ✅ มีแต่ `_tmp_*` |
+- บันทึก Matrix เป็น **provisional / untracked** owner = Lord Commander · ประกาศใน `CLAUDE.md § 📢` แล้ว
+- 🔒 **ไม่แก้ `.gitignore`** — เป็นไฟล์ของ Codex ตาม Matrix · เห็นชอบ ≠ มอบหมาย · รอเจ้าของเขียนเองหรือมอบหมายมา
+- 📌 **DA พบเพิ่ม 2 เรื่อง ส่งกลับให้เจ้าของวินิจฉัย:** `.gitignore` มี `*.docx` อยู่แล้ว (output ถูก ignore ตั้งแต่ต้น) · `PROJECT_INSTRUCTIONS_DRAFT.md` อยู่ใน `.gitignore` **แต่ถูก track จริง** = ขัดกันเอง
+
