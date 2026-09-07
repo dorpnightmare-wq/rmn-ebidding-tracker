@@ -12,21 +12,17 @@ ToolSearch → โหลดเฉพาะเมื่อ tool ไม่มี�
 ## 📢 ประกาศถึงทุก agent — **อ่านก่อนเริ่มงานทุกครั้ง**
 > 🔴 **DA ต้องเขียนที่นี่ทุกครั้งที่เปลี่ยน registry/ownership/กฎร่วม — ในรอบ commit เดียวกัน** · ไม่ประกาศ = agent อื่นตัดสินใจซ้อนกันเอง (เกิดจริง 09-03: OPY ไม่รู้ว่า DB ปลด) · เก่ากว่า 30 วัน → `CLAUDE_ARCHIVE_*.md`
 
-- **09-01 · DB (Design Board) ปลดแล้ว** — ไม่ใช่ agent/session · `RMN_Enterprise\DESIGN_PRINCIPLES.md` = **เอกสารหลักการ + Decision log เจ้าของ DA** · **ห้ามรอ DB ตัดสินใจ** เรื่องไฟล์ของตัวเอง ตัดสินเองได้เลย
-- **09-02 · DOC (Fee Payment) ปลดแล้ว** — ค่าเอกสารทั้งเส้นอยู่ใต้ **OPY** · OPY เขียน `doc_fees.json` + push ได้เอง · **ห้าม route/dispatch ไป DOC**
-- **09-02 · ชั้นยศ + File Ownership Matrix** — `Codex = Lord Commander` (เจ้าของ scripts/infra) · Claude = executor ของไฟล์ตาม domain · **ตารางเจ้าของไฟล์อยู่ใน `KB_ECOSYSTEM_ADMIN.md`** — ไฟล์ที่ไม่อยู่ในตาราง = ถามก่อนแก้
-- **09-02 · Skills Governance** — `agent propose → DA review/apply → บันทึก changelog` · agent ห้าม propose skill ของ agent อื่น
-- **09-03 · 📖 procedure Doc Fee/Slip/Email ย้ายไป `E-Bidding\OPERATING.md`** (เจ้าของ Sir OPY · สำเนา sync `KB\OPERATING.md`) — `CLAUDE.md` เหลือ **safety gate + pointer** · ห้ามขยายเพดาน 20 KB ให้แยกเนื้อหาเฉพาะทางออกแทน
 - **09-05 · 📞 ปิดเคส PII เบอร์ติดต่อ** — `087-223-5093` + ชื่อหุ้นส่วนผู้จัดการ = **เบอร์ธุรกิจ อยู่ใน repo public ได้** (มติ user) · **ไม่ต้อง mask ไม่ต้องย้าย** · Sir OPY ยกเลิกคำสั่งหยุดที่ DA สั่งไว้ · ⚔️ ปิดข้อขัดกัน Rule 19 vs 20 — sync KB ลง `KB/` ได้ตามปกติ · ⛔ ข้อยกเว้นนี้เฉพาะรายการนี้ เลขบัตร/เบอร์ส่วนตัวพนักงาน/เงินเดือน ยังอยู่ใต้ Rule 19 เต็ม
 - **09-04 · checker เช้า = `Work Health Check` แล้ว (เลิกนับ turn/context)** — วัด git status · HEAD vs origin · ขนาด/mtime ของ WRK · pending ทั้งระบบ · **read-only 100% ห้าม commit/push/pull/fetch** · รายงานต้องบอก **อะไรค้าง + owner + ต้องทำอะไรต่อ** · 📌 **เปลี่ยน registry ครั้งหน้าต้องไล่ตรวจ SKILL.md ทั้ง 4 ตัวด้วย** (อยู่นอก git ไม่มีใครเตือน)
 - **09-03 · ✅ Git Close-out** — งานเสร็จ = `git status` scope ตน → commit → push · ห้าม commit ไฟล์นอก ownership · รอ approval ให้เขียน `pending approval` (รายละเอียด § 🔀 Git Push)
-- **09-03 · `build_taksila_letterhead.py` + `tmp/` = Lord Commander** (provisional/untracked) — Claude อ่าน/รันได้ **แก้ไม่ได้**
 - **09-03 · 🐦 Raven Mail = รูปแบบส่งข้อความข้ามฝั่ง** — ส่งถึง Lord COMMANDER of GPT / Codex / ข้าม agent ต้องขึ้นหัว `🐦 Raven Mail` + `จาก:` + `ถึง:` + `เรื่อง:` · **ชื่อผู้ส่งต้องตรงตัวจริง ห้ามสลับ** (รายชื่อเต็มใน `KB_ECOSYSTEM_ADMIN.md § 🐦`)
 - **09-03 · `WRK_OPERATING_STATE.md` — owner Sir OPY · เฉพาะ Sir OPY** · OPY เปิด session อ่าน **2 ไฟล์** (`WRK_OPERATING.md`=กฎ + STATE=state/pending · เพดาน 20 KB ทั้งคู่ · เกินแล้วตัด state เก่าสุดเข้า archive ห้ามตัด pending) · ❌ **ไม่ใช่กฎทุก agent** — DA/EXP/MM/UI ใช้ WRK ไฟล์เดียว จะแยกต้องขอรับรองรายตัว
 - **09-07 · 👑 naming model ใหม่ (มติ King Marx)** — ฝั่ง GPT = **`Lord COMMANDER of GPT`** · `COMMANDER GATEWAY` = ชื่อห้องแชทตั้งต้น/จุดรับเรื่อง **ไม่ใช่ตำแหน่ง** · `Grand Maester` = **retired** · Codex เรียกตามหน้าที่ **`Codex / Technical Execution`** · `Lord` = ผู้ดูแลอาณาจักร/ระบบของตน · ชื่อเก่าในบันทึกเดิม **คงไว้** แต่ Raven/เอกสาร/แผนผังที่เป็น **current ต้องใช้ชื่อใหม่**
 - **09-07 · 👑 Raven = บล็อกเดียว copy ได้ + user กดส่ง = ยืนยันแล้ว** — King Marx กดส่ง Raven = ยืนยันเจตนา/ความถูกต้อง **ไม่ต้องขอยืนยันซ้ำ** · **ผู้ตัดสินเมื่อ 2 ฝั่งขัดกัน = King Marx เท่านั้น** · agent เสนอหลักฐานครบ 2 ด้าน **ห้ามตัดสินแทน**
 - **09-07 · 💰 Finance Capture v1 = ระบบใหม่ แยกจาก e-Bidding โดยสิ้นเชิง** — `LINE → Cloud Run → Drive + hidden Sheet` · เจ้าของโค้ด/config = **Lord DA** · เจ้าของ Cloud resource ทุกตัว = **King Marx** (ตาราง 2 ชั้นอยู่ใน `KB_ECOSYSTEM_ADMIN.md § 💰`) · ⛔ **ห้ามอ้างอิงข้อมูล Finance Capture จาก repo public / Pages / tracker ทุกกรณี** — สลิปมีเลขบัญชี+ชื่อ = Rule 19 เต็มตัว · ที่ส่งออกได้คือ `[ยอด · วันที่ · ประเภท · record_id]` เท่านั้น
 - **09-07 · 💰 ขอบเขต Finance Capture = "จ่ายจริง" เท่านั้น** — Sheet นี้ **ตอบไม่ได้** ว่าหนี้คงเหลือเท่าไหร่ / เหลือกี่งวด / ครบเมื่อไหร่ (ตารางแผนผ่อนยังไม่ถูกสร้าง) · ห้าม agent ใดอ่านยอดรวมใน Sheet นี้เป็นยอดหนี้คงเหลือ · ⚠️ `service.yaml` ค่า `maxScale: 1` + `containerConcurrency: 1` **เป็นกลไกความถูกต้อง ไม่ใช่ tuning** ห้ามแก้
+- **09-07 · 📁 ย้าย repo ออกจาก OneDrive → `C:\Repos\` แล้ว (ทุกเครื่อง path เดียวกัน)** — `C:\Repos\RMN-eBidding-Workflow` · `C:\Repos\M4RX-B4SE` · `C:\Repos\RMN-eBidding-KB` · **sync ข้ามเครื่องใช้ `git push/pull` เท่านั้น ห้ามพึ่ง OneDrive** · ⛔ **ห้ามวาง git repo ใน OneDrive/iCloud/Dropbox อีก** — 09-07 พังจริง 3 แบบจากเหตุเดียว: `.lock` ค้างลบไม่ได้ · `.git/objects` ขาด ~60 objects · reflog เสีย ต้อง re-clone ทั้ง repo
+- **09-07 · 🛠️ แต่ละ Sir ต้องแก้ path ใน WRK ของตัวเองรอบหน้าที่เปิด session** — DA แก้ให้ไม่ได้ (กฎห้าม commit ไฟล์นอก ownership) · **Sir OPY**: `WRK_OPERATING.md:107,122` · `WRK_FEE_PAYMENT.md:173` · **Sir MM**: `WRK_MAPMAKER.md:46` · **Codex**: `scripts/harvest_all.ps1:2` · `build_taksila_letterhead.py:13` · เดิมเป็น `C:\Users\Advice\OneDrive\...` ซึ่ง **ผูกกับชื่อ user เครื่องเดียว** ใช้กับเครื่องที่ 2 ไม่ได้ → เปลี่ยนเป็น `C:\Repos\...`
 
 ## ⚙️ Core Rules
 - Diff/changelog only — ห้าม output full file/table
@@ -80,7 +76,7 @@ M4RX-B4SE/RMN_Enterprise/E-Bidding/
 ทุก agent commit+push เองผ่าน **`Windows-MCP → PowerShell`** ไม่ต้องส่งคำสั่งให้ user รัน
 
 ```
-$r="$env:USERPROFILE\OneDrive\Claude\Projects\RMN-eBidding-Workflow"
+$r="C:\Repos\RMN-eBidding-Workflow"
 Remove-Item "$r\.git\HEAD.lock","$r\.git\index.lock" -Force -ErrorAction SilentlyContinue
 git -C $r add <file>
 git -C $r commit -m "msg"

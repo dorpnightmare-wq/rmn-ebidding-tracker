@@ -97,3 +97,12 @@
 ### ⏳ Pending
 - (none)
 push `doc_fees.json` / `doc_fee_queue.json` — **OPY push เอง** (2026-09-02)
+
+## 📢 ประกาศที่ย้ายมาเก็บ (09-01 / 09-02 — เกิน 30 วันหรือถูกมติใหม่แทนแล้ว)
+
+- **09-01 · DB (Design Board) ปลดแล้ว** — ไม่ใช่ agent/session · `RMN_Enterprise\DESIGN_PRINCIPLES.md` = **เอกสารหลักการ + Decision log เจ้าของ DA** · **ห้ามรอ DB ตัดสินใจ** เรื่องไฟล์ของตัวเอง ตัดสินเองได้เลย
+- **09-02 · DOC (Fee Payment) ปลดแล้ว** — ค่าเอกสารทั้งเส้นอยู่ใต้ **OPY** · OPY เขียน `doc_fees.json` + push ได้เอง · **ห้าม route/dispatch ไป DOC**
+- **09-02 · ชั้นยศ + File Ownership Matrix** — `Codex = Lord Commander` (เจ้าของ scripts/infra) · Claude = executor ของไฟล์ตาม domain · **ตารางเจ้าของไฟล์อยู่ใน `KB_ECOSYSTEM_ADMIN.md`** — ไฟล์ที่ไม่อยู่ในตาราง = ถามก่อนแก้
+- **09-02 · Skills Governance** — `agent propose → DA review/apply → บันทึก changelog` · agent ห้าม propose skill ของ agent อื่น
+- **09-03 · 📖 procedure Doc Fee/Slip/Email ย้ายไป `E-Bidding\OPERATING.md`** (เจ้าของ Sir OPY · สำเนา sync `KB\OPERATING.md`) — `CLAUDE.md` เหลือ **safety gate + pointer** · ห้ามขยายเพดาน 20 KB ให้แยกเนื้อหาเฉพาะทางออกแทน
+- **09-03 · `build_taksila_letterhead.py` + `tmp/` = Lord Commander** (provisional/untracked) — Claude อ่าน/รันได้ **แก้ไม่ได้**
