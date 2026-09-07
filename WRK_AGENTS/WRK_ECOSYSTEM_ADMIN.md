@@ -100,3 +100,11 @@ RMN                   106,228,801.38      204,802,746.73   +98,573,945
 3. **Strict Rule R1-R3** เสนอ Lord Commander แล้ว รอรับรอง (R1 join key · R2 เฉพาะเจาะจง · R3 สถานะยกเลิก 2 คำ)
 4. **35 record** ยังไม่ส่ง Sir OPY — รอ R1 รับรองก่อน (ตามที่ผมแจ้ง OPY ไว้)
 
+
+## 🔄 Session State (2026-09-07 — DA: naming model + กฎ Raven + จัดระเบียบ working copy)
+- ✅ **มติ King Marx — naming model ใหม่** บันทึกแล้ว: `KB § ชั้นยศ` + `KB § 🐦 Raven Mail` · `DESIGN_PRINCIPLES` Decision log 2 แถว · `CLAUDE.md § 📢` 2 บรรทัด (ประกาศในคอมมิตเดียวกันตามหน้าที่ broadcast)
+- ✅ artifact `process-map.html` แก้ชื่อกล่อง advisor + แถว ownership → **republish ทับ URL เดิม** (ไม่แตะเนื้อหาอื่นตามที่รับปากใน Raven)
+- 🛠️ **พบและแก้: working copy ไม่ตรง origin ทั้ง 2 repo** — `M4RX-B4SE` ค้างบน branch `claude/upbeat-johnson-xdUyN` (1 commit `21cf15d`, **ไม่มี KB_ECOSYSTEM_ADMIN.md / DESIGN_PRINCIPLES.md บนดิสก์เลย**) → `git checkout -B main origin/main` ได้ `ec7af3e` · `RMN-eBidding-Workflow` ช้ากว่า origin **78 commit** → `merge --ff-only` ได้ `c61cfb9` · ⚠️ **ไม่มีข้อมูลหาย** ของครบบน origin/main ทุกไฟล์
+- ⚠️ **บทเรียน PowerShell (จดไว้กันซ้ำ):** `$KL = Get-Content $k` — ถ้าใช้ชื่อ `$K` จะ **ทับตัวแปร `$k` ทันที** เพราะ PowerShell ไม่แยกตัวพิมพ์เล็ก/ใหญ่ → path กลายเป็นค่าว่าง เขียนไฟล์ไม่ได้ (เจอจริง 2 รอบ) · ต่อไปตั้งชื่อ array ว่า `$KL/$DL/$CL` เท่านั้น
+- ⏸️ **pending approval — ยังไม่บันทึกลงดิสก์ ห้ามถือเป็นกฎ:** architecture Workspace/GitHub/LINE · ownership TAB 1/2/3 · ผู้รับสรุปรายวัน + ผู้มีสิทธิเขียน · guard rails ①–⑩ · ถ้อยคำเส้นแบ่ง advisor (เปิด/ปิด) · TAB 2 `basis_amount` รอคำตอบ Top
+- 📌 LINE OA `RMN Finance Capture` **Friends = 1** → office/แม่ ยังไม่เข้าระบบ ยังทดสอบ intake จริงไม่ได้ · สถานะ not operational

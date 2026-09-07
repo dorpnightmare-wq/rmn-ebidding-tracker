@@ -1,4 +1,4 @@
-# RMN e-Bidding Tracker
+﻿# RMN e-Bidding Tracker
 
 ## 🚫 NEVER USE (no exceptions)
 TaskCreate · TaskUpdate · TaskList · TaskStop · TaskGet · AskUserQuestion · mcp__visualize__read_me
@@ -21,8 +21,10 @@ ToolSearch → โหลดเฉพาะเมื่อ tool ไม่มี�
 - **09-04 · checker เช้า = `Work Health Check` แล้ว (เลิกนับ turn/context)** — วัด git status · HEAD vs origin · ขนาด/mtime ของ WRK · pending ทั้งระบบ · **read-only 100% ห้าม commit/push/pull/fetch** · รายงานต้องบอก **อะไรค้าง + owner + ต้องทำอะไรต่อ** · 📌 **เปลี่ยน registry ครั้งหน้าต้องไล่ตรวจ SKILL.md ทั้ง 4 ตัวด้วย** (อยู่นอก git ไม่มีใครเตือน)
 - **09-03 · ✅ Git Close-out** — งานเสร็จ = `git status` scope ตน → commit → push · ห้าม commit ไฟล์นอก ownership · รอ approval ให้เขียน `pending approval` (รายละเอียด § 🔀 Git Push)
 - **09-03 · `build_taksila_letterhead.py` + `tmp/` = Lord Commander** (provisional/untracked) — Claude อ่าน/รันได้ **แก้ไม่ได้**
-- **09-03 · 🐦 Raven Mail = รูปแบบส่งข้อความข้ามฝั่ง** — ส่งถึง Grand Maester / Lord Commander / ข้าม agent ต้องขึ้นหัว `🐦 Raven Mail` + `จาก:` + `ถึง:` + `เรื่อง:` · **ชื่อผู้ส่งต้องตรงตัวจริง ห้ามสลับ** (รายชื่อเต็มใน `KB_ECOSYSTEM_ADMIN.md § 🐦`)
+- **09-03 · 🐦 Raven Mail = รูปแบบส่งข้อความข้ามฝั่ง** — ส่งถึง Lord COMMANDER of GPT / Codex / ข้าม agent ต้องขึ้นหัว `🐦 Raven Mail` + `จาก:` + `ถึง:` + `เรื่อง:` · **ชื่อผู้ส่งต้องตรงตัวจริง ห้ามสลับ** (รายชื่อเต็มใน `KB_ECOSYSTEM_ADMIN.md § 🐦`)
 - **09-03 · `WRK_OPERATING_STATE.md` — owner Sir OPY · เฉพาะ Sir OPY** · OPY เปิด session อ่าน **2 ไฟล์** (`WRK_OPERATING.md`=กฎ + STATE=state/pending · เพดาน 20 KB ทั้งคู่ · เกินแล้วตัด state เก่าสุดเข้า archive ห้ามตัด pending) · ❌ **ไม่ใช่กฎทุก agent** — DA/EXP/MM/UI ใช้ WRK ไฟล์เดียว จะแยกต้องขอรับรองรายตัว
+- **09-07 · 👑 naming model ใหม่ (มติ King Marx)** — ฝั่ง GPT = **`Lord COMMANDER of GPT`** · `COMMANDER GATEWAY` = ชื่อห้องแชทตั้งต้น/จุดรับเรื่อง **ไม่ใช่ตำแหน่ง** · `Grand Maester` = **retired** · Codex เรียกตามหน้าที่ **`Codex / Technical Execution`** · `Lord` = ผู้ดูแลอาณาจักร/ระบบของตน · ชื่อเก่าในบันทึกเดิม **คงไว้** แต่ Raven/เอกสาร/แผนผังที่เป็น **current ต้องใช้ชื่อใหม่**
+- **09-07 · 👑 Raven = บล็อกเดียว copy ได้ + user กดส่ง = ยืนยันแล้ว** — King Marx กดส่ง Raven = ยืนยันเจตนา/ความถูกต้อง **ไม่ต้องขอยืนยันซ้ำ** · **ผู้ตัดสินเมื่อ 2 ฝั่งขัดกัน = King Marx เท่านั้น** · agent เสนอหลักฐานครบ 2 ด้าน **ห้ามตัดสินแทน**
 
 ## ⚙️ Core Rules
 - Diff/changelog only — ห้าม output full file/table
