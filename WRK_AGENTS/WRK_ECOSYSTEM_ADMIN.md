@@ -108,3 +108,21 @@ RMN                   106,228,801.38      204,802,746.73   +98,573,945
 - ⚠️ **บทเรียน PowerShell (จดไว้กันซ้ำ):** `$KL = Get-Content $k` — ถ้าใช้ชื่อ `$K` จะ **ทับตัวแปร `$k` ทันที** เพราะ PowerShell ไม่แยกตัวพิมพ์เล็ก/ใหญ่ → path กลายเป็นค่าว่าง เขียนไฟล์ไม่ได้ (เจอจริง 2 รอบ) · ต่อไปตั้งชื่อ array ว่า `$KL/$DL/$CL` เท่านั้น
 - ⏸️ **pending approval — ยังไม่บันทึกลงดิสก์ ห้ามถือเป็นกฎ:** architecture Workspace/GitHub/LINE · ownership TAB 1/2/3 · ผู้รับสรุปรายวัน + ผู้มีสิทธิเขียน · guard rails ①–⑩ · ถ้อยคำเส้นแบ่ง advisor (เปิด/ปิด) · TAB 2 `basis_amount` รอคำตอบ Top
 - 📌 LINE OA `RMN Finance Capture` **Friends = 1** → office/แม่ ยังไม่เข้าระบบ ยังทดสอบ intake จริงไม่ได้ · สถานะ not operational
+
+## 🔄 Session State (2026-09-07 ต่อ — DA: Finance Capture v1 ส่งมอบ + ย้าย repo ออกจาก OneDrive)
+- ✅ **Execution Card RMN Finance Capture v1 ปิดครบ** — `M4RX-B4SE` `8ddaa84` governance (ก่อน) → `1ee1c0f` implementation · `Workflow` `40f8455` broadcast · RC1–RC9 อยู่ในโค้ดจริง · **60 offline tests ผ่านบนเครื่อง** · dependency 0 ตัว · ไม่มี secret ในไฟล์ใด · **หยุดก่อน deploy ตามคำสั่ง**
+- 📌 MB1 ปิด: Messaging API channel `RMN Finance Capture` **Channel ID 2011458199** (ID ไม่ใช่ secret บันทึกได้)
+- ✅ **ย้าย repo 3 ตัวออกจาก OneDrive → `C:\Repos\`** (path เดียวกันทุกเครื่อง ไม่มีชื่อ user) · `Workflow` `3c44f15` · `M4RX-B4SE` `1d37740`
+- 🔴 **OneDrive ทำ git พังจริง 3 แบบในวันเดียว** — บทเรียนที่แพงที่สุดของวันนี้:
+  ① `.git/*.lock` ค้าง ลบจาก mount ไม่ได้ → commit ไม่ผ่าน (แก้ชั่วคราวด้วย `mv` ได้ แต่ไม่ควรต้องทำ)
+  ② `.git/objects` **ขาด ~60 objects** + reflog เสีย + commit-graph parse ไม่ผ่าน → `RMN-eBidding-Workflow` ต้อง **re-clone ทั้ง repo**
+  ③ clone ลงมา **ผิด branch** เพราะ `origin/HEAD` ของ `M4RX-B4SE` ชี้ `claude/upbeat-johnson-xdUyN` (scaffold 1 commit) — หลอกทั้ง DA ตอนบ่ายและ clone ใหม่ตอนดึก · แก้ default branch บน GitHub แล้ว
+- ⚠️ **path เดิมผูกชื่อ user** `C:\Users\Advice\OneDrive\...` → เครื่องที่ 2 (`asus`) ใช้ไม่ได้ตั้งแต่ต้น ไม่ใช่เพิ่งพัง
+- ⚠️ **บทเรียน git จาก mount**: `device_bash` ลบไฟล์ไม่ได้ทั้ง mount (ไม่ใช่แค่ OneDrive) และ `core.autocrlf` ไม่ตั้งใน VM → ถ้า commit ตรงๆ ไฟล์ CRLF ที่ไม่ได้แตะจะกลายเป็น diff ทั้งไฟล์ · ต้องใส่ `-c core.autocrlf=input` ทุกคำสั่ง · **git ต้องผ่าน PowerShell เท่านั้น กฎเดิมถูกแล้ว**
+- ⏸️ **ค้าง 4 ข้อ**
+  ① `SKILL.md` ของ scheduled task ยังชี้ OneDrive · อยู่นอก git · `Documents\Claude` ขอสิทธิ์ผ่าน bridge ไม่ได้ → user รันสคริปต์เอง **ทั้ง 2 เครื่อง** (จุดนี้เคยทำ checker พังเงียบเป็นสัปดาห์)
+  ② `_old_*` + `.corrupt_20260907` ใน OneDrive — เก็บ 7 วันแล้วลบ
+  ③ Q1 Codex deploy GCP ได้จริงไหม — ถ้าไม่ได้ `runbook/RUNBOOK.md` เขียนให้ King Marx ทำเองครบทุกขั้น + rollback
+  ④ Q2 แม่/Office เป็นเพื่อน OA + OA เข้ากลุ่มแล้วยัง — **Friends ยัง = 1** daily summary ยังส่งไม่ถึงใคร
+- 🔎 **ยังไม่ย้าย ต้องตัดสินแยก** — `BSKNBot\` และ `RMN e-Bidding Tracker\` ยังเป็น repo ใน OneDrive เสี่ยงแบบเดียวกันเป๊ะ
+- 📌 **แต่ละ Sir แก้ path ใน WRK ของตัวเอง** — DA แก้ให้ไม่ได้ตามกฎ ownership · ประกาศรายชื่อไฟล์ไว้ใน `CLAUDE.md § 📢` แล้ว · Sir MM ยังมี `WRK_MAPMAKER.md` uncommitted อยู่บนดิสก์ (ไฟล์ไม่หาย แต่ของที่เคย `git add` หายไปกับ object ที่เสีย ต้อง add ใหม่)
