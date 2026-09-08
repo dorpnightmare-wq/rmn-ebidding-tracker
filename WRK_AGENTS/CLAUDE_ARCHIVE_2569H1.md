@@ -106,3 +106,4 @@ push `doc_fees.json` / `doc_fee_queue.json` — **OPY push เอง** (2026-09-
 - **09-02 · Skills Governance** — `agent propose → DA review/apply → บันทึก changelog` · agent ห้าม propose skill ของ agent อื่น
 - **09-03 · 📖 procedure Doc Fee/Slip/Email ย้ายไป `E-Bidding\OPERATING.md`** (เจ้าของ Sir OPY · สำเนา sync `KB\OPERATING.md`) — `CLAUDE.md` เหลือ **safety gate + pointer** · ห้ามขยายเพดาน 20 KB ให้แยกเนื้อหาเฉพาะทางออกแทน
 - **09-03 · `build_taksila_letterhead.py` + `tmp/` = Lord Commander** (provisional/untracked) — Claude อ่าน/รันได้ **แก้ไม่ได้**
+- **09-03 · 🐦 Raven Mail = รูปแบบส่งข้อความข้ามฝั่ง** — ส่งถึง Lord COMMANDER of GPT / Codex / ข้าม agent ต้องขึ้นหัว `🐦 Raven Mail` + `จาก:` + `ถึง:` + `เรื่อง:` · **ชื่อผู้ส่งต้องตรงตัวจริง ห้ามสลับ** (รายชื่อเต็มใน `KB_ECOSYSTEM_ADMIN.md § 🐦`)
