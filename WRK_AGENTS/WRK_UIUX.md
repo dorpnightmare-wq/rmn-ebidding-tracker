@@ -66,6 +66,68 @@ Senior UI/UX Designer — ปรับ UI/UX ของ `rmn_ebidding_tracker_2.h
 - แนะนำ Supabase ไปแล้ว (Postgres+Auth+Storage, free tier พอใช้ตอนนี้, Pro $25/mo ถ้าโต) — ยังไม่ตัดสินใจ/ยังไม่เริ่มสร้าง
 - ถ้า session หน้าคุยเรื่องนี้ต่อ: นี่เป็น infra decision ข้าม repo (พาดพิง PII → ต้องเป็น DA เป็นคน design schema ก่อน ไม่ใช่ UI agent ทำเอง)
 
+## 🎨 UI Rules (current — ตรวจจากโค้ดจริง 2026-09-08)
+> ของเดิมใน `EBIDDING.md` ถูกครอบ ⛔ แล้ว (M4RX-B4SE a98adeb) — ไฟล์นี้คือฉบับจริง
+
+**Theme**
+- Light เป็น default · persist ที่ `localStorage['rmn_theme']` (`'light'` เมื่อไม่เคยตั้ง) · dark = `html.dark`
+- Toggle 2 ตัวคุมค่าเดียวกัน: ปุ่ม `#theme-btn` (editor) + switch `#vt-chk` (viewer) — `toggleTheme()` อัปเดตทั้งคู่ ห้ามแยก state
+- ห้าม hardcode สีในคอมโพเนนต์ ใช้ CSS var — **ยกเว้น** ราคายื่น / เลขที่ / ชื่อหน่วยงาน / badge สถานะ ที่ต้อง contrast ชัดเสมอ ใช้ hex ตายตัว ห้ามพึ่ง role tint var [[feedback_widget_contrast]]
+- ⚠️ ไฟล์มี `:root` **2 บล็อก** — L10 (global) และ L280 (Report tab, G-Lead style) ที่ override `--pill-bg` `--pill-active` `--card-border` `--navy` ทับ · แก้ตัวแปรต้องเช็คว่าโดนบล็อกที่สองทับหรือเปล่า
+
+**View mode (mobile / คนดูอย่างเดียว)**
+- Editor = ไม่มี query param · Viewer = `?view=1` → `VIEW_MODE` + `body.view-mode`
+- `[data-edit-only]` ถูก `display:none !important` (L524) — ปุ่ม Share/Export, tab Records, tab Add Bid, ปุ่มลบ/แก้/quick-status
+- **Mobile viewport lock** — ใน view mode เท่านั้น เขียนทับ meta viewport เป็น `maximum-scale=1.0, user-scalable=no` (L928-930) กัน zoom เพี้ยนบนมือถือ · ห้ามใส่ค่านี้ใน meta ตั้งต้น (L5) เพราะ editor ต้อง zoom ได้
+- Tab label ย่อเฉพาะ view mode: `dashboard → 📊 ภาพรวม` · `report → 📋 โครงการ` (L933-940)
+- `copyViewLink()` (L2658) เติม `view=1` ให้เอง — เป็นทางเดียวที่ใช้แชร์
+
+**Quick-status controls** (`data-action="quickstatus"`)
+- `<select>` ในการ์ดแต่ละใบของ tab Records (L2236) · ซ่อนอัตโนมัติใน view mode (อยู่ใน `actionsHtml` ที่เป็น `''` เมื่อ VIEW_MODE)
+- Event delegation ที่ `#records-list` `change` (L2616) → `Store.updateStatus()` → `renderTable()` + `renderDash()` ผ่าน rAF (กัน re-render ซ้อน)
+- `value` = ค่า STATUS จริง · label สั้นมีอิโมจิ (พื้นที่แคบ) — เปลี่ยน label ได้ เปลี่ยน value ไม่ได้
+- ⚠️ ตอนนี้มี **7 ตัวเลือก** — ขาด `WITHDRAWN` (ห้างขอยกเลิกสัญญา) ต้องไปเปลี่ยนที่ฟอร์มแก้ไขแทน
+
+**Component conventions**
+- KPI card: accent เป็น `border-left:3px solid` เท่านั้น (`.kpi-card.blue/green/purple/orange` L313-316) ห้ามใช้ bg เต็มใบ
+- Filter: `.pill` ทรงแคปซูล · active = `--pill-active` พื้นทึบ ตัวหนังสือขาว
+- ปุ่มขยาย/ดูเพิ่ม = **text-link** (`.expand-btn` L597: ไม่มี bg ไม่มี border) — ปุ่ม "ดูทั้งหมด" ของ competitor (L1932) ใช้แนวเดียวกัน
+- Entity tag / pill เล็ก ใช้ `--tag-bg` (L21 / L34) ห้ามใส่ `rgba(255,255,255,…)` ตรงๆ เพราะหายไปใน light mode
+- Checklist ทุกชนิดต้องมี interactive HTML widget คู่กับ docx เสมอ [[feedback_checklist_as_widget]]
+
+**Doc Fee UI**
+- ซ่อนทั้งหมดแล้ว (`display:none`) ตั้งแต่ 2026-08-31 — workflow จ่ายพร้อมยื่นประมูล · ห้าม unhide เองโดยไม่มีคำสั่ง [[project_docfee_ui_retired]]
+
+## 📋 STATUS values (current — `CONFIG.STATUS` L946-958)
+`Object.freeze` · **ค่าที่เก็บใน record คือ string ภาษาไทยเต็ม ไม่ใช่ key** → เปลี่ยน string = ข้อมูล 635 records หลุดทันที
+
+**8 ค่า active**
+
+| key | value (string จริงใน data) | ใช้ที่ |
+|---|---|---|
+| `WIN_PENDING` | `รอผลพิจารณา [ เป็นผู้เสนอต่ำที่สุด ]` | default ของ Add Bid · fallback ทุกกรณีที่ match ไม่ได้ |
+| `LOSE_PENDING` | `รอผลพิจารณา [ ไม่ได้เป็นผู้เสนอต่ำที่สุด ]` | |
+| `WINNER` | `อนุมัติสั่งจ้าง/ประกาศให้เป็นผู้ชนะ` | นับเป็น "ชนะ" ใน SME/วงเงิน |
+| `CONTRACT` | `จัดทำสัญญาแล้ว` | นับเป็น "ชนะ" ใน SME/วงเงิน |
+| `LOSE` | `แพ้ เนื่องจากไม่ได้เสนอราคาต่ำที่สุด` | |
+| `DISQUALIFIED` | `แพ้ เนื่องจากโดนปรับตก` | **display อย่างเดียวเรียก "แพ้ ขาดคุณสมบัติ / ถูกปรับตก"** — ห้ามแก้ value |
+| `CANCELLED` | `หน่วยงานประกาศยกเลิกโครงการ` | |
+| `WITHDRAWN` | `ห้างขอยกเลิกสัญญา` | ไม่มีใน quick-status select |
+
+**3 ค่า legacy** (โค้ดยังรองรับ อ่านได้ แต่ห้ามเขียนใหม่)
+
+| key | value | ปลายทาง |
+|---|---|---|
+| `PENDING` | `อยู่ระหว่างพิจารณาผล` | มี branch รับใน renderTable → map เป็น `win-pending` |
+| `WIN_PRICE` | `ราคาต่ำสุด` | `STATUS_MIGRATE` → `WIN_PENDING` |
+| `LOSE_PRICE` | `ราคาไม่ต่ำสุด` | `STATUS_MIGRATE` → `LOSE_PENDING` |
+
+**`STATUS_MIGRATE`** (L1015-1025) แปลงค่าเก่าตอนโหลดจาก localStorage ทุกครั้ง — ครอบคลุมค่ารุ่นก่อนอีก 6 แบบ (`รอผลพิจารณา / …`, `แพ้การประมูล`, `แพ้เนื่องจากขาดคุณสมบัติ/เอกสารไม่สมบูรณ์`, `ยกเลิกโครงการ`, `ห้างขอยกเลิกเอง`)
+→ **เพิ่ม/เปลี่ยนชื่อสถานะเมื่อไหร่ ต้องเพิ่มบรรทัดใน `STATUS_MIGRATE` ด้วยเสมอ** ไม่งั้น record เก่าตกไป fallback เงียบๆ
+
+**จุดที่ต้องแก้พร้อมกันเมื่อเพิ่มสถานะใหม่** (7 จุด)
+`CONFIG.STATUS` · `STATUS_MIGRATE` · `<option>` 3 ชุด (rpt-status / fstatus / f-status) · quick-status select · badge map (`statusBadge`) · section-title ternary 3 จุด · `.sd-*` / `.b-*` CSS class
+
 ## 🚫 Out of Scope
 - seed_bids.js / data logic / API calls
 - assets.json / personnel.json / doc_fees.json (ข้อมูล — DA/Fee Payment Agent ดูแล)
