@@ -107,3 +107,19 @@ push `doc_fees.json` / `doc_fee_queue.json` — **OPY push เอง** (2026-09-
 - **09-03 · 📖 procedure Doc Fee/Slip/Email ย้ายไป `E-Bidding\OPERATING.md`** (เจ้าของ Sir OPY · สำเนา sync `KB\OPERATING.md`) — `CLAUDE.md` เหลือ **safety gate + pointer** · ห้ามขยายเพดาน 20 KB ให้แยกเนื้อหาเฉพาะทางออกแทน
 - **09-03 · `build_taksila_letterhead.py` + `tmp/` = Lord Commander** (provisional/untracked) — Claude อ่าน/รันได้ **แก้ไม่ได้**
 - **09-03 · 🐦 Raven Mail = รูปแบบส่งข้อความข้ามฝั่ง** — ส่งถึง Lord COMMANDER of GPT / Codex / ข้าม agent ต้องขึ้นหัว `🐦 Raven Mail` + `จาก:` + `ถึง:` + `เรื่อง:` · **ชื่อผู้ส่งต้องตรงตัวจริง ห้ามสลับ** (รายชื่อเต็มใน `KB_ECOSYSTEM_ADMIN.md § 🐦`)
+
+
+---
+
+> 📦 ย้ายเข้า archive 2026-09-08 — ประกาศที่ปิดเรื่องแล้ว 2 ข้อ + ข้อความ UI Rules / STATUS values **รุ่นก่อน** (ของจริงไปอยู่ `WRK_UIUX.md` ตาม `6afecce`)
+
+- **09-04 · checker เช้า = `Work Health Check` แล้ว (เลิกนับ turn/context)** — วัด git status · HEAD vs origin · ขนาด/mtime ของ WRK · pending ทั้งระบบ · **read-only 100% ห้าม commit/push/pull/fetch** · รายงานต้องบอก **อะไรค้าง + owner + ต้องทำอะไรต่อ** · 📌 **เปลี่ยน registry ครั้งหน้าต้องไล่ตรวจ SKILL.md ทั้ง 4 ตัวด้วย** (อยู่นอก git ไม่มีใครเตือน)
+- **09-03 · `WRK_OPERATING_STATE.md` — owner Sir OPY · เฉพาะ Sir OPY** · OPY เปิด session อ่าน **2 ไฟล์** (`WRK_OPERATING.md`=กฎ + STATE=state/pending · เพดาน 20 KB ทั้งคู่ · เกินแล้วตัด state เก่าสุดเข้า archive ห้ามตัด pending) · ❌ **ไม่ใช่กฎทุก agent** — DA/EXP/MM/UI ใช้ WRK ไฟล์เดียว จะแยกต้องขอรับรองรายตัว
+
+## 🎨 UI Rules (รุ่นก่อน — เลิกใช้ 2026-09-08)
+- Light mode default · Viewer URL: `?view=1` (mobile) · Editor: no param (desktop)
+- View mode: ซ่อน data-edit-only, theme btn, ปรับ tab labels สั้น
+- KPI border-left accent · filter inputs pill-shape · expand btn = text-link
+
+## 📋 STATUS values (รุ่นก่อน — เลิกใช้ 2026-09-08 · ตรงตัวอักษร 0/8 กับ tracker)
+รอผลพิจารณา/เป็นผู้เสนอต่ำสุด · ไม่ได้เป็นผู้เสนอต่ำสุด · อนุมัติสั่งจ้าง · จัดทำสัญญา · แพ้การประมูล · แพ้/ขาดคุณสมบัติ · ยกเลิกโครงการ · ห้างขอยกเลิก
